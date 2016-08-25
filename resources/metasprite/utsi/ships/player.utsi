@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF_8"?>
+<!DOCTYPE untech>
+<spriteimporter id="Player" tilesettype="ONE_ROW_FIXED" image="player.png" transparent="881a1c">
+  <grid width="20" height="20" xoffset="4" yoffset="4" xpadding="0" ypadding="0" xorigin="12" yorigin="10"/>
+  <exportorder src="player.utft"/>
+  <frame id="Dead" order="2">
+    <gridlocation x="0" y="1"/>
+    <object size="small" x="3" y="6"/>
+    <object size="large" x="2" y="2"/>
+  </frame>
+  <frame id="Down_1" order="2">
+    <gridlocation x="1" y="2"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <frame id="Down_2" order="2">
+    <gridlocation x="2" y="2"/>
+    <object size="small" x="3" y="6"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <frame id="Down_3" order="2">
+    <gridlocation x="3" y="2"/>
+    <object size="small" x="3" y="6"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <frame id="Straight_1" order="2">
+    <gridlocation x="1" y="1"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <frame id="Straight_2" order="2">
+    <gridlocation x="2" y="1"/>
+    <object size="small" x="3" y="6"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <frame id="Straight_3" order="2">
+    <gridlocation x="3" y="1"/>
+    <object size="small" x="3" y="6"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <frame id="Up_1" order="2">
+    <gridlocation x="1" y="0"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <frame id="Up_2" order="2">
+    <gridlocation x="2" y="0"/>
+    <object size="small" x="3" y="6"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <frame id="Up_3" order="2">
+    <gridlocation x="3" y="0"/>
+    <object size="small" x="3" y="6"/>
+    <object size="large" x="2" y="2"/>
+    <actionpoint parameter="0" x="14" y="4"/>
+    <actionpoint parameter="0" x="14" y="15"/>
+    <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
+    <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
+  </frame>
+  <animation id="Dead">
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="0" frame="Dead"/>
+    <instruction op="STOP"/>
+  </animation>
+  <animation id="Down">
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Down_1"/>
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Down_2"/>
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Down_3"/>
+    <instruction op="STOP"/>
+  </animation>
+  <animation id="Straight">
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Straight_1"/>
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Straight_2"/>
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Straight_3"/>
+    <instruction op="STOP"/>
+  </animation>
+  <animation id="Up">
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Up_1"/>
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Up_2"/>
+    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Up_3"/>
+    <instruction op="STOP"/>
+  </animation>
+</spriteimporter>
