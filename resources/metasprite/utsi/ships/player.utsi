@@ -91,21 +91,21 @@
     <instruction op="STOP"/>
   </animation>
   <animation id="Down">
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Down_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Down_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Down_3"/>
-    <instruction op="STOP"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Down_1"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Down_2"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Down_3"/>
+    <instruction op="GOTO_START"/>
   </animation>
   <animation id="Straight">
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Straight_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Straight_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Straight_3"/>
-    <instruction op="STOP"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Straight_1"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Straight_2"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Straight_3"/>
+    <instruction op="GOTO_START"/>
   </animation>
   <animation id="Up">
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Up_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Up_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="12" frame="Up_3"/>
-    <instruction op="STOP"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Up_1"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Up_2"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Up_3"/>
+    <instruction op="GOTO_START"/>
   </animation>
 </spriteimporter>
