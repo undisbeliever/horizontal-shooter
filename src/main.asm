@@ -22,6 +22,12 @@ include "untech/text.inc"
 include "untech/camera.inc"
 include "untech/entities.inc"
 
+
+include "gameloop.inc"
+
+include "entities/player.inc"
+
+
 code(code)
 CopHandler:
 IrqHandler:
@@ -31,7 +37,11 @@ EmptyHandler:
 
 code(code)
 Main:
-    stp
+    rep     #$30
+a16()
+i16()
+    jsr     GameLoop.Init
+    jmp     GameLoop.Run
 
 // vim: ft=asm ts=4 sw=4 et:
 
