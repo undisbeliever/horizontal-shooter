@@ -2,10 +2,19 @@
 scope Entities {
 scope PlayerEntity {
 
-// Player Velocity
-// (0:7:15 fixed point)
-constant X_VECL(0x010000)
-constant Y_VECL(0x018000)
+// Friction
+// (0:0:15 fixed point)
+constant FRICTION(0x6666)
+
+// Player Acceleration
+// (0:0:15 fixed point)
+constant X_ACCEL(FRICTION + 0x1234)
+constant Y_ACCEL(FRICTION + 0x3456)
+
+// Max Player Velocity
+// (0:7:7 fixed point)
+constant MAX_X_VECL(0x0140)
+constant MAX_Y_VECL(0x0200)
 
 
 buildFunctionTable(BaseEntityFunctionTable, PlayerEntity)
@@ -39,19 +48,56 @@ a16()
 i16()
 code()
 scope Process: {
+
+    macro _AddAcceleration(c, accel, maxVecl) {
+        scope {#} {
+            lda.b   EntityStruct.{c}Vecl.hw
+            bmi     Minus
+                cmp.w   #{maxVecl}
+                bcs     End
+
+        Minus:
+            lda.b   EntityStruct.{c}Vecl
+            clc
+            adc.w   #{accel}
+            sta.b   EntityStruct.{c}Vecl
+            bcc     End
+                sep     #$20
+                inc.b   EntityStruct.{c}Vecl + 2
+                rep     #$20
+        End:
+        }
+    }
+
+    macro _SubAcceleration(c, accel, maxVecl) {
+        scope {#} {
+            lda.b   EntityStruct.{c}Vecl.hw
+            bpl     Positive
+                cmp.w   #-{maxVecl}
+                bcc     End
+
+        Positive:
+            lda.b   EntityStruct.{c}Vecl
+            sec
+            sbc.w   #{accel}
+            sta.b   EntityStruct.{c}Vecl
+            bcs     End
+                sep     #$20
+                dec.b   EntityStruct.{c}Vecl + 2
+                rep     #$20
+        End:
+        }
+    }
+
     scope UpdateYVecl {
         lda.l   JOY1
         bit.w   #JOY.up
         beq     ElseTestDown
             // Up pressed
-
             lda.w   #MSEO.Player.Animations.Up
             jsr     MetaSprite.SetAnimation
 
-            lda.w   #-Y_VECL
-            sta.b   EntityStruct.yVecl
-            lda.w   #(-Y_VECL) >> 8
-            sta.b   EntityStruct.yVecl + 1
+            _SubAcceleration(y, Y_ACCEL, MAX_Y_VECL)
 
             bra     EndIf
 
@@ -63,10 +109,7 @@ scope Process: {
             lda.w   #MSEO.Player.Animations.Down
             jsr     MetaSprite.SetAnimation
 
-            lda.w   #Y_VECL
-            sta.b   EntityStruct.yVecl
-            lda.w   #(Y_VECL) >> 8
-            sta.b   EntityStruct.yVecl + 1
+            _AddAcceleration(y, Y_ACCEL, MAX_Y_VECL)
 
             bra     EndIf
     Else:
@@ -74,9 +117,6 @@ scope Process: {
 
         lda.w   #MSEO.Player.Animations.Straight
         jsr     MetaSprite.SetAnimation
-
-        stz.b   EntityStruct.yVecl
-        stz.b   EntityStruct.yVecl + 1
 
     EndIf:
     }
@@ -87,33 +127,74 @@ scope Process: {
         beq     ElseTestRight
             // Left pressed
 
-            lda.w   #-X_VECL
-            sta.b   EntityStruct.xVecl
-            lda.w   #(-X_VECL) >> 8
-            sta.b   EntityStruct.xVecl + 1
+            _SubAcceleration(x, X_ACCEL, MAX_X_VECL)
 
             bra     EndIf
 
     ElseTestRight:
         bit.w   #JOY.right
-        beq     Else
+        beq     EndIf
             // Right pressed
 
-            lda.w   #X_VECL
-            sta.b   EntityStruct.xVecl
-            lda.w   #X_VECL >> 8
-            sta.b   EntityStruct.xVecl + 1
+            _AddAcceleration(x, X_ACCEL, MAX_X_VECL)
 
             bra     EndIf
-    Else:
-        // Left/Right not pressed
-
-        stz.b   EntityStruct.xVecl
-        stz.b   EntityStruct.xVecl + 1
 
     EndIf:
     }
 
+    macro _handleFriction(c) {
+        scope Friction_{c} {
+            lda.b   EntityStruct.{c}Vecl.hw
+            bmi     Minus
+                // Positive Velocity
+                // subtract friction
+
+                sec
+                lda.b   EntityStruct.{c}Vecl
+                sbc.w   #FRICTION
+                tay
+
+                sep     #$20
+            a8()
+                lda.b   EntityStruct.{c}Vecl + 2
+                sbc.b   #0
+                bpl     +
+                    lda.b   #0
+                    ldy.w   #0
+            +
+                sty.b   EntityStruct.{c}Vecl
+                sta.b   EntityStruct.{c}Vecl + 2
+
+                bra     End
+
+        Minus:
+                // Negative velocity
+                // add friction
+
+                clc
+                lda.b   EntityStruct.{c}Vecl
+                adc.w   #FRICTION
+                tay
+
+                sep     #$20
+            a8()
+                lda.b   EntityStruct.{c}Vecl + 2
+                adc.b   #0
+                bmi     +
+                    lda.b   #0
+                    ldy.w   #0
+            +
+                sty.b   EntityStruct.{c}Vecl
+                sta.b   EntityStruct.{c}Vecl + 2
+
+        End:
+            rep     #$20
+        a16()
+        }
+    }
+    _handleFriction(x)
+    _handleFriction(y)
 
     macro _addVelocity(c) {
         clc
