@@ -2,6 +2,11 @@
 scope Entities {
 scope PlayerEntity {
 
+constant SCREEN_MARGIN_TOP(8)
+constant SCREEN_MARGIN_BOTTOM(8)
+constant SCREEN_MARGIN_LEFT(12)
+constant SCREEN_MARGIN_RIGHT(60)
+
 // Friction
 // (0:0:15 fixed point)
 constant FRICTION(0x6666)
@@ -215,6 +220,29 @@ scope Process: {
     }
     _addVelocity(x)
     _addVelocity(y)
+
+
+    macro _limitToMargin(c, evaluate min, evaluate max) {
+        scope Limit_{c} {
+            lda.w   Camera.{c}Pos
+            clc
+            adc.w   #{min}
+            cmp.b   EntityStruct.{c}Pos.px
+            bcs     OutsideMargin
+
+            // carry clear
+            adc.w   #{max} - {min}
+            cmp.b   EntityStruct.{c}Pos.px
+            bcs     InsideMargin
+
+        OutsideMargin:
+            sta.b   EntityStruct.{c}Pos.px
+
+        InsideMargin:
+        }
+    }
+    _limitToMargin(x, SCREEN_MARGIN_LEFT, Camera.DISPLAY_WIDTH - SCREEN_MARGIN_RIGHT)
+    _limitToMargin(y, SCREEN_MARGIN_TOP, Camera.DISPLAY_HEIGHT - SCREEN_MARGIN_BOTTOM)
 
     rts
 }
