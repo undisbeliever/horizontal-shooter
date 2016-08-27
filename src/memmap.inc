@@ -1,0 +1,54 @@
+arch snes.cpu
+
+createCodeBlock(code,                   0xc08000, 0xc0ffaf)
+createDataBlock(rom0,                   0xc00000, 0xc07fff)
+
+
+createDataBlock(MS_FrameSetList,        0xc10000, 0xc100ff)
+createDataBlock(MS_PaletteList,         0xc10100, 0xc101ff)
+createDataBlock(MS_FrameList,           0xc10200, 0xc102ff)
+createDataBlock(MS_AnimationList,       0xc10300, 0xc103ff)
+createDataBlock(EN_RomDataList,         0xc10400, 0xc104ff)
+
+createDataBlock(DMA_Tile16Data,         0xc10500, 0xc10fff)
+
+
+createDataBlock(MS_FrameSetData,        0xc11000, 0xc11fff)
+createDataBlock(MS_FrameData,           0xc12000, 0xc12fff)
+createDataBlock(MS_AnimationData,       0xc13000, 0xc13fff)
+createDataBlock(MS_FrameObjectsData,    0xc14000, 0xc14fff)
+createDataBlock(MS_TileHitboxData,      0xc15000, 0xc15fff)
+createDataBlock(MS_EntityHitboxData,    0xc16000, 0xc16fff)
+createDataBlock(MS_ActionPointsData,    0xc17000, 0xc17fff)
+
+createDataBlock(MS_PaletteData,         0xc18000, 0xc18fff)
+
+createDataBlock(EN_RomData,             0xc19000, 0xc19fff)
+
+createDataBlock(MS_TileBlock_0,         0xc1a000, 0xc1bfff)
+createDataBlock(MS_TileBlock_1,         0xc1c000, 0xc1dfff)
+createDataBlock(MS_TileBlock_2,         0xc1e000, 0xc1ffff)
+
+
+createRamBlock(dp,          0x000000, 0x0000ff)
+createRamBlock(entityBlock, 0x7e0100, 0x7e10ff)
+createRamBlock(shadow,      0x7e1100, 0x7e1f7f)
+createRamBlock(stack,       0x7e1f80, 0x7e1fff)
+createRamBlock(wram7e,      0x7e2000, 0x7effff)
+createRamBlock(wram7f,      0x7f0000, 0x7fffff)
+
+
+scope Entities {
+    constant ENTITY_SIZE(64)
+    constant N_ENTITIES(64)
+}
+
+
+// VRAM Layout
+// ===========
+constant VRAM_OBJ_WADDR(0x6000)
+constant VRAM_CONSOLE_TILES_WADDR(0x1000)
+constant VRAM_CONSOLE_MAP_WADDR(0x0000)
+
+// vim: ft=asm ts=4 sw=4 et:
+
