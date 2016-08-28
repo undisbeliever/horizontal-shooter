@@ -12,6 +12,7 @@ include "memmap.inc"
 
 include "../resources/metasprite/metasprites.gen.inc"
 include "../resources/text/text.inc"
+include "../resources/images/images.inc"
 
 include "untech/dma.inc"
 include "untech/interrupts.inc"
@@ -24,7 +25,7 @@ include "untech/entities.inc"
 
 
 include "gameloop.inc"
-
+include "camera/starfield.inc"
 include "entities/player.inc"
 
 

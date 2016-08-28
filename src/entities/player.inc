@@ -216,10 +216,17 @@ scope Process: {
             and     #$00ff
         +
         adc.b   EntityStruct.{c}Pos + 2
+
+        if EntityStruct.{c}Pos == EntityStruct.xPos {
+            clc
+            adc.w   #Camera.StarField.VELOCITY_INT
+        }
+
         sta.b   EntityStruct.{c}Pos + 2
     }
     _addVelocity(x)
     _addVelocity(y)
+
 
 
     macro _limitToMargin(c, evaluate min, evaluate max) {

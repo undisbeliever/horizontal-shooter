@@ -27,6 +27,8 @@ scope Run: {
         jsr     MetaSprite.Render.InitLoop
 
         jsr     Entities.ProcessGameLoop
+        jsr     Camera.StarField.ProcessFrame
+
         jsr     Entities.RenderLoop
 
         jsr     MetaSprite.Render.EndLoop
@@ -61,39 +63,39 @@ i16()
     // Setup Screen
     //
     // MODE1
-    // BG1 - text console buffer
-    // OAM - text screen
+    // BG1 - starfield (64x32 tilemap, 16x16px tiles)
+    // BG3 - text console buffer (32x32x tilemap, 8x8px tiles)
+    // OAM - objects
 
     lda.b   #INIDISP.force
     sta.w   INIDISP
 
-    stz.w   BGMODE
+    lda.b   #BGMODE.mode1Bg3
+    sta.w   BGMODE
 
-    lda.b   #((VRAM_CONSOLE_MAP_WADDR / BGXSC.base.walign) << BGXSC.base.shift) | BGXSC.map.s32x32
+    lda.b   #((VRAM_STARFIELD_MAP_WADDR / BGXSC.base.walign) << BGXSC.base.shift) | BGXSC.map.s64x32
     sta.w   BG1SC
 
-    lda.b   #(VRAM_CONSOLE_TILES_WADDR / BG12NBA.walign) << BG12NBA.bg1.shift
+    lda.b   #(VRAM_STARFIELD_TILES_WADDR / BG12NBA.walign) << BG12NBA.bg1.shift
     sta.w   BG12NBA
+
+    lda.b   #((VRAM_CONSOLE_MAP_WADDR / BGXSC.base.walign) << BGXSC.base.shift) | BGXSC.map.s32x32
+    sta.w   BG3SC
+
+    lda.b   #(VRAM_CONSOLE_TILES_WADDR / BG34NBA.walign) << BG34NBA.bg1.shift
+    sta.w   BG34NBA
 
     lda.b   #(VRAM_OBJ_WADDR / OBSEL.base.walign) | OBSEL.size.s8_16
     sta.w   OBSEL
 
-    lda.b   #TM.bg1 | TM.obj
+    lda.b   #TM.bg1 | TM.bg3 | TM.obj
     sta.w   TM
 
 
-    // text text color (white)
-    lda.b   #1
-    sta.w   CGADD
-
-    lda.b   #0xff
-    sta.w   CGDATA
-    sta.w   CGDATA
-
+    jsr     Camera.StarField.LoadGraphics
+    jsr     Text.Console.Init
 
     jsr     EnableVBlank
-
-    jsr     Text.Console.Init
 
     plb
 // DB = 0x7e
@@ -105,12 +107,20 @@ i16()
     // Setup the modules
     // -----------------
     jsr     Entities.Init
+    jsr     Camera.StarField.Init
 
 
     // Enable Screen
     // -------------
     sep     #$20
 a8()
+    // text text color (white)
+    lda.w   #0xffff
+    sta.w   Dma.Palette.buffer + 2
+
+    // Transfer palette buffer to CGRAM on next frame
+    Dma.Palette.MarkDirty(all)
+
     // Enable screen
     lda.b   #15
     sta.l   INIDISP
