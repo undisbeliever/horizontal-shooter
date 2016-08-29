@@ -2,4 +2,6 @@
 <!DOCTYPE untech>
 <metaspriteexport>
   <frameset src="utms-gen/ships/player.utms"/>
+
+  <frameset src="utms-gen/missiles/plasma.utms"/>
 </metaspriteexport>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF_8"?>
+<!DOCTYPE untech>
+<spriteimporter id="Plasma" tilesettype="ONE_TILE_FIXED" image="plasma.png" transparent="881a1c">
+  <grid width="16" height="16" xoffset="0" yoffset="0" xpadding="0" ypadding="0" xorigin="0" yorigin="0"/>
+  <exportorder src="missiles.utft"/>
+  <frame id="Right_1" order="3">
+    <gridlocation x="0" y="0"/>
+    <object size="small" x="4" y="4"/>
+    <entityhitbox type="PROJECTILE" x="6" y="7" width="4" height="2"/>
+  </frame>
+  <frame id="Right_2" order="3">
+    <gridlocation x="1" y="0"/>
+    <object size="small" x="4" y="4"/>
+    <entityhitbox type="PROJECTILE" x="6" y="7" width="4" height="2"/>
+  </frame>
+  <frame id="Right_3" order="3">
+    <gridlocation x="2" y="0"/>
+    <object size="small" x="4" y="4"/>
+    <entityhitbox type="PROJECTILE" x="6" y="7" width="4" height="2"/>
+  </frame>
+  <frame id="Right_4" order="3">
+    <gridlocation x="3" y="0"/>
+    <object size="small" x="4" y="4"/>
+    <entityhitbox type="PROJECTILE" x="6" y="7" width="4" height="2"/>
+  </frame>
+  <animation id="Move_Right">
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Right_1"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Right_2"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Right_3"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Right_4"/>
+    <instruction op="GOTO_START"/>
+  </animation>
+</spriteimporter>
