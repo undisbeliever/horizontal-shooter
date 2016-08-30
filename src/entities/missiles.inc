@@ -22,21 +22,51 @@ scope RomData: {
 }
 
 
-// IN: A = parameter (NONE)
+// IN: A = parameter (address entity)
+//    MetaSprite.ActionPoint.address - address of actionPoint that spawned the missile
 a16()
 i16()
 code()
 scope Init: {
-    ldx.b   EntityStruct.romPtr
+    ldx.w   MetaSprite.ActionPoint.address
+    lda.l   MetaSprite.Format.ActionPoints.xPos,x
+    and.w   #0x00ff
+    cmp.w   #INT_MS8_OFFSET
+    bcs     Right
 
-    // ::TODO direction of missile::
+        // Missile travels left
+        // load negative velocity
+        ldx.b   EntityStruct.romPtr
 
-    lda.l   RomData.initialVelocity,x
-    sta.b   EntityStruct.xVecl
-    lda.l   RomData.initialVelocity + 1,x
-    sta.b   EntityStruct.xVecl + 1
+        sec
+        lda.w   #0
+        sbc.l   RomData.initialVelocity,x
+        sta.b   EntityStruct.xVecl
 
-    lda.w   #MSEO.Missile.Animations.Move_Right
+        sep     #$20
+    a8()
+        lda.b   #0
+        sbc.l   RomData.initialVelocity + 2,x
+        sta.b   EntityStruct.xVecl + 2
+        rep     #$30
+    a16()
+
+        lda.w   #MSEO.Missile.Animations.Move_Left
+
+        bra     EndIf
+
+    Right:
+        // missile travels right
+        ldx.b   EntityStruct.romPtr
+
+        lda.l   RomData.initialVelocity,x
+        sta.b   EntityStruct.xVecl
+        lda.l   RomData.initialVelocity + 1,x
+        sta.b   EntityStruct.xVecl + 1
+
+        lda.w   #MSEO.Missile.Animations.Move_Right
+
+EndIf:
     jsr     MetaSprite.SetAnimation
 
     rts

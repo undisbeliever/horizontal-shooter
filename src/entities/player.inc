@@ -25,6 +25,9 @@ constant MAX_Y_VECL(0x0200)
 // (int frames)
 constant MISSILE_COOLDOWN(14)
 
+// The action point type of a missile
+constant MISSILE_ACTION_POINT(1)
+
 buildFunctionTable(BaseEntityFunctionTable, PlayerEntity)
 Entities.useDefaultRenderer()
 
@@ -271,16 +274,10 @@ scope Process: {
             lda.l   JOY1
             bit.w   #JOY.b | JOY.y
             beq     EndIf
-                // ::TODO spawn at ActionPoint::
+                lda.w   #MISSILE_ACTION_POINT
+                ldy.w   #Missile.PlayerPlasma.ENTITY_ID
+                jsr     MetaSprite.ActionPoint.SpawnEntityOfType
 
-                lda.b   EntityStruct.xPos.px
-                sta.w   Entities.Spawn.xPos
-
-                lda.b   EntityStruct.yPos.px
-                sta.w   Entities.Spawn.yPos
-
-                lda     #Missile.PlayerPlasma.ENTITY_ID
-                jsr     Entities.Spawn
 
                 lda.w   #MISSILE_COOLDOWN
                 sta.b   EntityStruct.missileCooldown

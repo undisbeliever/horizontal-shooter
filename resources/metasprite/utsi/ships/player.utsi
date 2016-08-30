@@ -11,8 +11,8 @@
   <frame id="Down_1" order="2">
     <gridlocation x="1" y="2"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
@@ -20,8 +20,8 @@
     <gridlocation x="2" y="2"/>
     <object size="small" x="3" y="6"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
@@ -29,16 +29,16 @@
     <gridlocation x="3" y="2"/>
     <object size="small" x="3" y="6"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
   <frame id="Straight_1" order="2">
     <gridlocation x="1" y="1"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
@@ -46,8 +46,8 @@
     <gridlocation x="2" y="1"/>
     <object size="small" x="3" y="6"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
@@ -55,16 +55,16 @@
     <gridlocation x="3" y="1"/>
     <object size="small" x="3" y="6"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
   <frame id="Up_1" order="2">
     <gridlocation x="1" y="0"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
@@ -72,8 +72,8 @@
     <gridlocation x="2" y="0"/>
     <object size="small" x="3" y="6"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
@@ -81,13 +81,13 @@
     <gridlocation x="3" y="0"/>
     <object size="small" x="3" y="6"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="0" x="14" y="4"/>
-    <actionpoint parameter="0" x="14" y="15"/>
+    <actionpoint parameter="1" x="14" y="5"/>
+    <actionpoint parameter="1" x="14" y="16"/>
     <entityhitbox type="BODY" x="5" y="3" width="7" height="14"/>
     <entityhitbox type="BODY_WEAK" x="12" y="7" width="3" height="6"/>
   </frame>
   <animation id="Dead">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="0" frame="Dead"/>
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="1" frame="Dead"/>
     <instruction op="STOP"/>
   </animation>
   <animation id="Down">
