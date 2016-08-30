@@ -21,22 +21,29 @@ constant Y_ACCEL(FRICTION + 0x3456)
 constant MAX_X_VECL(0x0140)
 constant MAX_Y_VECL(0x0200)
 
+// cooldown between missiles
+// (int frames)
+constant MISSILE_COOLDOWN(14)
 
 buildFunctionTable(BaseEntityFunctionTable, PlayerEntity)
 Entities.useDefaultRenderer()
 
 scope EntityStruct: {
     childstruct(BaseEntity)
+        field(missileCooldown, 2)
     endstruct()
 }
 
-// IN: A = parameter (frameDelay)
+
+// IN: A = parameter (NONE)
 a16()
 i16()
 code()
 scope Init: {
     lda.w   #MSEO.Player.Animations.Straight
     jsr     MetaSprite.SetAnimation
+
+    stz.b   EntityStruct.missileCooldown
 
     rts
 }
@@ -250,6 +257,35 @@ scope Process: {
     }
     _limitToMargin(x, SCREEN_MARGIN_LEFT, Camera.DISPLAY_WIDTH - SCREEN_MARGIN_RIGHT)
     _limitToMargin(y, SCREEN_MARGIN_TOP, Camera.DISPLAY_HEIGHT - SCREEN_MARGIN_BOTTOM)
+
+
+    // Spawn missile on button press (with cooldown timer)
+    scope Missiles {
+        lda.b   EntityStruct.missileCooldown
+        beq     TestButton
+            dec
+            sta.b   EntityStruct.missileCooldown
+            bra     EndIf
+
+        TestButton:
+            lda.l   JOY1
+            bit.w   #JOY.b | JOY.y
+            beq     EndIf
+                // ::TODO spawn at ActionPoint::
+
+                lda.b   EntityStruct.xPos.px
+                sta.w   Entities.Spawn.xPos
+
+                lda.b   EntityStruct.yPos.px
+                sta.w   Entities.Spawn.yPos
+
+                lda     #Missile.PlayerPlasma.ENTITY_ID
+                jsr     Entities.Spawn
+
+                lda.w   #MISSILE_COOLDOWN
+                sta.b   EntityStruct.missileCooldown
+    EndIf:
+    }
 
     rts
 }

@@ -26,6 +26,8 @@ include "untech/entities.inc"
 
 include "gameloop.inc"
 include "camera/starfield.inc"
+
+include "entities/missiles.inc"
 include "entities/player.inc"
 
 
