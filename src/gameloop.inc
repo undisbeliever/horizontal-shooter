@@ -19,6 +19,7 @@ scope Run: {
     lda.w   #Entities.PlayerEntity.ENTITY_ID
     jsr     Entities.Spawn
 
+    Spawner.Init()
 
 
     // Process the entities
@@ -30,6 +31,8 @@ scope Run: {
 
         jsr     Entities.ProcessGameLoop
         jsr     Camera.StarField.ProcessFrame
+
+        Spawner.ProcessGameLoop()
 
         jsr     Entities.RenderLoop
 
