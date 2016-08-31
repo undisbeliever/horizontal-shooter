@@ -26,6 +26,8 @@ scope Run: {
     Loop:
         jsr     MetaSprite.Render.InitLoop
 
+        jsr     Hacks.DeleteOffscreenEntities
+
         jsr     Entities.ProcessGameLoop
         jsr     Camera.StarField.ProcessFrame
 
@@ -131,9 +133,7 @@ i16()
     rts
 }
 
-
 }
-
 
 // vim: ft=asm ts=4 sw=4 et:
 

@@ -24,6 +24,7 @@ include "untech/camera.inc"
 include "untech/entities.inc"
 
 
+include "hacks.inc"
 include "gameloop.inc"
 include "camera/starfield.inc"
 
