@@ -27,6 +27,8 @@ include "untech/entity.inc"
 include "spawner.inc"
 include "hacks.inc"
 include "gameloop.inc"
+include "physics.inc"
+
 include "camera/starfield.inc"
 
 include "entities/missiles.inc"

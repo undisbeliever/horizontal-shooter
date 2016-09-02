@@ -47,32 +47,7 @@ a16()
 i16()
 code()
 scope Process: {
-    macro _addVelocity(c) {
-        clc
-        lda.b   EntityStruct.{c}Vecl
-        adc.b   EntityStruct.{c}Pos
-        sta.b   EntityStruct.{c}Pos
-
-        lda.b   EntityStruct.{c}Vecl + 1
-        xba
-        bpl     +
-            ora     #$ff00
-            bra     ++
-        +
-            and     #$00ff
-        +
-        adc.b   EntityStruct.{c}Pos + 2
-
-        if EntityStruct.{c}Pos == EntityStruct.xPos {
-            clc
-            adc.w   #Camera.StarField.VELOCITY_INT
-        }
-
-        sta.b   EntityStruct.{c}Pos + 2
-    }
-    _addVelocity(x)
-    _addVelocity(y)
-
+    jsr     Physics.ProcessEntity
     rts
 }
 
