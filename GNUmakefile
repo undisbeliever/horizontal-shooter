@@ -27,4 +27,5 @@ resources:
 .PHONY: clean
 clean:
 	$(RM) $(BINARY)
+	$(foreach d,$(RESOURCE_DIRS), $(MAKE) -C $d clean;)
 
