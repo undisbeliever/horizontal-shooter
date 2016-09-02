@@ -21,7 +21,7 @@ include "untech/metasprite.inc"
 include "untech/text.inc"
 
 include "untech/camera.inc"
-include "untech/entities.inc"
+include "untech/entity.inc"
 
 
 include "spawner.inc"

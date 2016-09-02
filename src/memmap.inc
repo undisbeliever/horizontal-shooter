@@ -38,7 +38,7 @@ createRamBlock(wram7e,      0x7e2000, 0x7effff)
 createRamBlock(wram7f,      0x7f0000, 0x7fffff)
 
 
-scope Entities {
+scope Entity {
     constant ENTITY_SIZE(64)
     constant N_ENTITIES(64)
 }

@@ -32,9 +32,9 @@ macro scope ProcessGameLoop() {
 
     // Spawn if no enemies on screen or --spawnDelay < 0
 
-    lda.w   Entities.lists.enemies
+    lda.w   Entity.lists.enemies
     bne     DecrementCounter
-    lda.w   Entities.lists.bosses
+    lda.w   Entity.lists.bosses
     bne     DecrementCounter
     bra     Spawn
 
@@ -87,18 +87,18 @@ allocateTmpWord(tmp_count)
             lda.l   SpawnTableRow.xPos,x
             clc
             adc.w   Camera.xPos
-            sta.w   Entities.Spawn.xPos
+            sta.w   Entity.Spawn.xPos
 
             lda.l   SpawnTableRow.yPos,x
             clc
             adc.w   Camera.yPos
-            sta.w   Entities.Spawn.yPos
+            sta.w   Entity.Spawn.yPos
 
             lda.l   SpawnTableRow.parameter,x
             tay
             lda.l   SpawnTableRow.entityId,x
 
-            jsr     Entities.Spawn
+            jsr     Entity.Spawn
 
         pla
         clc

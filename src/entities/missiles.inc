@@ -8,7 +8,7 @@ constant X_VELOCITY(0x028000)
 
 
 buildFunctionTable(BaseEntityFunctionTable, Missile)
-Entities.useDefaultRenderer()
+Entity.useDefaultRenderer()
 
 scope EntityStruct: {
     childstruct(BaseEntity)
@@ -129,7 +129,7 @@ macro _entity(name, frameSetId, list, velocity) {
         }
 
         rodata(EN_RomDataList)
-        constant ENTITY_ID((pc() - Entities.Data.List) / 2)
+        constant ENTITY_ID((pc() - Entity.Data.List) / 2)
             dw  RomData
     }
 }

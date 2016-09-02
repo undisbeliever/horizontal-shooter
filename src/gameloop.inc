@@ -11,13 +11,13 @@ scope Run: {
     // Spawn the player
     // ----------------
     lda.w   #Camera.DISPLAY_WIDTH / 2 + Camera.ORIGIN
-    sta.w   Entities.Spawn.xPos
+    sta.w   Entity.Spawn.xPos
     lda.w   #Camera.DISPLAY_HEIGHT / 2 + Camera.ORIGIN
-    sta.w   Entities.Spawn.yPos
+    sta.w   Entity.Spawn.yPos
 
     ldy.w   #0
     lda.w   #Entities.PlayerEntity.ENTITY_ID
-    jsr     Entities.Spawn
+    jsr     Entity.Spawn
 
     Spawner.Init()
 
@@ -29,12 +29,12 @@ scope Run: {
 
         jsr     Hacks.DeleteOffscreenEntities
 
-        jsr     Entities.ProcessGameLoop
+        jsr     Entity.ProcessGameLoop
         jsr     Camera.StarField.ProcessFrame
 
         Spawner.ProcessGameLoop()
 
-        jsr     Entities.RenderLoop
+        jsr     Entity.RenderLoop
 
         jsr     MetaSprite.Render.EndLoop
 
@@ -111,7 +111,7 @@ i16()
 
     // Setup the modules
     // -----------------
-    jsr     Entities.Init
+    jsr     Entity.Init
     jsr     Camera.StarField.Init
 
 

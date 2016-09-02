@@ -10,7 +10,7 @@ a16()
 i16()
 code()
 scope DeleteOffscreenEntities: {
-    lda.w   Entities.lists.deactivated
+    lda.w   Entity.lists.deactivated
     beq     NoneToDelete
 
     Loop:
@@ -19,22 +19,22 @@ scope DeleteOffscreenEntities: {
         MetaSprite.EntityDestructor()
 
         ldx.b   BaseEntity.romPtr
-        lda.l   Entities.BaseEntityData.functionTable,x
+        lda.l   Entity.BaseEntityData.functionTable,x
         tax
-        jsr     (Entities.BaseEntityFunctionTable.Destructor,x)
+        jsr     (Entity.BaseEntityFunctionTable.Destructor,x)
 
         lda.b   BaseEntity.next
         bne     Loop
 
     // Move the toDelete list into the free list
 
-    lda.w   Entities.lists.free
+    lda.w   Entity.lists.free
     sta.b   BaseEntity.next
 
-    lda.w   Entities.lists.deactivated
-    sta.w   Entities.lists.free
+    lda.w   Entity.lists.deactivated
+    sta.w   Entity.lists.free
 
-    stz.w   Entities.lists.deactivated
+    stz.w   Entity.lists.deactivated
 
 
 NoneToDelete:

@@ -29,7 +29,7 @@ constant MISSILE_COOLDOWN(14)
 constant MISSILE_ACTION_POINT(1)
 
 buildFunctionTable(BaseEntityFunctionTable, PlayerEntity)
-Entities.useDefaultRenderer()
+Entity.useDefaultRenderer()
 
 scope EntityStruct: {
     childstruct(BaseEntity)
@@ -297,7 +297,7 @@ scope RomData: {
 }
 
 rodata(EN_RomDataList)
-constant ENTITY_ID((pc() - Entities.Data.List) / 2)
+constant ENTITY_ID((pc() - Entity.Data.List) / 2)
     dw  RomData
 }
 }

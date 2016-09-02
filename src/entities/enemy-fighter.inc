@@ -3,7 +3,7 @@ scope Entities {
 scope EnemyFighter {
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyFighter)
-Entities.useDefaultRenderer()
+Entity.useDefaultRenderer()
 
 scope EntityStruct: {
     childstruct(BaseEntity)
@@ -92,7 +92,7 @@ macro _entity(name, frameSetId, velocity) {
         }
 
         rodata(EN_RomDataList)
-        constant ENTITY_ID((pc() - Entities.Data.List) / 2)
+        constant ENTITY_ID((pc() - Entity.Data.List) / 2)
             dw  RomData
     }
 }
