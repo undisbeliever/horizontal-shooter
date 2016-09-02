@@ -59,10 +59,13 @@ scope Destructor: {
 }
 
 
-a16()
-i16()
-code()
-scope Process: {
+// Change velocity depending on state of dpad
+// Velocity is capped to MAX_*_VECL
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+macro ProcessDpad() {
+    assert16a()
+    assert16i()
 
     macro _AddAcceleration(c, accel, maxVecl) {
         scope {#} {
@@ -157,6 +160,16 @@ scope Process: {
 
     EndIf:
     }
+}
+
+
+
+// Apply friction to entity
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+macro ProcessFriction() {
+    assert16a()
+    assert16i()
 
     macro _handleFriction(c) {
         scope Friction_{c} {
@@ -210,10 +223,15 @@ scope Process: {
     }
     _handleFriction(x)
     _handleFriction(y)
+}
 
 
-    jsr     Physics.ProcessEntity
-
+// Prevent the entity from leaving the screen
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+macro LimitToMargin() {
+    assert16a()
+    assert16i()
 
     macro _limitToMargin(c, evaluate min, evaluate max) {
         scope Limit_{c} {
@@ -236,29 +254,46 @@ scope Process: {
     }
     _limitToMargin(x, SCREEN_MARGIN_LEFT, Camera.DISPLAY_WIDTH - SCREEN_MARGIN_RIGHT)
     _limitToMargin(y, SCREEN_MARGIN_TOP, Camera.DISPLAY_HEIGHT - SCREEN_MARGIN_BOTTOM)
+}
 
 
-    // Spawn missile on button press (with cooldown timer)
-    scope Missiles {
-        lda.b   EntityStruct.missileCooldown
-        beq     TestButton
-            dec
+// Spawn missile on button press (with cooldown timer)
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+macro scope SpawnMissilesOnButtonPress() {
+    lda.b   EntityStruct.missileCooldown
+    beq     TestButton
+        dec
+        sta.b   EntityStruct.missileCooldown
+        bra     EndIf
+
+    TestButton:
+        lda.l   JOY1
+        bit.w   #JOY.b | JOY.y
+        beq     EndIf
+            lda.w   #MISSILE_ACTION_POINT
+            ldy.w   #Missile.PlayerPlasma.ENTITY_ID
+            jsr     MetaSprite.ActionPoint.SpawnEntityOfType
+
+
+            lda.w   #MISSILE_COOLDOWN
             sta.b   EntityStruct.missileCooldown
-            bra     EndIf
-
-        TestButton:
-            lda.l   JOY1
-            bit.w   #JOY.b | JOY.y
-            beq     EndIf
-                lda.w   #MISSILE_ACTION_POINT
-                ldy.w   #Missile.PlayerPlasma.ENTITY_ID
-                jsr     MetaSprite.ActionPoint.SpawnEntityOfType
+EndIf:
+}
 
 
-                lda.w   #MISSILE_COOLDOWN
-                sta.b   EntityStruct.missileCooldown
-    EndIf:
-    }
+a16()
+i16()
+code()
+scope Process: {
+    ProcessDpad()
+    ProcessFriction()
+
+    jsr     Physics.ProcessEntity
+
+    LimitToMargin()
+
+    SpawnMissilesOnButtonPress()
 
     rts
 }
