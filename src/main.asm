@@ -14,6 +14,8 @@ include "../resources/metasprite/metasprites.gen.inc"
 include "../resources/text/text.inc"
 include "../resources/images/images.inc"
 
+include "../tables/tables.inc"
+
 include "untech/dma.inc"
 include "untech/interrupts.inc"
 include "untech/math.inc"
@@ -34,7 +36,6 @@ include "camera/starfield.inc"
 include "entities/missiles.inc"
 include "entities/player.inc"
 include "entities/enemy-fighter.inc"
-
 
 code(code)
 CopHandler:
