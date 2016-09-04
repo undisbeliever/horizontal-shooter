@@ -89,15 +89,12 @@ scope Process: {
 }
 
 
-constant PLAYER_PROJECTILE(3 * 2)
-constant ENEMY_PROJECTILE(4 * 2)
-
 macro _entity(name, frameSetId, list, velocity) {
     scope {name} {
         rodata(EN_RomData)
         scope RomData: {
             dw  FunctionTable
-            db  {list}              // initial List
+            db  Entity.ListId.{list}// initial List
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
             dl  {velocity}          // launch velocity

@@ -302,9 +302,9 @@ scope Process: {
 rodata(EN_RomData)
 scope RomData: {
     dw  FunctionTable
-    db  0               // initial List (player) ::TODO name these lists::
-    dw  MSFS.Player     // frameSetId
-    db  0               // defaultPalette
+    db  Entity.ListId.PLAYER    // initial List
+    dw  MSFS.Player             // frameSetId
+    db  0                       // defaultPalette
 }
 
 rodata(EN_RomDataList)

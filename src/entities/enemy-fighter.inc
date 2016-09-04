@@ -52,15 +52,12 @@ scope Process: {
 }
 
 
-constant BOSS_LIST(1 * 2)
-constant ENEMY_LIST(2 * 2)
-
 macro _entity(name, frameSetId, velocity) {
     scope {name} {
         rodata(EN_RomData)
         scope RomData: {
             dw  FunctionTable
-            db  ENEMY_LIST          // initial List
+            db  Entity.ListId.ENEMY // initial List
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
             dl  {velocity}          // launch velocity
