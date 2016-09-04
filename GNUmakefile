@@ -20,7 +20,7 @@ bin/:
 
 .PHONY: resources
 resources:
-	$(foreach d,$(RESOURCE_DIRS), $(MAKE) -C $d;)
+	$(foreach d,$(RESOURCE_DIRS),$(MAKE) -C $d &&) true
 
 
 
