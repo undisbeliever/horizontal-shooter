@@ -1,13 +1,6 @@
 
 scope Spawner {
 
-    constant MIN_SPAWN_DELAY(75)        // 1 second
-    constant MAX_SPAWN_DELAY(75 * 10)   // 10 seconds
-
-    // delay to next enemy spawn
-    // (word)
-    allocate(spawnDelay, wram7e, 2)
-
     // id of previous spawn table
     // (word)
     allocate(previousTableId, wram7e, 2)
@@ -16,9 +9,6 @@ scope Spawner {
 // REQUIRES: 16 bit A, DB = 0x7e
 macro scope Init() {
     assert16a()
-
-    lda.w   #1
-    sta.w   Spawner.spawnDelay
 
     lda.w   #0xffff
     sta.w   Spawner.previousTableId
@@ -30,19 +20,14 @@ macro scope ProcessGameLoop() {
     assert16a()
     assert16i()
 
-    // Spawn if no enemies on screen or --spawnDelay < 0
+    // Spawn if no enemies or bosses on screen
+
+    lda.w   Entity.lists.bosses
+    bne     EndIf
 
     lda.w   Entity.lists.enemies
-    bne     DecrementCounter
-    lda.w   Entity.lists.bosses
-    bne     DecrementCounter
-    bra     Spawn
+    bne     EndIf
 
-    DecrementCounter:
-        dec.w   Spawner.spawnDelay
-        bpl     EndIf
-
-    Spawn:
         jsr     Spawner.Spawn
     EndIf:
 }
@@ -55,10 +40,6 @@ i16()
 scope Spawn: {
 allocateTmpWord(tmp_address)
 allocateTmpWord(tmp_count)
-
-    lda.w   #Spawner.MAX_SPAWN_DELAY / 2
-    sta.w   Spawner.spawnDelay
-
 
     // ::TODO select random table not of previous
 
