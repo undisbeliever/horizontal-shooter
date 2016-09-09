@@ -33,6 +33,7 @@ include "physics.inc"
 
 include "camera/starfield.inc"
 
+include "entities/_base-enemy.inc"
 include "entities/missiles.inc"
 include "entities/player.inc"
 include "entities/enemy-fighter.inc"
