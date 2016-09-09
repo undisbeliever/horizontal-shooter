@@ -1,6 +1,9 @@
 
 scope GameLoop {
 
+// address of the current player
+allocateTmpWord(playerEntity)
+
 // Executes the gameloop
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // LOOPS FOREVER
@@ -18,6 +21,7 @@ scope Run: {
     ldy.w   #0
     lda.w   #Entities.PlayerEntity.ENTITY_ID
     jsr     Entity.Spawn
+    sty.w   playerEntity
 
     Spawner.Init()
 

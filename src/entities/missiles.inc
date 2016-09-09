@@ -172,6 +172,7 @@ macro _entity(name, frameSetId, list, velocity) {
     }
 }
 _entity(PlayerPlasma, Plasma, PLAYER_PROJECTILE, 0x028000)
+_entity(EnemyPlasma, Plasma, ENEMY_PROJECTILE, 0x020000)
 
 }
 }
