@@ -15,6 +15,7 @@ include "../resources/text/text.inc"
 include "../resources/images/images.inc"
 
 include "../tables/tables.inc"
+include "../tables2/tables.inc"
 
 include "untech/dma.inc"
 include "untech/interrupts.inc"
@@ -37,6 +38,7 @@ include "entities/_base-enemy.inc"
 include "entities/missiles.inc"
 include "entities/player.inc"
 include "entities/enemy-fighter.inc"
+include "entities/enemy-sinusoidal.inc"
 
 code(code)
 CopHandler:
