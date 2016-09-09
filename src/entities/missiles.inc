@@ -10,8 +10,17 @@ constant X_VELOCITY(0x028000)
 buildFunctionTable(BaseEntityFunctionTable, Missile)
 Entity.useDefaultRenderer()
 
+scope State {
+    createEnum(0, 2)
+        enum(FLYING)
+        enum(EXPLODING)
+
+    constant MASK(0x1 << 1)
+}
+
 scope EntityStruct: {
     childstruct(BaseEntity)
+        field(state, 2)
     endstruct()
 }
 
@@ -69,6 +78,10 @@ scope Init: {
 EndIf:
     jsr     MetaSprite.SetAnimation
 
+
+    assert(State.FLYING == 0)
+    stz.b   EntityStruct.state
+
     rts
 }
 
@@ -84,11 +97,42 @@ a16()
 i16()
 code()
 scope Process: {
+    lda.b   EntityStruct.state
+    and.w   #State.MASK
+    tax
+    jmp     (FunctionTable,x)
+
+
+// ::TODO find a way to automate this::
+// buildFunctionTable doesn't work as it wants a basestruct
+FunctionTable:
+    dw  Flying
+    dw  Exploding
+}
+
+
+a16()
+i16()
+code()
+scope Process.Flying: {
     jsr     Physics.ProcessEntity
     rts
 }
 
 
+a16()
+i16()
+code()
+scope Process.Exploding: {
+    // ::TODO wait for animation to end::
+
+    ldy.w   #Entity.lists.toDelete
+    sty.w   Entity.changeList
+    rts
+}
+
+
+// Missile has collided with a hitbox
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // INPUT: dp = entity
 // INPUT: Y = entity attacking
@@ -96,22 +140,19 @@ scope Process: {
 a16()
 i16()
 code()
-scope CalculateAttackValue: {
-    lda.w   #1
-    rts
-}
-
-
-// ::TODO collision behaviour::
-a16()
-i16()
-code()
 BlockWithShield:
 TakeDamageFromEntity:
 CollideWithBody:
 CollideWithShield:
-    rts
+scope CalculateAttackValue: {
+    ldx.w   #State.EXPLODING
+    stx.b   EntityStruct.state
 
+    // ::TODO display collision animation::
+
+    lda.w   #1
+    rts
+}
 
 
 macro _entity(name, frameSetId, list, velocity) {
