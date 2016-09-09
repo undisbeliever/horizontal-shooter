@@ -19,9 +19,9 @@ scope DeleteOffscreenEntities: {
         MetaSprite.EntityDestructor()
 
         ldx.b   BaseEntity.romPtr
-        lda.l   Entity.BaseEntityData.functionTable,x
+        lda.l   BaseEntityData.functionTable,x
         tax
-        jsr     (Entity.BaseEntityFunctionTable.Destructor,x)
+        jsr     (BaseEntityFunctionTable.Destructor,x)
 
         lda.b   BaseEntity.next
         bne     Loop

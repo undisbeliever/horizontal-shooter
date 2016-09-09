@@ -299,6 +299,32 @@ scope Process: {
 }
 
 
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+// INPUT: Y = entity attacking
+// OUTPUT: A = attack value
+a16()
+i16()
+code()
+scope CalculateAttackValue: {
+    // ::TODO proper value::
+
+    lda.w   #1
+    rts
+}
+
+
+// ::TODO collision behaviour::
+a16()
+i16()
+code()
+BlockWithShield:
+CollideWithBody:
+CollideWithShield:
+TakeDamageFromEntity:
+    rts
+
+
 rodata(EN_RomData)
 scope RomData: {
     dw  FunctionTable
