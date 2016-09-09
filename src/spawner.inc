@@ -144,6 +144,24 @@ scope SpawnTableData: {
         row(EnemySinusoidal.Fast,   0,      0,      112 + 0)
         row(EnemySinusoidal.Fast,   0,     20,      112 + 10)
 
+    table()
+        db 6
+        row(EnemySinusoidal.Slow,   0,     20,      40 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      40 + 0)
+        row(EnemySinusoidal.Slow,   0,     20,      40 + 10)
+        row(EnemySinusoidal.Slow,   0,     20,      184 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      184 + 0)
+        row(EnemySinusoidal.Slow,   0,     20,      184 + 10)
+
+    table()
+        db 7
+        row(EnemySinusoidal.Slow,   0,     30,      112 - 30)
+        row(EnemySinusoidal.Slow,   0,     20,      112 - 20)
+        row(EnemySinusoidal.Slow,   0,     10,      112 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      112 + 0)
+        row(EnemySinusoidal.Slow,   0,     10,      112 + 10)
+        row(EnemySinusoidal.Slow,   0,     20,      112 + 20)
+        row(EnemySinusoidal.Slow,   0,     30,      112 + 30)
 
     table()
         db 12
