@@ -16,7 +16,7 @@ scope Font {
     constant LOWER_A(0x25)
     constant SPACE(0x5f)
     constant MINUS(0x4b)
-
+    constant HP_ICON(0x60)
 
 rodata(rom0)
     insert FixedTiles, "font-fixed.2bpp"

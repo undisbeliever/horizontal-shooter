@@ -44,6 +44,8 @@ scope Run: {
 
         jsr     MetaSprite.Render.EndLoop
 
+        jsr     Interface.Update
+
         jsr     Hacks.WaitFrameCpuUsage
 
         bra     Loop
@@ -118,15 +120,13 @@ i16()
     // -----------------
     jsr     Entity.Init
     jsr     Camera.StarField.Init
+    jsr     Interface.Init
 
 
     // Enable Screen
     // -------------
     sep     #$20
 a8()
-    // text text color (white)
-    lda.w   #0xffff
-    sta.w   Dma.Palette.buffer + 2
 
     // Transfer palette buffer to CGRAM on next frame
     Dma.Palette.MarkDirty(all)

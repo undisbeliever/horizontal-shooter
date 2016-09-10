@@ -26,11 +26,12 @@ include "untech/text.inc"
 include "untech/camera.inc"
 include "untech/entity.inc"
 
-
+include "interface.inc"
 include "spawner.inc"
 include "hacks.inc"
-include "gameloop.inc"
 include "physics.inc"
+
+include "gameloop.inc"
 
 include "camera/starfield.inc"
 
