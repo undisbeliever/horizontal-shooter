@@ -4,6 +4,25 @@ scope GameLoop {
 // address of the current player
 allocateTmpWord(playerEntity)
 
+scope Run {
+    // Restarts the game if the player pressed start and the player is dead
+    //
+    // REQUIRES: 16 bit A, 16 bit Index
+    macro scope ProcessStartButton() {
+        assert16a()
+        assert16i()
+
+        lda.w   Controller.Joy1.pressed
+        and.w   #JOY.start
+        beq     EndIf
+            ldy.w   GameLoop.playerEntity
+            lda.w   Entities.PlayerEntity.EntityStruct.hp,y
+            bne     EndIf
+                jmp     Restart
+        EndIf:
+    }
+}
+
 // Executes the gameloop
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // LOOPS FOREVER
@@ -30,6 +49,7 @@ scope Run: {
     // --------------------
     Loop:
         Controller.UpdateControllerState()
+        ProcessStartButton()
 
         jsr     MetaSprite.Render.InitLoop
 
@@ -59,8 +79,7 @@ scope Run: {
 // REGISTER OUTPUT: DB = 0x7e, 16 bit A, 16 bit Index
 a16()
 i16()
-code()
-scope Init: {
+macro Init() {
     rep     #$30
     sep     #$20
 a8()
@@ -138,8 +157,20 @@ a8()
     rep     #$30
 a16()
 i16()
-    rts
 }
+
+
+// Restarts the game
+//
+// REQUIRES: none
+scope Restart: {
+    rep     #$30
+a16()
+i16()
+    Init()
+    jmp     Run
+}
+
 
 }
 

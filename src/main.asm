@@ -48,13 +48,7 @@ EmptyHandler:
     rti
 
 
-code(code)
-Main:
-    rep     #$30
-a16()
-i16()
-    jsr     GameLoop.Init
-    jmp     GameLoop.Run
+constant Main(GameLoop.Restart)
 
 // vim: ft=asm ts=4 sw=4 et:
 
