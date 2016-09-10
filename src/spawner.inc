@@ -20,13 +20,17 @@ macro scope ProcessGameLoop() {
     assert16a()
     assert16i()
 
-    // Spawn if no enemies or bosses on screen
+    // Spawn if player has HP and no enemies or bosses on screen
 
     lda.w   Entity.lists.bosses
     bne     EndIf
 
     lda.w   Entity.lists.enemies
     bne     EndIf
+
+    ldy.w   GameLoop.playerEntity
+    lda.w   Entities.PlayerEntity.EntityStruct.hp,y
+    beq     EndIf
 
         jsr     Spawner.Spawn
     EndIf:

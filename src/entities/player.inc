@@ -33,7 +33,14 @@ Entity.useDefaultRenderer()
 
 scope EntityStruct: {
     childstruct(BaseEntity)
+        field(hp, 2)
         field(missileCooldown, 2)
+    endstruct()
+}
+
+scope RomData: {
+    childstruct(BaseEntityData)
+        field(health, 2)
     endstruct()
 }
 
@@ -47,6 +54,10 @@ scope Init: {
     jsr     MetaSprite.SetAnimation
 
     stz.b   EntityStruct.missileCooldown
+
+    ldx.b   EntityStruct.romPtr
+    lda.l   RomData.health,x
+    sta.b   EntityStruct.hp
 
     rts
 }
@@ -282,10 +293,20 @@ EndIf:
 }
 
 
+
+scope Process {
+ReturnB:
+    rts
+}
+
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 a16()
 i16()
 code()
 scope Process: {
+    lda.b   EntityStruct.hp
+    beq     ReturnB
+
     ProcessDpad()
     ProcessFriction()
 
@@ -307,8 +328,6 @@ a16()
 i16()
 code()
 scope CalculateAttackValue: {
-    // ::TODO proper value::
-
     lda.w   #1
     rts
 }
@@ -318,24 +337,78 @@ scope CalculateAttackValue: {
 a16()
 i16()
 code()
-BlockWithShield:
-CollideWithBody:
-CollideWithShield:
-TakeDamageFromEntity:
+scope BlockWithShield: {
+
+}
+
+
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+// INPUT: Y = entity collided with
+a16()
+i16()
+code()
+scope CollideWithShield: {
+    lda.w   #2
+    bra     TakeDamage
+}
+
+
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+// INPUT: Y = entity collided with
+a16()
+i16()
+code()
+scope CollideWithBody: {
+    lda.w   #5
+    bra     TakeDamage
+}
+
+
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+// INPUT: Y = entity attacking
+// INPUT: A = attack value
+a16()
+i16()
+code()
+scope TakeDamageFromEntity: {
+    bra     TakeDamage
+}
+
+
+// Subtract damage from HP
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = entity
+// INPUT: A = damage
+scope TakeDamage: {
+    // A = clamp(hp - A)
+
+    eor.w   #0xffff
+    sec
+    adc.b   EntityStruct.hp
+    bcs     +
+        lda.w   #0
+    +
+    sta.b   EntityStruct.hp
+
     rts
+}
 
 
 rodata(EN_RomData)
-scope RomData: {
+scope PlayerRomData: {
     dw  FunctionTable
     db  Entity.ListId.PLAYER    // initial List
     dw  MSFS.Player             // frameSetId
     db  0                       // defaultPalette
+    dw  6                       // health
 }
 
 rodata(EN_RomDataList)
 constant ENTITY_ID((pc() - Entity.Data.List) / 2)
-    dw  RomData
+    dw  PlayerRomData
 }
 }
 
