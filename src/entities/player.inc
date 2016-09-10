@@ -108,7 +108,7 @@ macro ProcessDpad() {
     }
 
     scope UpdateYVecl {
-        lda.l   JOY1
+        lda.w   Controller.Joy1.current
         bit.w   #JOY.up
         beq     ElseTestDown
             // Up pressed
@@ -140,7 +140,7 @@ macro ProcessDpad() {
     }
 
     scope UpdateXVecl {
-        lda.l   JOY1
+        lda.w   Controller.Joy1.current
         bit.w   #JOY.left
         beq     ElseTestRight
             // Left pressed
@@ -268,7 +268,7 @@ macro scope SpawnMissilesOnButtonPress() {
         bra     EndIf
 
     TestButton:
-        lda.l   JOY1
+        lda.w   Controller.Joy1.current
         bit.w   #JOY.b | JOY.y
         beq     EndIf
             lda.w   #MISSILE_ACTION_POINT

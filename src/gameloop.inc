@@ -29,6 +29,8 @@ scope Run: {
     // Process the entities
     // --------------------
     Loop:
+        Controller.UpdateControllerState()
+
         jsr     MetaSprite.Render.InitLoop
 
         jsr     Hacks.DeleteOffscreenEntities
