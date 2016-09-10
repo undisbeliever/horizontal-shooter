@@ -2,6 +2,7 @@
 scope Entities {
 scope EnemySinusoidal {
 
+constant X_PADDING(15)
 constant MISSILE_THREASHOLD(15)
 constant MISSILE_ACTION_POINT(1)
 constant SECOND_SHOT_COOLDOWN(30)
@@ -76,7 +77,51 @@ a8()
 a16()
 
 
+    scope TestXVecl {
+        // Change x velocity so entity stays on screen
 
+
+        // if (xVecl > 0 and xPos >= Camera.xPos + DISPLAY_WIDTH - X_PADDING)
+        //    or (xVecl < 0 and xPos - X_PADDING <= player.xPos)
+        //      xVecl = -xVelocity
+
+        lda.b   EntityStruct.xVecl.hw
+        bmi     NegXVecl
+            // positive velocity
+            lda.w   Camera.xPos
+            clc
+            adc.w   #Camera.DISPLAY_WIDTH - X_PADDING
+            cmp.b   EntityStruct.xPos.px
+            bcc     NegateVelocity
+            bra     EndIf
+
+        NegXVecl:
+            // negative velocity
+            ldy.w   GameLoop.playerEntity
+
+            lda.b   EntityStruct.xPos.px
+            sec
+            sbc.w   #X_PADDING
+            cmp.w   BaseEntity.xPos.px,y
+            bcs     EndIf
+
+            NegateVelocity:
+                sec
+                lda.w   #0
+                sbc.b   EntityStruct.xVecl
+                sta.b   EntityStruct.xVecl
+
+                sep     #$20
+            a8()
+                lda.b   #0
+                sbc.b   EntityStruct.xVecl + 2
+                sta.b   EntityStruct.xVecl + 2
+                rep     #$30
+            a16()
+
+            // ::TODO change animation, depending on n flag::
+    EndIf:
+    }
     // Spawn missile is near player and cooldown = 0
     lda.b   EntityStruct.missileCooldown
     beq     SpawnMissileTest
