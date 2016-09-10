@@ -44,8 +44,7 @@ scope Run: {
 
         jsr     MetaSprite.Render.EndLoop
 
-        jsr     Dma.TransferOnNextVBlank
-        jsr     WaitFrame
+        jsr     Hacks.WaitFrameCpuUsage
 
         bra     Loop
 }
