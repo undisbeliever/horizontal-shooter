@@ -38,6 +38,7 @@ include "camera/starfield.inc"
 include "entities/_base-enemy.inc"
 include "entities/missiles.inc"
 include "entities/player.inc"
+include "entities/particles.inc"
 include "entities/enemy-fighter.inc"
 include "entities/enemy-sinusoidal.inc"
 

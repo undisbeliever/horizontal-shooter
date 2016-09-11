@@ -393,6 +393,21 @@ scope TakeDamage: {
     +
     sta.b   EntityStruct.hp
 
+    bne     StillAlive
+
+        // Entity is out of HP
+        // Spawn explosion
+        lda.b   EntityStruct.xPos.px
+        sta.w   Entity.Spawn.xPos
+
+        lda.b   EntityStruct.yPos.px
+        sta.w   Entity.Spawn.yPos
+
+        ldy.w   #0
+        lda.w   #Entities.Particles.Explosion.ENTITY_ID
+        jsr     Entity.Spawn
+
+StillAlive:
     rts
 }
 

@@ -54,8 +54,16 @@ scope Process: {
     lda.b   EntityStruct.hp
     bne     +
         // Entity is out of HP
+        // Spawn explosion
+        lda.b   EntityStruct.xPos.px
+        sta.w   Entity.Spawn.xPos
 
-        // ::TODO spawn explosion
+        lda.b   EntityStruct.yPos.px
+        sta.w   Entity.Spawn.yPos
+
+        ldy.w   #0
+        lda.w   #Entities.Particles.Explosion.ENTITY_ID
+        jsr     Entity.Spawn
 
         ldy.w   #Entity.lists.toDelete
         sty.w   Entity.changeList

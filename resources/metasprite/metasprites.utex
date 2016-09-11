@@ -6,4 +6,5 @@
   <frameset src="utms-gen/ships/enemy-carrier.utms"/>
 
   <frameset src="utms-gen/missiles/plasma.utms"/>
+  <frameset src="utms-gen/particles/explosion.utms"/>
 </metaspriteexport>
