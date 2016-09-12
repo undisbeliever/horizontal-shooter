@@ -5,7 +5,7 @@ scope EnemyCarrier {
 
 constant X_POSITION(180)
 constant SHIELD_HEALTH(7)
-constant SHIELD_RECHARGE(60 * 1)
+constant SHIELD_RECHARGE(60)
 
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrier)
@@ -17,7 +17,6 @@ scope State {
     createEnum(0, 2)
         enum(MOVE_TO_POSITION)
         enum(HOVER)
-        // null
 
     constant MASK(0x1 << 1)
 }
@@ -42,7 +41,7 @@ a16()
 i16()
 code()
 scope Init: {
-    lda.w   #MSEO.EnemyCarrier.Animations.Flying_Shield_Left
+    lda.w   #MSEO.EnemyCarrier.Animations.Flying_Shield
     jsr     MetaSprite.SetAnimation
 
     lda.w   #SHIELD_HEALTH
@@ -68,7 +67,7 @@ macro scope ProcessShield() {
             lda.w   #SHIELD_HEALTH
             sta.b   EntityStruct.shieldHealth
 
-            lda.w   #MSEO.EnemyCarrier.Animations.Flying_Shield_Left
+            lda.w   #MSEO.EnemyCarrier.Animations.RaiseShield
             jsr     MetaSprite.SetAnimation
 EndIf:
 }
@@ -154,21 +153,26 @@ scope TakeDamageFromEntity: {
 a16()
 i16()
 BlockWithShield: {
+    lda.b   EntityStruct.MetaSprite.Animation.id
+    and.w   #0xff
+    cmp.w   #MSEO.EnemyCarrier.Animations.Flying_Shield
+    bne     Return
+
     lda.b   EntityStruct.shieldHealth
     dec
     bpl     +
         lda.w   #0
     +
     sta.b   EntityStruct.shieldHealth
-    bne     +
-        // shield if destroyed
+    bne     Return
+        // shield is destroyed
 
         lda.w   #SHIELD_RECHARGE
         sta.b   EntityStruct.shieldRechargeDelay
 
-        lda.w   #MSEO.EnemyCarrier.Animations.Flying_Left
+        lda.w   #MSEO.EnemyCarrier.Animations.DropShield
         jmp     MetaSprite.SetAnimation
-    +
+Return:
     rts
 }
 
