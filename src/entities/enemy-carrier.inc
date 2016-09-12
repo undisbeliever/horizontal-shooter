@@ -19,8 +19,14 @@ scope State {
         enum(HOVER)
 
     constant MASK(0x1 << 1)
-}
 
+    code()
+    FunctionTable:
+        dw  Process.MoveToPosition
+        dw  Process.Hover
+
+        assert(pc() - FunctionTable == MASK + 2)
+}
 
 scope EntityStruct {
     childstruct(BaseEnemy)
@@ -84,13 +90,7 @@ scope Process: {
     lda.b   EntityStruct.state
     and.w   #State.MASK
     tax
-    jmp     (FunctionTable,x)
-
-// ::TODO find a way to automate this::
-// buildFunctionTable doesn't work as it wants a basestruct
-FunctionTable:
-    dw  MoveToPosition
-    dw  Hover
+    jmp     (State.FunctionTable,x)
 }
 
 

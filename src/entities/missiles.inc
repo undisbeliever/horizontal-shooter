@@ -18,6 +18,15 @@ scope State {
         // null
 
     constant MASK(0x3 << 1)
+
+    code()
+    FunctionTable:
+        dw  Process.Flying
+        dw  Process.Exploding
+        dw  Process.Reflect
+        dw  Process.Null
+
+        assert(pc() - FunctionTable == MASK + 2)
 }
 
 scope EntityStruct {
@@ -103,17 +112,7 @@ scope Process: {
     lda.b   EntityStruct.state
     and.w   #State.MASK
     tax
-    jmp     (FunctionTable,x)
-
-
-// ::TODO find a way to automate this::
-// buildFunctionTable doesn't work as it wants a basestruct
-FunctionTable:
-    dw  Flying
-    dw  Exploding
-    dw  Reflect
-
-    dw  Null
+    jmp     (State.FunctionTable,x)
 }
 
 
