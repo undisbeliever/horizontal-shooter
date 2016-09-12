@@ -125,6 +125,10 @@ scope SpawnTableData: {
     }
 
     table()
+        db 1
+        row(EnemyCarrier,           0,      0,      112)
+
+    table()
         db 3
         row(EnemySinusoidal.Slow,   0,     20,      40 - 10)
         row(EnemySinusoidal.Slow,   0,      0,      40 + 0)
