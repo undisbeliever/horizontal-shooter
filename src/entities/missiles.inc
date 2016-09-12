@@ -14,19 +14,22 @@ scope State {
     createEnum(0, 2)
         enum(FLYING)
         enum(EXPLODING)
+        enum(REFLECT)
+        // null
 
-    constant MASK(0x1 << 1)
+    constant MASK(0x3 << 1)
 }
 
-scope EntityStruct: {
+scope EntityStruct {
     childstruct(BaseEntity)
         field(state, 2)
     endstruct()
 }
 
-scope RomData: {
+scope RomData {
     childstruct(BaseEntityData)
         field(initialVelocity, 3)
+        field(reflectOffShield, 1)
     endstruct()
 }
 
@@ -108,15 +111,18 @@ scope Process: {
 FunctionTable:
     dw  Flying
     dw  Exploding
+    dw  Reflect
+
+    dw  Null
 }
 
 
 a16()
 i16()
 code()
+Process.Null:
 scope Process.Flying: {
-    jsr     Physics.ProcessEntity
-    rts
+    jmp     Physics.ProcessEntity
 }
 
 
@@ -132,6 +138,73 @@ scope Process.Exploding: {
 }
 
 
+a16()
+i16()
+code()
+scope Process.Reflect: {
+    assert(State.FLYING == 0)
+    stz.b   EntityStruct.state
+
+    // Change missile type
+
+    ldy.w   Entity.currentList
+    cpy.w   #Entity.lists.enemyProjectiles
+    bne     +
+        ldy.w   #Entity.lists.playerProjectiles
+        bra     ++
+    +
+        ldy.w   #Entity.lists.enemyProjectiles
+    +
+    sty.w   Entity.changeList
+
+
+    // Invert Velocity
+
+    sep     #$21
+a8()
+    lda.b   EntityStruct.yVecl
+    eor.b   #0xff
+    // c set
+    adc.b   #0
+    sta.b   EntityStruct.yVecl
+
+    rep     #$20
+a16()
+    lda.b   EntityStruct.yVecl + 1
+    eor.w   #0xffff
+    adc.w   #0
+    sta.b   EntityStruct.yVecl + 1
+
+
+    sep     #$21
+a8()
+    lda.b   EntityStruct.xVecl
+    eor.b   #0xff
+    // c set
+    adc.b   #0
+    sta.b   EntityStruct.xVecl
+
+    rep     #$20
+a16()
+    lda.b   EntityStruct.xVecl + 1
+    eor.w   #0xffff
+    adc.w   #0
+    sta.b   EntityStruct.xVecl + 1
+
+    bpl     +
+        // travelling left
+        lda.w   #MSEO.Missile.Animations.Move_Left
+        bra     ++
+    +
+        // travelling left
+        lda.w   #MSEO.Missile.Animations.Move_Right
+    +
+
+    jmp     MetaSprite.SetAnimation
+}
+
+
+
 // Missile has collided with a hitbox
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // INPUT: dp = entity
@@ -140,10 +213,9 @@ scope Process.Exploding: {
 a16()
 i16()
 code()
-BlockWithShield:
 TakeDamageFromEntity:
 CollideWithBody:
-CollideWithShield:
+BlockWithShield:
 scope CalculateAttackValue: {
     ldx.w   #State.EXPLODING
     stx.b   EntityStruct.state
@@ -155,7 +227,28 @@ scope CalculateAttackValue: {
 }
 
 
-macro _entity(name, frameSetId, list, velocity) {
+// Missile has collided with a shield
+//
+// Deflect back at opponent
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: dp = missile entity
+// INPUT: Y = other entity
+a16()
+i16()
+code()
+CollideWithShield: {
+    ldx.b   EntityStruct.romPtr
+    lda.l   RomData.reflectOffShield,x
+    and.w   #0xff
+    beq     CollideWithBody
+
+    ldx.w   #State.REFLECT
+    stx.b   EntityStruct.state
+
+    rts
+}
+
+macro _entity(name, frameSetId, list, velocity, reflectOffShield) {
     scope {name} {
         rodata(EN_RomData)
         scope RomData: {
@@ -164,6 +257,7 @@ macro _entity(name, frameSetId, list, velocity) {
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
             dl  {velocity}          // launch velocity
+            db  {reflectOffShield}  // reflectOffShield
         }
 
         rodata(EN_RomDataList)
@@ -171,8 +265,8 @@ macro _entity(name, frameSetId, list, velocity) {
             dw  RomData
     }
 }
-_entity(PlayerPlasma, Plasma, PLAYER_PROJECTILE, 0x028000)
-_entity(EnemyPlasma, Plasma, ENEMY_PROJECTILE, 0x020000)
+_entity(PlayerPlasma, Plasma, PLAYER_PROJECTILE, 0x028000, 1)
+_entity(EnemyPlasma, Plasma, ENEMY_PROJECTILE, 0x020000, 1)
 
 }
 }
