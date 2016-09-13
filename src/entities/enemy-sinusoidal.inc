@@ -224,5 +224,5 @@ _entity(Fast,   EnemyFighter,   -0x012345, 40)
 }
 }
 
-// vim: ft=asm ts=4 sw=4 et:
+// vim: ft=bass-65816 ts=4 sw=4 et:
 

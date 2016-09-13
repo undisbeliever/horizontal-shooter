@@ -53,5 +53,5 @@ constant VRAM_CONSOLE_MAP_WADDR(0x0000)
 constant VRAM_STARFIELD_TILES_WADDR(0x2000)
 constant VRAM_STARFIELD_MAP_WADDR(0x0400)
 
-// vim: ft=asm ts=4 sw=4 et:
+// vim: ft=bass-65816 ts=4 sw=4 et:
 
