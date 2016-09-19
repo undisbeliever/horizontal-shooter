@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF_8"?>
+<!DOCTYPE untech>
+<metaspriteproject>
+  <frameset src="utsi/ships/player.utsi"/>
+  <frameset src="utsi/ships/enemy-fighter.utsi"/>
+  <frameset src="utsi/ships/enemy-carrier.utsi"/>
+
+  <frameset src="utsi/missiles/plasma.utsi"/>
+  <frameset src="utsi/particles/explosion.utsi"/>
+</metaspriteproject>
