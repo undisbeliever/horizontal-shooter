@@ -124,7 +124,7 @@ scope SpawnTableData: {
         dw  Entities.{entity}.ENTITY_ID, {param}, XSTART + {xPos}, {yPos}
     }
 
-    table()
+    //table()
         db 1
         row(EnemyCarrier,           0,      0,      112)
 

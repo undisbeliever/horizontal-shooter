@@ -5,6 +5,7 @@
   <frameset src="utsi/ships/enemy-fighter.utsi"/>
   <frameset src="utsi/ships/enemy-carrier.utsi"/>
 
-  <frameset src="utsi/missiles/plasma.utsi"/>
+  <frameset src="utsi/missiles/player-plasma.utsi"/>
+  <frameset src="utsi/missiles/enemy-plasma.utsi"/>
   <frameset src="utsi/particles/explosion.utsi"/>
 </metaspriteproject>
