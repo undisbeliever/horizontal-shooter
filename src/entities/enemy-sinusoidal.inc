@@ -164,8 +164,7 @@ a16()
 
         lda.w   #MISSILE_ACTION_POINT
         ldy.w   #Missile.EnemyPlasma.ENTITY_ID
-        jsr     MetaSprite.ActionPoint.SpawnEntityOfType
-
+        jsr     Entity.SpawnEnemyProjectileFromActionPoint
 
         ldx.b   EntityStruct.romPtr
         lda.l   RomData.missileCooldown,x

@@ -247,12 +247,12 @@ CollideWithShield: {
     rts
 }
 
-macro _entity(name, frameSetId, list, velocity, reflectOffShield) {
+macro _entity(name, frameSetId, velocity, reflectOffShield) {
     scope {name} {
         rodata(EN_RomData)
         scope RomData: {
             dw  FunctionTable
-            db  Entity.ListId.{list}// initial List
+            db  0                   // initial List (always null)
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
             dl  {velocity}          // launch velocity
@@ -264,8 +264,8 @@ macro _entity(name, frameSetId, list, velocity, reflectOffShield) {
             dw  RomData
     }
 }
-_entity(PlayerPlasma, PlayerPlasma, PLAYER_PROJECTILE, 0x028000, 1)
-_entity(EnemyPlasma, EnemyPlasma, ENEMY_PROJECTILE, 0x020000, 1)
+_entity(PlayerPlasma, PlayerPlasma, 0x028000, 1)
+_entity(EnemyPlasma, EnemyPlasma, 0x020000, 1)
 
 }
 }

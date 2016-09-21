@@ -284,8 +284,7 @@ macro scope SpawnMissilesOnButtonPress() {
         beq     EndIf
             lda.w   #MISSILE_ACTION_POINT
             ldy.w   #Missile.PlayerPlasma.ENTITY_ID
-            jsr     MetaSprite.ActionPoint.SpawnEntityOfType
-
+            jsr     Entity.SpawnPlayerProjectileFromActionPoint
 
             lda.w   #MISSILE_COOLDOWN
             sta.b   EntityStruct.missileCooldown
