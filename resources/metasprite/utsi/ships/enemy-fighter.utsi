@@ -10,19 +10,19 @@
   <frame id="Flying_Left_1" order="2">
     <gridlocation x="1" y="0"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="1" x="6" y="11"/>
+    <actionpoint parameter="1" x="8" y="11"/>
     <entityhitbox type="BODY" x="5" y="7" width="10" height="7"/>
   </frame>
   <frame id="Flying_Left_2" order="2">
     <gridlocation x="2" y="0"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="1" x="6" y="11"/>
+    <actionpoint parameter="1" x="8" y="11"/>
     <entityhitbox type="BODY" x="5" y="7" width="10" height="7"/>
   </frame>
   <frame id="Flying_Left_3" order="2">
     <gridlocation x="3" y="0"/>
     <object size="large" x="2" y="2"/>
-    <actionpoint parameter="1" x="6" y="11"/>
+    <actionpoint parameter="1" x="8" y="11"/>
     <entityhitbox type="BODY" x="5" y="7" width="10" height="7"/>
   </frame>
   <animation id="Dead_Left">

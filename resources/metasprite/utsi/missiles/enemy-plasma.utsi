@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
 <spriteimporter id="EnemyPlasma" tilesettype="ONE_TILE_FIXED" image="enemy-plasma.png" transparent="881a1c">
-  <grid width="16" height="16" xoffset="0" yoffset="0" xpadding="0" ypadding="0" xorigin="7" yorigin="8"/>
+  <grid width="16" height="16" xoffset="0" yoffset="0" xpadding="0" ypadding="0" xorigin="8" yorigin="8"/>
   <exportorder src="missiles.utft"/>
   <frame id="Right_1" order="3">
     <gridlocation x="0" y="0"/>
