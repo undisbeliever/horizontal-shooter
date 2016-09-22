@@ -11,6 +11,10 @@ constant SCREEN_MARGIN_RIGHT(60)
 // (0:0:15 fixed point)
 constant FRICTION(0x6666)
 
+// Repeat dead explosion frame count
+// (int frames)
+constant DEAD_EXPLOSION_FRAME_DELAY(25)
+
 // Player Acceleration
 // (0:0:15 fixed point)
 constant X_ACCEL(FRICTION + 0x1234)
@@ -34,6 +38,8 @@ Entity.useDefaultRenderer()
 scope EntityStruct: {
     childstruct(BaseEntity)
         field(hp, 2)
+
+        // reused for explosion delay
         field(missileCooldown, 2)
     endstruct()
 }
@@ -292,19 +298,70 @@ EndIf:
 }
 
 
+// Spawns multiple explosions throughout the ship
+// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// DP = entity
+a16()
+i16()
+code()
+scope Process.Dead: {
+allocateTmpWord(explosionLocation)
+constant explosionLoc.x(explosionLocation)
+constant explosionLoc.y(explosionLocation + 1)
 
-scope Process {
-ReturnB:
+    lda.b   EntityStruct.missileCooldown
+    dec
+    bpl     SkipExplosion
+
+        // EXTREMELY BASIC explosion "randomizer"
+        //   explosionLoc.x += 23
+        //   explosionLoc.y += 37
+        //   spawn.xPos = entity.xPos - 8 + (explosionLoc.x & 15)
+        //   spawn.yPos = entity.yPos - 4 + (explosionLoc.y & 7)
+
+        assert(explosionLoc.y == explosionLoc.x + 1)
+
+        lda.w   explosionLoc.x
+        // ignore carry
+        adc.w   #37 << 8 | 23
+        sta.w   explosionLoc.x
+
+        and.w   #15
+        sec
+        sbc.w   #8
+        clc
+        adc.b   EntityStruct.xPos.px
+        sta.w   Entity.Spawn.xPos
+
+        lda.w   explosionLoc.y
+        and.w   #7
+        sec
+        sbc.w   #4
+        clc
+        adc.b   EntityStruct.yPos.px
+        sta.w   Entity.Spawn.yPos
+
+        ldy.w   #0
+        lda.w   #Entities.Particles.Explosion.ENTITY_ID
+        jsr     Entity.Spawn
+
+        // reset explosion counter
+        lda.w   #DEAD_EXPLOSION_FRAME_DELAY - 1
+
+SkipExplosion:
+    sta.b   EntityStruct.missileCooldown
+
     rts
 }
 
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
+// DP = entity
 a16()
 i16()
 code()
 scope Process: {
     lda.b   EntityStruct.hp
-    beq     ReturnB
+    beq     Dead
 
     ProcessDpad()
     ProcessFriction()
@@ -395,16 +452,8 @@ scope TakeDamage: {
     bne     StillAlive
 
         // Entity is out of HP
-        // Spawn explosion
-        lda.b   EntityStruct.xPos.px
-        sta.w   Entity.Spawn.xPos
-
-        lda.b   EntityStruct.yPos.px
-        sta.w   Entity.Spawn.yPos
-
-        ldy.w   #0
-        lda.w   #Entities.Particles.Explosion.ENTITY_ID
-        jsr     Entity.Spawn
+        // Spawn explosion on next frame
+        stz.b   EntityStruct.missileCooldown
 
 StillAlive:
     rts
