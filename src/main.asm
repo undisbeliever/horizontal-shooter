@@ -42,6 +42,7 @@ include "entities/particles.inc"
 include "entities/enemy-fighter.inc"
 include "entities/enemy-sinusoidal.inc"
 include "entities/enemy-carrier.inc"
+include "entities/enemy-carrier-drone.inc"
 
 code(code)
 CopHandler:

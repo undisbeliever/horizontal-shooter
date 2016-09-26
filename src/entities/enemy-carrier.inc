@@ -4,8 +4,15 @@ scope EnemyCarrier {
 
 
 constant X_POSITION(180)
-constant SHIELD_HEALTH(7)
-constant SHIELD_RECHARGE(60)
+constant SHIELD_HEALTH(6)
+constant SHIELD_RECHARGE(60 * 4)
+
+constant MAX_FRONT_DRONES(4)
+constant MAX_REAR_DRONES(4)
+
+constant SPAWN_DRONE_DELAY(60 * 2)
+constant FRONT_BAY_ACTION_POINT(1)
+constant REAR_BAY_ACTION_POINT(2)
 
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrier)
@@ -33,6 +40,7 @@ scope EntityStruct {
         field(state, 2)
         field(shieldHealth, 2)
         field(shieldRechargeDelay, 2)
+        field(spawnDroneDelay, 2)
     endstruct()
 }
 
@@ -112,6 +120,8 @@ scope Process.MoveToPosition: {
         stz.b   EntityStruct.xVecl
         stz.b   EntityStruct.xVecl + 1
 
+        stz.b   EntityStruct.spawnDroneDelay
+
         ldx.w   #State.HOVER
         stx.b   EntityStruct.state
 
@@ -127,7 +137,32 @@ a16()
 i16()
 code()
 scope Process.Hover: {
-    // ::TODO::
+    lda.b   EntityStruct.spawnDroneDelay
+    dec
+    bpl     SkipSpawnDrone
+
+        lda.w   #EnemyCarrierDrone.FrontBay.ENTITY_ID
+        jsr     Entity.CountEnemiesWithId
+        cmp.w   #MAX_FRONT_DRONES - 1
+        bcs     +
+            lda.w   #FRONT_BAY_ACTION_POINT
+            ldy.w   #EnemyCarrierDrone.FrontBay.ENTITY_ID
+            jsr     Entity.SpawnAtActionPoint
+        +
+
+        lda.w   #EnemyCarrierDrone.RearBay.ENTITY_ID
+        jsr     Entity.CountEnemiesWithId
+        cmp.w   #MAX_REAR_DRONES - 1
+        bcs     +
+            lda.w   #REAR_BAY_ACTION_POINT
+            ldy.w   #EnemyCarrierDrone.RearBay.ENTITY_ID
+            jsr     Entity.SpawnAtActionPoint
+        +
+
+        lda.w   #SPAWN_DRONE_DELAY
+
+SkipSpawnDrone:
+    sta.b   EntityStruct.spawnDroneDelay
 
     jmp     BaseEnemy.Process
 }
@@ -192,8 +227,8 @@ scope CarrierRomData: {
     db  Entity.ListId.BOSS  // initial List
     dw  MSFS.EnemyCarrier   // frameSetId
     db  0                   // defaultPalette
-    dw  75                  // health
-    dl  -0x009000           // launch velocity
+    dw  50                  // health
+    dl  -0x010000           // launch velocity
 }
 
 rodata(EN_RomDataList)

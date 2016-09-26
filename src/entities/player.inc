@@ -27,7 +27,7 @@ constant MAX_Y_VECL(0x0200)
 
 // cooldown between missiles
 // (int frames)
-constant MISSILE_COOLDOWN(14)
+constant MISSILE_COOLDOWN(20)
 
 // The action point type of a missile
 constant MISSILE_ACTION_POINT(1)

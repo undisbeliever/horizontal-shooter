@@ -23,6 +23,10 @@
     <object size="small" x="0" y="24"/>
     <object size="small" x="0" y="32"/>
     <object size="small" x="2" y="40"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="3" y="5" width="5" height="38"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
@@ -46,6 +50,10 @@
     <object size="small" x="0" y="8"/>
     <object size="small" x="0" y="24"/>
     <object size="small" x="0" y="32"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="3" y="8" width="5" height="32"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
@@ -69,6 +77,10 @@
     <object size="small" x="0" y="8"/>
     <object size="small" x="0" y="24"/>
     <object size="small" x="0" y="32"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="3" y="11" width="4" height="26"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
@@ -90,6 +102,10 @@
     <object size="small" x="26" y="40"/>
     <object size="small" x="0" y="16"/>
     <object size="small" x="0" y="24"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="3" y="16" width="4" height="16"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
@@ -111,6 +127,10 @@
     <object size="small" x="26" y="40"/>
     <object size="small" x="0" y="16"/>
     <object size="small" x="0" y="24"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="3" y="19" width="4" height="10"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
@@ -131,6 +151,10 @@
     <object size="small" x="34" y="40"/>
     <object size="small" x="26" y="40"/>
     <object size="small" x="0" y="20"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="3" y="22" width="4" height="4"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
@@ -150,6 +174,10 @@
     <object size="small" x="42" y="40"/>
     <object size="small" x="34" y="40"/>
     <object size="small" x="26" y="40"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
     <entityhitbox type="BODY_WEAK" x="27" y="38" width="21" height="7"/>
@@ -168,6 +196,10 @@
     <object size="small" x="42" y="40"/>
     <object size="small" x="34" y="40"/>
     <object size="small" x="26" y="40"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
     <entityhitbox type="BODY_WEAK" x="27" y="38" width="21" height="7"/>
@@ -186,6 +218,10 @@
     <object size="small" x="42" y="40"/>
     <object size="small" x="34" y="40"/>
     <object size="small" x="26" y="40"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
     <entityhitbox type="BODY_WEAK" x="27" y="38" width="21" height="7"/>
@@ -210,6 +246,10 @@
     <object size="small" x="0" y="24"/>
     <object size="small" x="0" y="32"/>
     <object size="small" x="2" y="40"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="5" y="3" width="4" height="42"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
@@ -235,6 +275,10 @@
     <object size="small" x="0" y="24"/>
     <object size="small" x="0" y="32"/>
     <object size="small" x="2" y="40"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="5" y="3" width="5" height="42"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
@@ -260,6 +304,10 @@
     <object size="small" x="0" y="24"/>
     <object size="small" x="0" y="32"/>
     <object size="small" x="2" y="40"/>
+    <actionpoint parameter="1" x="18" y="20"/>
+    <actionpoint parameter="1" x="18" y="29"/>
+    <actionpoint parameter="2" x="35" y="29"/>
+    <actionpoint parameter="2" x="35" y="19"/>
     <entityhitbox type="SHIELD" x="5" y="3" width="5" height="42"/>
     <entityhitbox type="BODY" x="10" y="12" width="33" height="23"/>
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>

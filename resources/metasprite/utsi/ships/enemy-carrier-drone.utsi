@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF_8"?>
+<!DOCTYPE untech>
+<spriteimporter id="EnemyCarrierDrone" tilesettype="ONE_TILE_FIXED" image="enemy-carrier-drone.png" transparent="891a1c">
+  <grid width="16" height="16" xoffset="8" yoffset="0" xpadding="0" ypadding="0" xorigin="8" yorigin="8"/>
+  <exportorder src="enemy-carrier-drone.utft"/>
+  <frame id="Flying" order="2">
+    <gridlocation x="0" y="0"/>
+    <object size="large" x="0" y="0"/>
+    <actionpoint parameter="1" x="4" y="8"/>
+    <entityhitbox type="BODY" x="6" y="5" width="5" height="6"/>
+  </frame>
+  <animation id="Flying">
+    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="0" frame="Flying"/>
+    <instruction op="STOP"/>
+  </animation>
+</spriteimporter>
