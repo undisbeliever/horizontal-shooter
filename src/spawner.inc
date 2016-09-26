@@ -125,53 +125,6 @@ scope SpawnTableData: {
     }
 
     table()
-        db 1
-        row(EnemyCarrier,           0,      0,      112)
-
-    table()
-        db 3
-        row(EnemySinusoidal.Slow,   0,     20,      40 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      40 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      40 + 10)
-
-    table()
-        db 3
-        row(EnemySinusoidal.Medium, 0,     20,      112 - 10)
-        row(EnemySinusoidal.Medium, 0,      0,      112 + 0)
-        row(EnemySinusoidal.Medium, 0,     20,      112 + 10)
-
-    table()
-        db 3
-        row(EnemySinusoidal.Slow,   0,     20,      184 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      184 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      184 + 10)
-
-    table()
-        db 3
-        row(EnemySinusoidal.Fast,   0,     20,      112 - 10)
-        row(EnemySinusoidal.Fast,   0,      0,      112 + 0)
-        row(EnemySinusoidal.Fast,   0,     20,      112 + 10)
-
-    table()
-        db 6
-        row(EnemySinusoidal.Slow,   0,     20,      40 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      40 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      40 + 10)
-        row(EnemySinusoidal.Slow,   0,     20,      184 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      184 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      184 + 10)
-
-    table()
-        db 7
-        row(EnemySinusoidal.Slow,   0,     30,      112 - 30)
-        row(EnemySinusoidal.Slow,   0,     20,      112 - 20)
-        row(EnemySinusoidal.Slow,   0,     10,      112 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      112 + 0)
-        row(EnemySinusoidal.Slow,   0,     10,      112 + 10)
-        row(EnemySinusoidal.Slow,   0,     20,      112 + 20)
-        row(EnemySinusoidal.Slow,   0,     30,      112 + 30)
-
-    table()
         db 12
         row(EnemyFighter.Slow,      0,      0,      18 + 17 * 0)
         row(EnemyFighter.Slow,      0,      0,      18 + 17 * 1)
@@ -187,19 +140,20 @@ scope SpawnTableData: {
         row(EnemyFighter.Slow,      0,      0,      18 + 17 * 11)
 
     table()
-        db 12
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 0)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 1)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 2)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 3)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 4)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 5)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 6)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 7)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 8)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 9)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 10)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 11)
+        db 3
+        row(EnemySinusoidal.Slow,   0,     20,      112 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      112 + 0)
+        row(EnemySinusoidal.Slow,   0,     20,      112 + 10)
+
+    table()
+        db 7
+        row(EnemySinusoidal.Slow,   0,     30,      112 - 30)
+        row(EnemySinusoidal.Slow,   0,     20,      112 - 20)
+        row(EnemySinusoidal.Slow,   0,     10,      112 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      112 + 0)
+        row(EnemySinusoidal.Slow,   0,     10,      112 + 10)
+        row(EnemySinusoidal.Slow,   0,     20,      112 + 20)
+        row(EnemySinusoidal.Slow,   0,     30,      112 + 30)
 
     table()
         db 12
@@ -217,6 +171,21 @@ scope SpawnTableData: {
         row(EnemyFighter.Fast,      0,      0,      18 + 17 * 11)
 
     table()
+        db 3
+        row(EnemySinusoidal.Fast,   0,     20,      112 - 10)
+        row(EnemySinusoidal.Fast,   0,      0,      112 + 0)
+        row(EnemySinusoidal.Fast,   0,     20,      112 + 10)
+
+    table()
+        db 6
+        row(EnemySinusoidal.Slow,   0,     20,      40 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      40 + 0)
+        row(EnemySinusoidal.Slow,   0,     20,      40 + 10)
+        row(EnemySinusoidal.Slow,   0,     20,      184 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      184 + 0)
+        row(EnemySinusoidal.Slow,   0,     20,      184 + 10)
+
+    table()
         db 12
         row(EnemyFighter.Slow,      0,      0,      18 + 17 * 0)
         row(EnemyFighter.Slow,      0,      0,      18 + 17 * 1)
@@ -230,6 +199,40 @@ scope SpawnTableData: {
         row(EnemyFighter.Medium,    0,      0,      18 + 17 * 9)
         row(EnemyFighter.Slow,      0,      0,      18 + 17 * 10)
         row(EnemyFighter.Slow,      0,      0,      18 + 17 * 11)
+
+    table()
+        db 11
+        row(EnemySinusoidal.Medium, 0,     20,      112 - 10)
+        row(EnemySinusoidal.Medium, 0,      0,      112 + 0)
+        row(EnemySinusoidal.Medium, 0,     20,      112 + 10)
+
+        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 0)
+        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 1)
+        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 2)
+        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 3)
+
+        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 8)
+        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 9)
+        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 10)
+        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 11)
+
+    table()
+        db 9
+        row(EnemySinusoidal.Slow,   0,     20,      184 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      184 + 0)
+        row(EnemySinusoidal.Slow,   0,     20,      184 + 10)
+
+        row(EnemySinusoidal.Medium, 0,     20,      112 - 10)
+        row(EnemySinusoidal.Medium, 0,      0,      112 + 0)
+        row(EnemySinusoidal.Medium, 0,     20,      112 + 10)
+
+        row(EnemySinusoidal.Slow,   0,     20,      40 - 10)
+        row(EnemySinusoidal.Slow,   0,      0,      40 + 0)
+        row(EnemySinusoidal.Slow,   0,     20,      40 + 10)
+
+    table()
+        db 1
+        row(EnemyCarrier,           0,      0,      112)
 }
 
 scope SpawnTableList: {

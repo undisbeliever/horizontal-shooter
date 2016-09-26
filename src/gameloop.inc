@@ -32,7 +32,7 @@ code()
 scope Run: {
     // Spawn the player
     // ----------------
-    lda.w   #Camera.DISPLAY_WIDTH / 2 + Camera.ORIGIN
+    lda.w   #Camera.DISPLAY_WIDTH / 5 + Camera.ORIGIN
     sta.w   Entity.Spawn.xPos
     lda.w   #Camera.DISPLAY_HEIGHT / 2 + Camera.ORIGIN
     sta.w   Entity.Spawn.yPos
