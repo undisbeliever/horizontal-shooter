@@ -2,7 +2,7 @@
 scope Entities {
 scope EnemySinusoidal {
 
-constant X_PADDING(15)
+constant X_PADDING(30)
 constant MISSILE_THREASHOLD(15)
 constant MISSILE_ACTION_POINT(1)
 constant SECOND_SHOT_COOLDOWN(30)
