@@ -14,6 +14,8 @@ constant SPAWN_DRONE_DELAY(60 * 2)
 constant FRONT_BAY_ACTION_POINT(1)
 constant REAR_BAY_ACTION_POINT(2)
 
+constant N_DEATH_EXPLOSIONS(8)
+
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrier)
 Entity.useDefaultRenderer()
@@ -177,7 +179,57 @@ a16()
 i16()
 code()
 scope TakeDamageFromEntity: {
-    jmp     BaseEnemy.TakeDamageFromEntity
+allocateTmpWord(explosionLocation)
+constant explosionLoc.x(explosionLocation)
+constant explosionLoc.y(explosionLocation + 1)
+
+    jsr     BaseEnemy.TakeDamageFromEntity
+
+    lda.b   EntityStruct.hp
+    bne     StillAlive
+        // Spawn multiple explosions
+
+        lda.w   #N_DEATH_EXPLOSIONS - 1
+
+        Loop:
+            pha
+
+            // EXTREMELY BASIC explosion "randomizer"
+            //   explosionLoc.x += 13
+            //   explosionLoc.y += 37
+            //   spawn.xPos = entity.xPos - 24 + (explosionLoc.x & 63)
+            //   spawn.yPos = entity.yPos - 16 + (explosionLoc.y & 31)
+
+            lda.w   explosionLoc.x
+            // ignore carry
+            adc.w   #37 << 8 | 13
+            sta.w   explosionLoc.x
+
+            and.w   #63
+            sec
+            sbc.w   #24
+            clc
+            adc.b   EntityStruct.xPos.px
+            sta.w   Entity.Spawn.xPos
+
+            lda.w   explosionLoc.y
+            and.w   #31
+            sec
+            sbc.w   #16
+            clc
+            adc.b   EntityStruct.yPos.px
+            sta.w   Entity.Spawn.yPos
+
+            ldy.w   #0
+            lda.w   #Entities.Particles.Explosion.ENTITY_ID
+            jsr     Entity.Spawn
+
+            pla
+            dec
+            bne     Loop
+
+StillAlive:
+    rts
 }
 
 
