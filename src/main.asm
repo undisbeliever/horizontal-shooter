@@ -7,7 +7,7 @@ define REGION(Australia)
 define ROM_NAME("HORIZONTAL SHOOTER")
 define VERSION(0)
 
-include "untech/common.inc"
+include "../untech/src/common.inc"
 include "memmap.inc"
 
 include "../resources/metasprite/metasprites.gen.inc"
@@ -15,16 +15,16 @@ include "../resources/text/text.inc"
 include "../resources/images/images.inc"
 
 include "../tables/tables.inc"
-include "../tables2/tables.inc"
+include "../untech/tables/tables.inc"
 
-include "untech/dma.inc"
-include "untech/interrupts.inc"
-include "untech/math.inc"
-include "untech/metasprite.inc"
-include "untech/text.inc"
+include "../untech/src/dma.inc"
+include "../untech/src/interrupts.inc"
+include "../untech/src/math.inc"
+include "../untech/src/metasprite.inc"
+include "../untech/src/text.inc"
 
-include "untech/camera.inc"
-include "untech/entity.inc"
+include "../untech/src/camera.inc"
+include "../untech/src/entity.inc"
 
 include "interface.inc"
 include "spawner.inc"

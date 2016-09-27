@@ -3,7 +3,7 @@ BINARY         := bin/horizontal-shooter.sfc
 MAIN           := src/main.asm
 INCLUDES       := $(wildcard src/* src/*/*.* src/*/*/*.* src/*/*/*/*.*)
 
-RESOURCE_DIRS  := $(wildcard resources/*) tables/ tables2/
+RESOURCE_DIRS  := $(wildcard resources/*) tables/ untech/tables/
 
 .DELETE_ON_ERROR:
 
