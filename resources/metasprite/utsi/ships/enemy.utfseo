@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
-<framesettype name="Enemy">
+<fsexportorder name="Enemy">
   <animation id="Flying_Left">
     <alt name="Flying_Right" hflip="true"/>
   </animation>
@@ -13,4 +13,4 @@
   <animation id="Dead_Right">
     <alt name="Dead_Left" hflip="true"/>
   </animation>
-</framesettype>
+</fsexportorder>

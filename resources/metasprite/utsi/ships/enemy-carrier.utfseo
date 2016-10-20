@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
-<framesettype name="EnemyCarrier">
+<fsexportorder name="EnemyCarrier">
   <animation id="Flying_Shield"/>
   <animation id="DropShield"/>
   <animation id="RaiseShield"/>
-</framesettype>
+</fsexportorder>

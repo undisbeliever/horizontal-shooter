@@ -2,7 +2,7 @@
 <!DOCTYPE untech>
 <spriteimporter id="EnemyFighter" tilesettype="ONE_ROW_FIXED" image="enemy-fighter.png" transparent="881a1c">
   <grid width="20" height="20" xoffset="0" yoffset="0" xpadding="0" ypadding="0" xorigin="10" yorigin="11"/>
-  <exportorder src="enemy.utft"/>
+  <exportorder src="enemy.utfseo"/>
   <frame id="Dead_Left" order="2">
     <gridlocation x="0" y="0"/>
     <object size="large" x="2" y="2"/>

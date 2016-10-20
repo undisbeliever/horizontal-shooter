@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
-<framesettype name="Player">
+<fsexportorder name="Player">
   <animation id="Straight"/>
   <animation id="Up"/>
   <animation id="Down"/>
   <animation id="Dead"/>
-</framesettype>
+</fsexportorder>

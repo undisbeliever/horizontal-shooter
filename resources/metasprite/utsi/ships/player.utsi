@@ -2,7 +2,7 @@
 <!DOCTYPE untech>
 <spriteimporter id="Player" tilesettype="ONE_ROW_FIXED" image="player.png" transparent="881a1c">
   <grid width="20" height="20" xoffset="4" yoffset="4" xpadding="0" ypadding="0" xorigin="12" yorigin="10"/>
-  <exportorder src="player.utft"/>
+  <exportorder src="player.utfseo"/>
   <frame id="Dead" order="2">
     <gridlocation x="0" y="1"/>
     <object size="small" x="3" y="6"/>

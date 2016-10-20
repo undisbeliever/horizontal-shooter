@@ -2,7 +2,7 @@
 <!DOCTYPE untech>
 <spriteimporter id="EnemyCarrier" tilesettype="ONE_ROW_FIXED" image="enemy-carrier.png" transparent="881a1c">
   <grid width="56" height="48" xoffset="4" yoffset="4" xpadding="0" ypadding="8" xorigin="10" yorigin="24"/>
-  <exportorder src="enemy-carrier.utft"/>
+  <exportorder src="enemy-carrier.utfseo"/>
   <frame id="Destroy_Shield_1" order="2">
     <gridlocation x="0" y="2"/>
     <object size="large" x="8" y="8"/>
