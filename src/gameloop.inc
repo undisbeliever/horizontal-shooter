@@ -53,7 +53,7 @@ scope Run: {
 
         jsr     MetaSprite.Render.InitLoop
 
-        jsr     Hacks.DeleteOffscreenEntities
+        jsr     Entity.DeleteDeactivatedEntities
 
         jsr     Entity.ProcessGameLoop
         jsr     Camera.StarField.ProcessFrame
