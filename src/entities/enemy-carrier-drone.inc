@@ -173,7 +173,6 @@ a16()
     lda.l   RomData.Path.xVecl + 1,x
     sta.b   EntityStruct.xVecl + 1
 
-Spot:
     lda.l   RomData.Path.frames,x
     and.w   #0xff
     sta.b   EntityStruct.counter
