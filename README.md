@@ -28,5 +28,6 @@ Build Requirements
  * [untech-editor](https://github.com/undisbeliever/untech-editor)
  * [untech-engine](https://github.com/undisbeliever/untech-engine)
  * pcx2snes
+ * python3
  * gnu Make
 
