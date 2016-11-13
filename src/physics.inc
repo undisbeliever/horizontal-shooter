@@ -16,21 +16,13 @@ scope ProcessEntity: {
         adc.b   BaseEntity.{c}Pos
         sta.b   BaseEntity.{c}Pos
 
-        lda.b   BaseEntity.{c}Vecl + 1
-        xba
-        bpl     +
-            ora     #$ff00
-            bra     ++
-        +
-            and     #$00ff
-        +
+        lda.b   BaseEntity.{c}Vecl + 2
         adc.b   BaseEntity.{c}Pos + 2
 
         if BaseEntity.{c}Pos == BaseEntity.xPos {
             clc
             adc.w   #Camera.StarField.VELOCITY_INT
         }
-
         sta.b   BaseEntity.{c}Pos + 2
     }
     _addVelocity(x)

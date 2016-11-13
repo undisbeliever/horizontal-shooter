@@ -70,7 +70,7 @@ macro _entity(name, frameSetId, velocity) {
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
             dw  3                   // health
-            dl  {velocity}          // launch velocity
+            dd  {velocity}          // launch velocity
         }
 
         rodata(EN_RomDataList)

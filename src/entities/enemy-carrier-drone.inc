@@ -51,14 +51,14 @@ scope RomData {
             // (0:7:15 fixed point)
             constant xVecl(initialVelocity)
             // (0:7:15 fixed point)
-            field(yVecl, 3)
+            field(yVecl, 4)
             // number of movement frames
             // (byte - frames)
             field(frames, 1)
 
-            assert(xVecl + 3 == yVecl)
+            assert(xVecl + 4 == yVecl)
 
-            constant size(7)
+            constant size(9)
         }
     endstruct()
 }
@@ -136,42 +136,33 @@ a16()
     adc.b   EntityStruct.romPtr
     tax
 
-    sep     #$21
-a8()
     lda.b   EntityStruct.movingUpOnZero
     bne     MoveDown
-        // moving down
-        lda.l   RomData.Path.yVecl,x
-        eor.b   #0xff
-        // carry set
-        adc.b   #0
+        // moving up
+        sec
+        lda.w   #0
+        sbc.l   RomData.Path.yVecl,x
         sta.b   EntityStruct.yVecl
 
-        rep     #$20
-    a16()
-        lda.l   RomData.Path.yVecl + 1,x
-        eor.w   #0xffff
-        adc.w   #0
+        lda.w   #0
+        sbc.l   RomData.Path.yVecl + 2,x
 
         bra     EndIf
 
     MoveDown:
-    a8()
-        // moving up
+        // moving down
         lda.l   RomData.Path.yVecl,x
         sta.b   EntityStruct.yVecl
 
-        rep     #$20
-    a16()
-        lda.l   RomData.Path.yVecl + 1,x
+        lda.l   RomData.Path.yVecl + 2,x
+
 EndIf:
-a16()
-    sta.b   EntityStruct.yVecl + 1
+    sta.b   EntityStruct.yVecl + 2
 
     lda.l   RomData.Path.xVecl,x
     sta.b   EntityStruct.xVecl
-    lda.l   RomData.Path.xVecl + 1,x
-    sta.b   EntityStruct.xVecl + 1
+    lda.l   RomData.Path.xVecl + 2,x
+    sta.b   EntityStruct.xVecl + 2
 
     lda.l   RomData.Path.frames,x
     and.w   #0xff
@@ -229,7 +220,7 @@ code()
 scope Process.Patrol: {
     // Invert Y velocity when hit margins
 
-    lda.b   EntityStruct.yVecl.hw
+    lda.b   EntityStruct.yVecl + 2
     bpl     MovingDown
         // Moving Up
         lda.w   Camera.yPos
@@ -248,18 +239,14 @@ scope Process.Patrol: {
         bcs     EndIf
 
         InvertYVelocity:
-            sep     #$21
-        a8()
-            // carry set
-            lda.b   #0
+            sec
+            lda.w   #0
             sbc.b   EntityStruct.yVecl
             sta.b   EntityStruct.yVecl
 
-            rep     #$20
-        a16()
             lda.w   #0
-            sbc.b   EntityStruct.yVecl + 1
-            sta.b   EntityStruct.yVecl + 1
+            sbc.b   EntityStruct.yVecl + 2
+            sta.b   EntityStruct.yVecl + 2
 
     EndIf:
 
@@ -314,16 +301,16 @@ scope FrontBay {
         db  0                       // defaultPalette
         dw  2                       // health
 
-        dl  0x000000                // xVecl
-        dl  0x007777                // yVecl
+        dd  0x000000                // xVecl
+        dd  0x007777                // yVecl
         db  45                      // frame count
 
-        dl  -0x07777                // xVecl
-        dl  0x003bbb                // yVecl
+        dd  -0x07777                // xVecl
+        dd  0x003bbb                // yVecl
         db  55                      // frame count
 
-        dl  0                       // xVecl
-        dl  0x011000                // yVecl
+        dd  0                       // xVecl
+        dd  0x011000                // yVecl
         db  0
     }
 
@@ -341,16 +328,16 @@ scope RearBay {
         db  0                       // defaultPalette
         dw  2                       // health
 
-        dl  0x006666                // xVecl
-        dl  0x000000                // yVecl
+        dd  0x006666                // xVecl
+        dd  0x000000                // yVecl
         db  50                      // frame count
 
-        dl  0x005555                // xVecl
-        dl  0x003bbb                // yVecl
+        dd  0x005555                // xVecl
+        dd  0x003bbb                // yVecl
         db  50                      // frame count
 
-        dl  0                       // xVecl
-        dl  0x011000                // yVecl
+        dd  0                       // xVecl
+        dd  0x011000                // yVecl
         db  0
     }
 

@@ -63,18 +63,13 @@ scope Process: {
     sta.b   EntityStruct.yVecl
 
     // sign extend
-    sep     #$20
-a8()
     bcs     +
-        lda.b   #0
+        lda.w   #0
         bra     ++
     +
-        lda.b   #0xff
+        lda.w   #0xffff
     +
     sta.b   EntityStruct.yVecl + 2
-
-    rep     #$20
-a16()
 
 
     scope TestXVecl {
@@ -85,7 +80,7 @@ a16()
         //    or (xVecl < 0 and xPos - X_PADDING <= player.xPos)
         //      xVecl = -xVelocity
 
-        lda.b   EntityStruct.xVecl.hw
+        lda.b   EntityStruct.xVecl + 2
         bmi     NegXVecl
             // positive velocity
             lda.w   Camera.xPos
@@ -111,15 +106,9 @@ a16()
                 sbc.b   EntityStruct.xVecl
                 sta.b   EntityStruct.xVecl
 
-                sep     #$20
-            a8()
-                lda.b   #0
+                lda.w   #0
                 sbc.b   EntityStruct.xVecl + 2
                 sta.b   EntityStruct.xVecl + 2
-                rep     #$30
-            a16()
-
-            // ::TODO change animation, depending on n flag::
     EndIf:
     }
     // Spawn missile is near player and cooldown = 0
@@ -207,7 +196,7 @@ macro _entity(name, frameSetId, velocity, missileCooldown) {
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
             dw  2                   // health
-            dl  {velocity}          // launch velocity
+            dd  {velocity}          // launch velocity
             dw  {missileCooldown}   // missile cooldown
         }
 

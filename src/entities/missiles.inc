@@ -37,7 +37,7 @@ scope EntityStruct {
 
 scope RomData {
     childstruct(BaseEntityData)
-        field(initialVelocity, 3)
+        field(initialVelocity, 4)
         field(reflectOffShield, 1)
     endstruct()
 }
@@ -64,13 +64,9 @@ scope Init: {
         sbc.l   RomData.initialVelocity,x
         sta.b   EntityStruct.xVecl
 
-        sep     #$20
-    a8()
-        lda.b   #0
+        lda.w   #0
         sbc.l   RomData.initialVelocity + 2,x
         sta.b   EntityStruct.xVecl + 2
-        rep     #$30
-    a16()
 
         lda.w   #MSEO.Missile.Animations.Move_Left
 
@@ -82,12 +78,13 @@ scope Init: {
 
         lda.l   RomData.initialVelocity,x
         sta.b   EntityStruct.xVecl
-        lda.l   RomData.initialVelocity + 1,x
-        sta.b   EntityStruct.xVecl + 1
+        lda.l   RomData.initialVelocity + 2,x
+        sta.b   EntityStruct.xVecl + 2
 
         lda.w   #MSEO.Missile.Animations.Move_Right
 
 EndIf:
+
     jsr     MetaSprite.SetAnimation
 
 
@@ -158,37 +155,24 @@ scope Process.Reflect: {
 
 
     // Invert Velocity
-
-    sep     #$21
-a8()
-    lda.b   EntityStruct.yVecl
-    eor.b   #0xff
-    // c set
-    adc.b   #0
+    sec
+    lda.w   #0
+    sbc.b   EntityStruct.yVecl
     sta.b   EntityStruct.yVecl
 
-    rep     #$20
-a16()
-    lda.b   EntityStruct.yVecl + 1
-    eor.w   #0xffff
-    adc.w   #0
-    sta.b   EntityStruct.yVecl + 1
+    lda.w   #0
+    sbc.b   EntityStruct.yVecl + 2
+    sta.b   EntityStruct.yVecl + 2
 
 
-    sep     #$21
-a8()
-    lda.b   EntityStruct.xVecl
-    eor.b   #0xff
-    // c set
-    adc.b   #0
+    sec
+    lda.w   #0
+    sbc.b   EntityStruct.xVecl
     sta.b   EntityStruct.xVecl
 
-    rep     #$20
-a16()
-    lda.b   EntityStruct.xVecl + 1
-    eor.w   #0xffff
-    adc.w   #0
-    sta.b   EntityStruct.xVecl + 1
+    lda.w   #0
+    sbc.b   EntityStruct.xVecl + 2
+    sta.b   EntityStruct.xVecl + 2
 
     bpl     +
         // travelling left
@@ -255,7 +239,7 @@ macro _entity(name, frameSetId, velocity, reflectOffShield) {
             db  0                   // initial List (always null)
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
-            dl  {velocity}          // launch velocity
+            dd  {velocity}          // launch velocity
             db  {reflectOffShield}  // reflectOffShield
         }
 

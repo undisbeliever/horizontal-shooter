@@ -11,7 +11,7 @@ scope EntityStruct: {
 scope RomData: {
     basestruct(BaseEnemyData, BaseEntityData)
         field(health, 2)
-        field(initialVelocity, 3)
+        field(initialVelocity, 4)
     endstruct()
 }
 
@@ -25,8 +25,8 @@ scope Init: {
 
     lda.l   RomData.initialVelocity,x
     sta.b   EntityStruct.xVecl
-    lda.l   RomData.initialVelocity + 1,x
-    sta.b   EntityStruct.xVecl + 1
+    lda.l   RomData.initialVelocity + 2,x
+    sta.b   EntityStruct.xVecl + 2
 
     lda.l   RomData.health,x
     sta.b   EntityStruct.hp

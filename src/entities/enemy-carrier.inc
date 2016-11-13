@@ -120,7 +120,7 @@ scope Process.MoveToPosition: {
 
         // in correct position, cancel velocity
         stz.b   EntityStruct.xVecl
-        stz.b   EntityStruct.xVecl + 1
+        stz.b   EntityStruct.xVecl + 2
 
         stz.b   EntityStruct.spawnDroneDelay
 
@@ -280,7 +280,7 @@ scope CarrierRomData: {
     dw  MSFS.EnemyCarrier   // frameSetId
     db  0                   // defaultPalette
     dw  50                  // health
-    dl  -0x010000           // launch velocity
+    dd  -0x010000           // launch velocity
 }
 
 rodata(EN_RomDataList)
