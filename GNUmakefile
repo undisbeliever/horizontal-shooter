@@ -12,7 +12,7 @@ all: $(BINARY)
 
 $(INCLUDES):
 $(BINARY): resources bin/ $(INCLUDES)
-	bass -strict -create -o $@ -sym $(@:.sfc=.sym) $(MAIN)
+	bass-untech -strict -create -o $@ -sym $(@:.sfc=.sym) $(MAIN)
 
 bin/:
 	mkdir -p $@
