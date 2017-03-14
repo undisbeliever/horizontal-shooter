@@ -3,6 +3,7 @@
 <spriteimporter id="PlayerPlasma" tilesettype="ONE_TILE_FIXED" image="player-plasma.png" transparent="881a1c">
   <grid width="16" height="16" xoffset="0" yoffset="0" xpadding="0" ypadding="0" xorigin="9" yorigin="8"/>
   <exportorder src="missiles.utfseo"/>
+  <palette npalettes="1" colorsize="4"/>
   <frame id="Right_1" order="3">
     <gridlocation x="0" y="0"/>
     <object size="small" x="4" y="4"/>
