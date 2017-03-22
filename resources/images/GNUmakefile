@@ -4,10 +4,8 @@
 .PHONY: all
 all: stars.4bpp stars.clr stars.map
 
-stars.4bpp stars.clr stars.map: stars.pcx
-	pcx2snes -n -s8 -c16 -o16 -screen stars
-	mv stars.pic stars.4bpp
-	python3 palette-offset-map.py stars.map 1
+stars.4bpp stars.clr stars.map: stars.png
+	untech-png2snes -b 4 --palette-offset 1 --max-palettes 7 -t stars.4bpp -p stars.clr -m stars.map stars.png
 
 .PHONY: clean
 clean:
