@@ -61,8 +61,8 @@ macro _entity(name, frameSetId, palette) {
             db  {palette}               // defaultPalette
         }
 
-        rodata(EN_RomDataList)
-        constant ENTITY_ID((pc() - Entity.Data.List) / 2)
+        rodata(EN_EntityList)
+        constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
             dw  RomData
     }
 }

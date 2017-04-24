@@ -243,8 +243,8 @@ macro _entity(name, frameSetId, velocity, reflectOffShield) {
             db  {reflectOffShield}  // reflectOffShield
         }
 
-        rodata(EN_RomDataList)
-        constant ENTITY_ID((pc() - Entity.Data.List) / 2)
+        rodata(EN_ProjectileList)
+        constant PROJECTILE_ID((pc() - Entity.Data.ProjectileList) / 2)
             dw  RomData
     }
 }

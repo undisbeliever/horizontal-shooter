@@ -300,7 +300,7 @@ macro scope SpawnMissilesOnButtonPress() {
         bit.w   #JOY.b | JOY.y
         beq     EndIf
             lda.w   #MISSILE_ACTION_POINT
-            ldy.w   #Missile.PlayerPlasma.ENTITY_ID
+            ldy.w   #Missile.PlayerPlasma.PROJECTILE_ID
             jsr     Entity.SpawnPlayerProjectileFromActionPoint
 
             lda.w   #MISSILE_COOLDOWN
@@ -480,8 +480,8 @@ scope PlayerRomData: {
     dw  6                       // health
 }
 
-rodata(EN_RomDataList)
-constant ENTITY_ID((pc() - Entity.Data.List) / 2)
+rodata(EN_EntityList)
+constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
     dw  PlayerRomData
 }
 }

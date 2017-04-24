@@ -256,7 +256,7 @@ scope Process.Patrol: {
     bne     DontShoot
 
         lda.w   #MISSILE_ACTION_POINT
-        ldy.w   #Missile.EnemyPlasma.ENTITY_ID
+        ldy.w   #Missile.EnemyPlasma.PROJECTILE_ID
         jsr     Entity.SpawnEnemyProjectileFromActionPoint
 
         lda.w   #DELAY_BETWEEN_SHOTS + 1
@@ -314,8 +314,8 @@ scope FrontBay {
         db  0
     }
 
-    rodata(EN_RomDataList)
-    constant ENTITY_ID((pc() - Entity.Data.List) / 2)
+    rodata(EN_EntityList)
+    constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
         dw  CarrierDroneRomData
 }
 
@@ -341,8 +341,8 @@ scope RearBay {
         db  0
     }
 
-    rodata(EN_RomDataList)
-    constant ENTITY_ID((pc() - Entity.Data.List) / 2)
+    rodata(EN_EntityList)
+    constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
         dw  CarrierDroneRomData
 }
 

@@ -152,7 +152,7 @@ scope Process: {
         bcc     SkipMissileTest
 
         lda.w   #MISSILE_ACTION_POINT
-        ldy.w   #Missile.EnemyPlasma.ENTITY_ID
+        ldy.w   #Missile.EnemyPlasma.PROJECTILE_ID
         jsr     Entity.SpawnEnemyProjectileFromActionPoint
 
         ldx.b   EntityStruct.romPtr
@@ -200,8 +200,8 @@ macro _entity(name, frameSetId, velocity, missileCooldown) {
             dw  {missileCooldown}   // missile cooldown
         }
 
-        rodata(EN_RomDataList)
-        constant ENTITY_ID((pc() - Entity.Data.List) / 2)
+        rodata(EN_EntityList)
+        constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
             dw  RomData
     }
 }

@@ -8,7 +8,9 @@ createDataBlock(MS_FrameSetList,        0xc10000, 0xc100ff)
 createDataBlock(MS_PaletteList,         0xc10100, 0xc101ff)
 createDataBlock(MS_FrameList,           0xc10200, 0xc102ff)
 createDataBlock(MS_AnimationList,       0xc10300, 0xc103ff)
-createDataBlock(EN_RomDataList,         0xc10400, 0xc104ff)
+
+createDataBlock(EN_EntityList,          0xc10400, 0xc1047f)
+createDataBlock(EN_ProjectileList,      0xc10480, 0xc104ff)
 
 createDataBlock(DMA_Tile16Data,         0xc10500, 0xc10fff)
 
@@ -38,6 +40,20 @@ createRamBlock(wram7e,      0x7e2000, 0x7effff)
 createRamBlock(wram7f,      0x7f0000, 0x7fffff)
 
 
+// Temporary Variables
+// ===================
+allocate(dpTmp0, dp, 2)
+allocate(dpTmp1, dp, 2)
+allocate(dpTmp2, dp, 2)
+allocate(dpTmp3, dp, 2)
+allocate(dpTmp4, dp, 2)
+allocate(dpTmp5, dp, 2)
+allocate(dpTmp6, dp, 2)
+allocate(dpTmp7, dp, 2)
+
+
+// Entity Layout
+// =============
 scope Entity {
     constant ENTITY_SIZE(64)
     constant N_ENTITIES(64)

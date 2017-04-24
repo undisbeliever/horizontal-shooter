@@ -283,8 +283,8 @@ scope CarrierRomData: {
     dd  -0x010000           // launch velocity
 }
 
-rodata(EN_RomDataList)
-constant ENTITY_ID((pc() - Entity.Data.List) / 2)
+rodata(EN_EntityList)
+constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
     dw  CarrierRomData
 
 }

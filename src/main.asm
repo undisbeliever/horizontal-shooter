@@ -18,6 +18,7 @@ include "../tables/tables.inc"
 include "../untech/tables/tables.inc"
 
 include "../untech/src/dma.inc"
+include "../untech/src/hdma.inc"
 include "../untech/src/interrupts.inc"
 include "../untech/src/math.inc"
 include "../untech/src/metasprite.inc"
