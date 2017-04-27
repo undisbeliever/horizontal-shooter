@@ -236,14 +236,12 @@ scope SpawnTableData: {
 }
 
 scope SpawnTableList: {
-    macro _repeat(evaluate n) {
-        if {n} < {SpawnTableData.count} {
-            dw  SpawnTableData._{n}
+    evaluate n(0)
+    while {n} < {SpawnTableData.count} {
+        dw  SpawnTableData._{n}
 
-            _repeat({n} + 1)
-        }
+        evaluate n({n} + 1)
     }
-    _repeat(0)
 
     constant N_ELEMENTS((pc() - SpawnTableList) / 2)
 }
