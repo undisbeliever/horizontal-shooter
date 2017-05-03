@@ -10,9 +10,7 @@ define VERSION(0)
 include "../untech/src/common.inc"
 include "memmap.inc"
 
-include "../gen/metasprites.inc"
-include "../resources/text/text.inc"
-include "../resources/images/images.inc"
+include "resources.inc"
 
 include "../gen/tables/sine.inc"
 include "../gen/tables/entityhitbox-collisionorder.inc"

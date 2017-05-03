@@ -1,7 +1,6 @@
 
 scope Text {
 scope Font {
-
     map '0', 0x01, 10
     map 'A', 0x0b, 26
     map 'a', 0x25, 26
@@ -20,12 +19,6 @@ scope Font {
     constant HP_ICON(0x60)
 
     constant NEW_LINE(0xff)
-
-rodata(rom0)
-    insert FixedTiles, "../../gen/font-fixed.2bpp"
-
-    // ::TODO change 1bpp tiles::
-    constant FixedTiles.bitDepth(2)
 }
 }
 
