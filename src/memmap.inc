@@ -5,7 +5,9 @@
 arch snes.cpu
 
 createCodeBlock(code,                   0xc08000, 0xc0ffaf)
-createDataBlock(rom0,                   0xc00000, 0xc07fff)
+createDataBlock(rom0,                   0xc00080, 0xc07fff)
+
+createDataBlock(CopyrightHeader,        0xc00000, 0xc0007f)
 
 
 createDataBlock(MS_FrameSetList,        0xc10000, 0xc100ff)

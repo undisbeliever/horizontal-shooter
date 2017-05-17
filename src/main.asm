@@ -49,6 +49,15 @@ EmptyHandler:
 constant Main(GameLoop.Restart)
 
 
+rodata(CopyrightHeader)
+    map 0, 0, 256
+
+	//   12345678901234567890123456789012
+    db  "Horizontal Shooter             \n"
+    db  "Copyright (c) 2016 - 2017      \n"
+    db  "Marcus Rowe (The UnDisbeliever)\n"
+    db  "MIT Licensed code, CC0 Graphics\n"
+
 finalizeMemory()
 
 // vim: ft=bass-65816 ts=4 sw=4 et:
