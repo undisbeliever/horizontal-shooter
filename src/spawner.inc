@@ -112,7 +112,7 @@ scope SpawnTableRow {
 }
 
 scope SpawnTableData: {
-    constant XSTART(Camera.DISPLAY_WIDTH + Camera.ACTIVE_WINDOW_EXTEND_HORIZONTAL / 2)
+    constant XSTART(Camera.DISPLAY_WIDTH + Entity.ACTIVE_WINDOW_EXTEND_HORIZONTAL / 2)
     evaluate count(0)
 
     macro table() {

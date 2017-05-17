@@ -15,15 +15,7 @@ include "resources.inc"
 include "../gen/tables/sine.inc"
 include "../gen/tables/entityhitbox-collisionorder.inc"
 
-include "../untech/src/dma.inc"
-include "../untech/src/hdma.inc"
-include "../untech/src/interrupts.inc"
-include "../untech/src/math.inc"
-include "../untech/src/metasprite.inc"
-include "../untech/src/text.inc"
-
-include "../untech/src/camera.inc"
-include "../untech/src/entity.inc"
+include "../untech/src/untech.inc"
 
 include "interface.inc"
 include "spawner.inc"
