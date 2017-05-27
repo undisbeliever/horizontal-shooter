@@ -91,6 +91,8 @@ i16()
     plb
 // DB = REGISTER_DB
 
+    Warnings.Reset()
+
     jsr     ResetRegisters
 
 
