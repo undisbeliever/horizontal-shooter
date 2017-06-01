@@ -314,37 +314,33 @@
     <entityhitbox type="BODY_WEAK" x="27" y="3" width="21" height="7"/>
     <entityhitbox type="BODY_WEAK" x="27" y="38" width="21" height="7"/>
   </frame>
-  <animation id="DropShield">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_3"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_4"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_5"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_5"/>
-    <instruction op="GOTO_ANIMATION" goto="Flying_NoShield"/>
+  <animation id="DropShield" durationformat="FRAME" next="Flying_NoShield">
+    <aframe frame="Destroy_Shield_1" duration="2"/>
+    <aframe frame="Destroy_Shield_2" duration="2"/>
+    <aframe frame="Destroy_Shield_3" duration="2"/>
+    <aframe frame="Destroy_Shield_4" duration="2"/>
+    <aframe frame="Destroy_Shield_5" duration="2"/>
+    <aframe frame="Destroy_Shield_6" duration="2"/>
   </animation>
-  <animation id="Flying_NoShield">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="3" frame="Flying_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="3" frame="Flying_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="3" frame="Flying_3"/>
-    <instruction op="GOTO_START"/>
+  <animation id="Flying_NoShield" durationformat="FRAME">
+    <aframe frame="Flying_1" duration="3"/>
+    <aframe frame="Flying_2" duration="3"/>
+    <aframe frame="Flying_3" duration="3"/>
   </animation>
-  <animation id="Flying_Shield">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Flying_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Flying_Shield_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Flying_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Flying_Shield_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Flying_3"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Flying_Shield_3"/>
-    <instruction op="GOTO_START"/>
+  <animation id="Flying_Shield" durationformat="FRAME">
+    <aframe frame="Flying_1" duration="2"/>
+    <aframe frame="Flying_Shield_1" duration="2"/>
+    <aframe frame="Flying_2" duration="2"/>
+    <aframe frame="Flying_Shield_2" duration="2"/>
+    <aframe frame="Flying_3" duration="2"/>
+    <aframe frame="Flying_Shield_3" duration="2"/>
   </animation>
-  <animation id="RaiseShield">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_5"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_5"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_4"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_3"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Destroy_Shield_1"/>
-    <instruction op="GOTO_ANIMATION" goto="Flying_Shield"/>
+  <animation id="RaiseShield" durationformat="FRAME" next="Flying_Shield">
+    <aframe frame="Destroy_Shield_6" duration="2"/>
+    <aframe frame="Destroy_Shield_5" duration="2"/>
+    <aframe frame="Destroy_Shield_4" duration="2"/>
+    <aframe frame="Destroy_Shield_3" duration="2"/>
+    <aframe frame="Destroy_Shield_2" duration="2"/>
+    <aframe frame="Destroy_Shield_1" duration="2"/>
   </animation>
 </spriteimporter>

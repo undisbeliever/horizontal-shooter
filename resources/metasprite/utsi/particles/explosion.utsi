@@ -35,15 +35,14 @@
     <gridlocation x="7" y="0"/>
     <object size="large" x="0" y="0"/>
   </frame>
-  <animation id="Animation">
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="6" frame="Frame_0"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="6" frame="Frame_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="6" frame="Frame_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="6" frame="Frame_3"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="6" frame="Frame_4"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="6" frame="Frame_5"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="6" frame="Frame_6"/>
-    <instruction op="SET_FRAME_AND_WAIT_TIME" parameter="6" frame="Frame_7"/>
-    <instruction op="STOP"/>
+  <animation id="Animation" durationformat="TIME" oneshot="true">
+    <aframe frame="Frame_0" duration="6"/>
+    <aframe frame="Frame_1" duration="6"/>
+    <aframe frame="Frame_2" duration="6"/>
+    <aframe frame="Frame_3" duration="6"/>
+    <aframe frame="Frame_4" duration="6"/>
+    <aframe frame="Frame_5" duration="6"/>
+    <aframe frame="Frame_6" duration="6"/>
+    <aframe frame="Frame_7" duration="6"/>
   </animation>
 </spriteimporter>

@@ -24,11 +24,10 @@
     <object size="small" x="4" y="4"/>
     <entityhitbox type="ATTACK" x="7" y="7" width="2" height="3"/>
   </frame>
-  <animation id="Move_Right">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Right_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Right_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Right_3"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="2" frame="Right_4"/>
-    <instruction op="GOTO_START"/>
+  <animation id="Move_Right" durationformat="FRAME">
+    <aframe frame="Right_1" duration="2"/>
+    <aframe frame="Right_2" duration="2"/>
+    <aframe frame="Right_3" duration="2"/>
+    <aframe frame="Right_4" duration="2"/>
   </animation>
 </spriteimporter>

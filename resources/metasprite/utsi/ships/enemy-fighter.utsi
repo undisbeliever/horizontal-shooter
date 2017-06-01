@@ -26,14 +26,12 @@
     <actionpoint parameter="1" x="8" y="11"/>
     <entityhitbox type="BODY" x="5" y="7" width="10" height="7"/>
   </frame>
-  <animation id="Dead_Left">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="1" frame="Dead_Left"/>
-    <instruction op="STOP"/>
+  <animation id="Dead_Left" durationformat="FRAME">
+    <aframe frame="Dead_Left" duration="1"/>
   </animation>
-  <animation id="Flying_Left">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="5" frame="Flying_Left_1"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="5" frame="Flying_Left_2"/>
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="5" frame="Flying_Left_3"/>
-    <instruction op="GOTO_START"/>
+  <animation id="Flying_Left" durationformat="FRAME">
+    <aframe frame="Flying_Left_1" duration="5"/>
+    <aframe frame="Flying_Left_2" duration="5"/>
+    <aframe frame="Flying_Left_3" duration="5"/>
   </animation>
 </spriteimporter>

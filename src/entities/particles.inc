@@ -30,13 +30,19 @@ a16()
 i16()
 code()
 scope Process: {
-    // Delete entity is animation has stopped
+    // Delete entity if animation.id == 0xff
 
-    lda.b   BaseEntity.MetaSprite.Animation.pc
+    sep     #$20
+a8()
+    lda.b   BaseEntity.MetaSprite.Animation.id
+    inc
     bne     +
         ldy.w   #Entity.lists.toDelete
         sty.w   Entity.changeList
     +
+
+    rep     #$30
+a16()
     rts
 }
 

@@ -10,8 +10,7 @@
     <actionpoint parameter="1" x="4" y="8"/>
     <entityhitbox type="BODY" x="6" y="5" width="5" height="6"/>
   </frame>
-  <animation id="Flying">
-    <instruction op="SET_FRAME_AND_WAIT_FRAMES" parameter="0" frame="Flying"/>
-    <instruction op="STOP"/>
+  <animation id="Flying" durationformat="FRAME" oneshot="true">
+    <aframe frame="Flying" duration="1"/>
   </animation>
 </spriteimporter>
