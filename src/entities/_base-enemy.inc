@@ -3,36 +3,37 @@
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
 scope Entities {
-scope BaseEnemy {
 
-scope EntityStruct: {
-    basestruct(BaseEnemy, BaseEntity)
+scope BaseEnemy {
+    basestruct(BaseEntity)
         field(hp, 2)
     endstruct()
 }
 
-scope RomData: {
-    basestruct(BaseEnemyData, BaseEntityData)
+scope BaseEnemyData {
+    basestruct(BaseEntityData)
         field(health, 2)
         field(initialVelocity, 4)
     endstruct()
 }
 
 
+scope BaseEnemy {
+
 // IN: A = parameter (currently undefined)
 a16()
 i16()
 code()
 scope Init: {
-    ldx.b   EntityStruct.romPtr
+    ldx.b   BaseEnemy.romPtr
 
-    lda.l   RomData.initialVelocity,x
-    sta.b   EntityStruct.xVecl
-    lda.l   RomData.initialVelocity + 2,x
-    sta.b   EntityStruct.xVecl + 2
+    lda.l   BaseEnemyData.initialVelocity,x
+    sta.b   BaseEnemy.xVecl
+    lda.l   BaseEnemyData.initialVelocity + 2,x
+    sta.b   BaseEnemy.xVecl + 2
 
-    lda.l   RomData.health,x
-    sta.b   EntityStruct.hp
+    lda.l   BaseEnemyData.health,x
+    sta.b   BaseEnemy.hp
 
     rts
 }
@@ -54,14 +55,14 @@ a16()
 i16()
 code()
 scope Process: {
-    lda.b   EntityStruct.hp
+    lda.b   BaseEnemy.hp
     bne     +
         // Entity is out of HP
         // Spawn explosion
-        lda.b   EntityStruct.xPos.px
+        lda.b   BaseEnemy.xPos.px
         sta.w   Entity.Spawn.xPos
 
-        lda.b   EntityStruct.yPos.px
+        lda.b   BaseEnemy.yPos.px
         sta.w   Entity.Spawn.yPos
 
         ldy.w   #0
@@ -106,11 +107,11 @@ scope TakeDamageFromEntity: {
 
     eor.w   #0xffff
     sec
-    adc.b   EntityStruct.hp
+    adc.b   BaseEnemy.hp
     bcs     +
         lda.w   #0
     +
-    sta.b   EntityStruct.hp
+    sta.b   BaseEnemy.hp
 
     rts
 }
