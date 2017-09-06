@@ -2,14 +2,14 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-arch snes.cpu
+architecture wdc65816
 
-define MEMORY_MAP(HIROM)
-define ROM_SIZE(1)
-define ROM_SPEED(slow)
-define REGION(Australia)
-define ROM_NAME("HORIZONTAL SHOOTER")
-define VERSION(0)
+define MEMORY_MAP = HIROM
+define ROM_SIZE = 1
+define ROM_SPEED = slow
+define REGION = Australia
+define ROM_NAME = "HORIZONTAL SHOOTER"
+define VERSION = 0
 
 include "../untech/src/common.inc"
 include "memmap.inc"
@@ -46,7 +46,7 @@ EmptyHandler:
     rti
 
 
-constant Main(GameLoop.Restart)
+constant Main = GameLoop.Restart
 
 
 rodata(CopyrightHeader)

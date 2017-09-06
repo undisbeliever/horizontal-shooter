@@ -2,13 +2,13 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Entities {
-scope EnemySinusoidal {
+namespace Entities {
+namespace EnemySinusoidal {
 
-constant X_PADDING(30)
-constant MISSILE_THREASHOLD(15)
-constant MISSILE_ACTION_POINT(1)
-constant SECOND_SHOT_COOLDOWN(30)
+constant X_PADDING = 30
+constant MISSILE_THREASHOLD = 15
+constant MISSILE_ACTION_POINT = 1
+constant SECOND_SHOT_COOLDOWN = 30
 
 buildFunctionTable(BaseEntityFunctionTable, EnemySinusoidal)
 Entity.useDefaultRenderer()
@@ -16,14 +16,14 @@ BaseEnemy.useDefaultDestructor()
 BaseEnemy.useDefaultCalculateAttackValue()
 
 
-scope EntityStruct: {
+namespace EntityStruct {
     childstruct(BaseEnemy)
         field(sineTableIndex, 2)
         field(missileCooldown, 2)
     endstruct()
 }
 
-scope RomData: {
+namespace RomData {
     childstruct(BaseEnemyData)
         field(missileCooldown, 2)
     endstruct()
@@ -34,7 +34,7 @@ scope RomData: {
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     lda.w   #MSEO.Enemy.Animations.Flying_Left
     jsr     MetaSprite.SetAnimation
 
@@ -48,7 +48,7 @@ scope Init: {
 a16()
 i16()
 code()
-scope Process: {
+function Process {
     // Change velocity
 
     lda.b   EntityStruct.sineTableIndex
@@ -75,7 +75,7 @@ scope Process: {
     sta.b   EntityStruct.yVecl + 2
 
 
-    scope TestXVecl {
+    namespace TestXVecl {
         // Change x velocity so entity stays on screen
 
 
@@ -175,7 +175,7 @@ SkipMissileTest:
 a16()
 i16()
 code()
-scope TakeDamageFromEntity: {
+function TakeDamageFromEntity {
     jmp     BaseEnemy.TakeDamageFromEntity
 }
 
@@ -190,10 +190,10 @@ CollideWithShield:
     rts
 
 
-macro _entity(name, frameSetId, velocity, missileCooldown) {
-    scope {name} {
+inline _entity(name, frameSetId, velocity, missileCooldown) {
+    namespace {name} {
         rodata(EN_RomData)
-        scope RomData: {
+        RomData:
             dw  FunctionTable
             db  Entity.ListId.ENEMY // initial List
             dw  MSFS.{frameSetId}   // frameSetId
@@ -201,10 +201,10 @@ macro _entity(name, frameSetId, velocity, missileCooldown) {
             dw  2                   // health
             dd  {velocity}          // launch velocity
             dw  {missileCooldown}   // missile cooldown
-        }
+
 
         rodata(EN_EntityList)
-        constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
+        constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
             dw  RomData
     }
 }

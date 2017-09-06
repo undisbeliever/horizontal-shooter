@@ -2,27 +2,27 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Entities {
-scope EnemyCarrierDrone {
+namespace Entities {
+namespace EnemyCarrierDrone {
 
-constant SCREEN_MARGIN_TOP(24)
-constant SCREEN_MARGIN_BOTTOM(24)
+constant SCREEN_MARGIN_TOP = 24
+constant SCREEN_MARGIN_BOTTOM = 24
 
-constant DELAY_BETWEEN_SHOTS(90)
+constant DELAY_BETWEEN_SHOTS = 90
 
-constant MISSILE_ACTION_POINT(1)
+constant MISSILE_ACTION_POINT = 1
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrierDrone)
 Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
 BaseEnemy.useDefaultCalculateAttackValue()
 
-scope State {
+namespace State {
     createEnum(0, 2)
         enum(MOVE_TO_POSITION)
         enum(PATROL)
 
-    constant MASK(0x1 << 1)
+    constant MASK = 0x1 << 1
 
     code()
     FunctionTable:
@@ -32,7 +32,7 @@ scope State {
         assert(pc() - FunctionTable == MASK + 2)
 }
 
-scope EntityStruct {
+namespace EntityStruct {
     childstruct(BaseEnemy)
         field(state, 2)
 
@@ -47,12 +47,12 @@ scope EntityStruct {
     endstruct()
 }
 
-scope RomData {
+namespace RomData {
     childstruct(BaseEnemyData)
         // repeated until path.frames = 0
-        scope Path {
+        namespace Path {
             // (0:7:15 fixed point)
-            constant xVecl(initialVelocity)
+            constant xVecl = initialVelocity
             // (0:7:15 fixed point)
             field(yVecl, 4)
             // number of movement frames
@@ -61,7 +61,7 @@ scope RomData {
 
             assert(xVecl + 4 == yVecl)
 
-            constant size(9)
+            constant size = 9
         }
     endstruct()
 }
@@ -72,7 +72,7 @@ scope RomData {
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     lda.w   #MSEO.EnemyCarrierDrone.Animations.Flying
     jsr     MetaSprite.SetAnimation
 
@@ -109,7 +109,7 @@ End:
 a16()
 i16()
 code()
-scope _LoadNextPath: {
+function _LoadNextPath {
     assert(pc() == Init.End)
 
     // X = romPtr + pathIndex
@@ -180,7 +180,7 @@ EndIf:
 a16()
 i16()
 code()
-scope Process: {
+function Process {
     lda.b   EntityStruct.state
     and.w   #State.MASK
     tax
@@ -194,7 +194,7 @@ scope Process: {
 a16()
 i16()
 code()
-scope Process.MoveToPosition: {
+function Process.MoveToPosition {
     // entity.counter--
     // if entity.counter == 0:
     //      _LoadNextPath
@@ -220,7 +220,7 @@ scope Process.MoveToPosition: {
 a16()
 i16()
 code()
-scope Process.Patrol: {
+function Process.Patrol {
     // Invert Y velocity when hit margins
 
     lda.b   EntityStruct.yVecl + 2
@@ -280,7 +280,7 @@ DontShoot:
 a16()
 i16()
 code()
-scope TakeDamageFromEntity: {
+function TakeDamageFromEntity {
     jmp     BaseEnemy.TakeDamageFromEntity
 }
 
@@ -295,9 +295,9 @@ CollideWithShield:
     rts
 
 
-scope FrontBay {
+namespace FrontBay {
     rodata(EN_RomData)
-    scope CarrierDroneRomData: {
+    CarrierDroneRomData:
         dw  FunctionTable
         db  Entity.ListId.ENEMY     // initial List
         dw  MSFS.EnemyCarrierDrone  // frameSetId
@@ -315,16 +315,15 @@ scope FrontBay {
         dd  0                       // xVecl
         dd  0x011000                // yVecl
         db  0
-    }
 
     rodata(EN_EntityList)
-    constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
+    constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
         dw  CarrierDroneRomData
 }
 
-scope RearBay {
+namespace RearBay {
     rodata(EN_RomData)
-    scope CarrierDroneRomData: {
+    CarrierDroneRomData:
         dw  FunctionTable
         db  Entity.ListId.ENEMY     // initial List
         dw  MSFS.EnemyCarrierDrone  // frameSetId
@@ -342,10 +341,9 @@ scope RearBay {
         dd  0                       // xVecl
         dd  0x011000                // yVecl
         db  0
-    }
 
     rodata(EN_EntityList)
-    constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
+    constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
         dw  CarrierDroneRomData
 }
 

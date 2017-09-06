@@ -2,7 +2,7 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-arch snes.cpu
+architecture wdc65816
 
 createCodeBlock(code,                   0xc08000, 0xc0ffaf)
 createDataBlock(rom0,                   0xc00080, 0xc07fff)
@@ -60,20 +60,20 @@ allocate(dpTmp7, dp, 2)
 
 // Entity Layout
 // =============
-scope Entity {
-    constant ENTITY_SIZE(64)
-    constant N_ENTITIES(64)
+namespace Entity {
+    constant ENTITY_SIZE = 64
+    constant N_ENTITIES = 64
 }
 
 
 // VRAM Layout
 // ===========
-constant VRAM_OBJ_WADDR(0x6000)
-constant VRAM_CONSOLE_TILES_WADDR(0x1000)
-constant VRAM_CONSOLE_MAP_WADDR(0x0000)
+constant VRAM_OBJ_WADDR = 0x6000
+constant VRAM_CONSOLE_TILES_WADDR = 0x1000
+constant VRAM_CONSOLE_MAP_WADDR = 0x0000
 
-constant VRAM_STARFIELD_TILES_WADDR(0x2000)
-constant VRAM_STARFIELD_MAP_WADDR(0x0400)
+constant VRAM_STARFIELD_TILES_WADDR = 0x2000
+constant VRAM_STARFIELD_MAP_WADDR = 0x0400
 
 // vim: ft=bass-65816 ts=4 sw=4 et:
 

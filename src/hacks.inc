@@ -2,7 +2,7 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Hacks {
+namespace Hacks {
 
 // Waits until the start of a new frame.
 //
@@ -13,7 +13,7 @@ scope Hacks {
 a16()
 i16()
 code()
-scope WaitFrameCpuUsage: {
+function WaitFrameCpuUsage {
 // state of the cpu usage debugger
 // (byte)
 allocate(_showCpuUsage, wram7e, 1)

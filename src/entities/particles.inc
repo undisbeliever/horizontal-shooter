@@ -2,8 +2,8 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Entities {
-scope Particles {
+namespace Entities {
+namespace Particles {
 
 buildFunctionTable(BaseEntityFunctionTable, Particles)
 Entity.useDefaultRenderer()
@@ -13,7 +13,7 @@ Entity.useDefaultRenderer()
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     lda.w   #MSEO.Particle.Animations.Animation
     jmp     MetaSprite.SetAnimation
 }
@@ -21,7 +21,7 @@ scope Init: {
 a16()
 i16()
 code()
-scope Destructor: {
+function Destructor {
     rts
 }
 
@@ -29,7 +29,7 @@ scope Destructor: {
 a16()
 i16()
 code()
-scope Process: {
+function Process {
     // Delete entity if animation.id == 0xff
 
     sep     #$20
@@ -55,23 +55,23 @@ BlockWithShield:
 TakeDamageFromEntity:
 CollideWithBody:
 CollideWithShield:
-scope CalculateAttackValue: {
+function CalculateAttackValue {
     rts
 }
 
 
-macro _entity(name, frameSetId, palette) {
-    scope {name} {
+inline _entity(name, frameSetId, palette) {
+    namespace {name} {
         rodata(EN_RomData)
-        scope RomData: {
+        RomData:
             dw  FunctionTable
             db  Entity.ListId.PARTICLE  // initial List
             dw  MSFS.{frameSetId}       // frameSetId
             db  {palette}               // defaultPalette
-        }
+
 
         rodata(EN_EntityList)
-        constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
+        constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
             dw  RomData
     }
 }

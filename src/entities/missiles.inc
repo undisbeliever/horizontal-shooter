@@ -2,25 +2,25 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Entities {
-scope Missile {
+namespace Entities {
+namespace Missile {
 
 // Missile X Velocity
 // (0:7:16 fixed point)
-constant X_VELOCITY(0x028000)
+constant X_VELOCITY = 0x028000
 
 
 buildFunctionTable(BaseEntityFunctionTable, Missile)
 Entity.useDefaultRenderer()
 
-scope State {
+namespace State {
     createEnum(0, 2)
         enum(FLYING)
         enum(EXPLODING)
         enum(REFLECT)
         // null
 
-    constant MASK(0x3 << 1)
+    constant MASK = 0x3 << 1
 
     code()
     FunctionTable:
@@ -32,13 +32,13 @@ scope State {
         assert(pc() - FunctionTable == MASK + 2)
 }
 
-scope EntityStruct {
+namespace EntityStruct {
     childstruct(BaseEntity)
         field(state, 2)
     endstruct()
 }
 
-scope RomData {
+namespace RomData {
     childstruct(BaseEntityData)
         field(initialVelocity, 4)
         field(reflectOffShield, 1)
@@ -51,7 +51,7 @@ scope RomData {
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     ldx.w   MetaSprite.ActionPoint.address
     lda.l   MetaSprite.Format.ActionPoints.xPos,x
     and.w   #0x00ff
@@ -100,7 +100,7 @@ EndIf:
 a16()
 i16()
 code()
-scope Destructor: {
+function Destructor {
     rts
 }
 
@@ -108,7 +108,7 @@ scope Destructor: {
 a16()
 i16()
 code()
-scope Process: {
+function Process {
     lda.b   EntityStruct.state
     and.w   #State.MASK
     tax
@@ -120,7 +120,7 @@ a16()
 i16()
 code()
 Process.Null:
-scope Process.Flying: {
+function Process.Flying {
     jmp     Physics.ProcessEntity
 }
 
@@ -128,7 +128,7 @@ scope Process.Flying: {
 a16()
 i16()
 code()
-scope Process.Exploding: {
+function Process.Exploding {
     // ::TODO wait for animation to end::
 
     ldy.w   #Entity.lists.toDelete
@@ -140,7 +140,7 @@ scope Process.Exploding: {
 a16()
 i16()
 code()
-scope Process.Reflect: {
+function Process.Reflect {
     assert(State.FLYING == 0)
     stz.b   EntityStruct.state
 
@@ -202,7 +202,7 @@ code()
 TakeDamageFromEntity:
 CollideWithBody:
 BlockWithShield:
-scope CalculateAttackValue: {
+function CalculateAttackValue {
     ldx.w   #State.EXPLODING
     stx.b   EntityStruct.state
 
@@ -234,20 +234,20 @@ CollideWithShield: {
     rts
 }
 
-macro _entity(name, frameSetId, velocity, reflectOffShield) {
-    scope {name} {
+inline _entity(name, frameSetId, velocity, reflectOffShield) {
+    namespace {name} {
         rodata(EN_RomData)
-        scope RomData: {
+        RomData:
             dw  FunctionTable
             db  0                   // initial List (always null)
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
             dd  {velocity}          // launch velocity
             db  {reflectOffShield}  // reflectOffShield
-        }
+
 
         rodata(EN_ProjectileList)
-        constant PROJECTILE_ID((pc() - Entity.Data.ProjectileList) / 2)
+        constant PROJECTILE_ID = (pc() - Entity.Data.ProjectileList) / 2
             dw  RomData
     }
 }

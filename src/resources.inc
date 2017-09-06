@@ -5,21 +5,21 @@
 include "../gen/metasprites.inc"
 include "../resources/text/text.inc"
 
-scope Text {
-    scope Font {
+namespace Text {
+    namespace Font {
 rodata(rom0)
         insert FixedTiles, "../gen/font-fixed.1bpp"
-        constant FixedTiles.bitDepth(1)
+        constant FixedTiles.bitDepth = 1
     }
 }
 
-scope Images {
-    scope Stars {
+namespace Images {
+    namespace Stars {
 rodata(rom0)
         insert Tiles, "../gen/images/stars.4bpp"
         insert Palette, "../gen/images/stars.clr"
         insert Map, "../gen/images/stars.map"
-        constant PaletteOffset(1)
+        constant PaletteOffset = 1
     }
 }
 

@@ -23,7 +23,7 @@ def f_to_hex(f):
 def sine_table():
     print("// 1:15 fixed point integer")
     print("rodata(rom0)")
-    print("scope SineTable: {", end="")
+    print("SineTable:", end="")
 
     d = 0.0
     end = 360.0
@@ -41,8 +41,7 @@ def sine_table():
 
         d += step
 
-    print("\n\nconstant size(", N_ROTATIONS * 2, ")")
-    print("}")
+    print("\nconstant SineTable.size = ", N_ROTATIONS * 2)
 
 
 def main():

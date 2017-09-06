@@ -2,15 +2,15 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Entities {
+namespace Entities {
 
-scope BaseEnemy {
+namespace BaseEnemy {
     basestruct(BaseEntity)
         field(hp, 2)
     endstruct()
 }
 
-scope BaseEnemyData {
+namespace BaseEnemyData {
     basestruct(BaseEntityData)
         field(health, 2)
         field(initialVelocity, 4)
@@ -18,13 +18,13 @@ scope BaseEnemyData {
 }
 
 
-scope BaseEnemy {
+namespace BaseEnemy {
 
 // IN: A = parameter (currently undefined)
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     ldx.b   BaseEnemy.romPtr
 
     lda.l   BaseEnemyData.initialVelocity,x
@@ -39,14 +39,14 @@ scope Init: {
 }
 
 
-macro useDefaultDestructor() {
-    constant Destructor(Entities.BaseEnemy.Destructor)
+inline useDefaultDestructor() {
+    constant Destructor = Entities.BaseEnemy.Destructor
 }
 
 a16()
 i16()
 code()
-scope Destructor: {
+function Destructor {
     rts
 }
 
@@ -54,7 +54,7 @@ scope Destructor: {
 a16()
 i16()
 code()
-scope Process: {
+function Process {
     lda.b   BaseEnemy.hp
     bne     +
         // Entity is out of HP
@@ -78,8 +78,8 @@ scope Process: {
 }
 
 
-macro useDefaultCalculateAttackValue() {
-    constant CalculateAttackValue(Entities.BaseEnemy.CalculateAttackValue)
+inline useDefaultCalculateAttackValue() {
+    constant CalculateAttackValue = Entities.BaseEnemy.CalculateAttackValue
 }
 
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
@@ -89,7 +89,7 @@ macro useDefaultCalculateAttackValue() {
 a16()
 i16()
 code()
-scope CalculateAttackValue: {
+function CalculateAttackValue {
     lda.w   #1
     rts
 }
@@ -102,7 +102,7 @@ scope CalculateAttackValue: {
 a16()
 i16()
 code()
-scope TakeDamageFromEntity: {
+function TakeDamageFromEntity {
     // A = clamp(hp - A)
 
     eor.w   #0xffff

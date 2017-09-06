@@ -2,7 +2,7 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Physics {
+namespace Physics {
 
 // Processes the player's physics
 // Updates player position depending on velocity
@@ -12,7 +12,7 @@ scope Physics {
 a16()
 i16()
 code()
-scope ProcessEntity: {
+function ProcessEntity {
     macro _addVelocity(c) {
         clc
         lda.b   BaseEntity.{c}Vecl

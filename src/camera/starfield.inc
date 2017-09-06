@@ -2,12 +2,12 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Camera {
-scope StarField {
+namespace Camera {
+namespace StarField {
 
 // Camera Velocity
 // (integer)
-constant VELOCITY_INT(2)
+constant VELOCITY_INT = 2
 
 
 // Load starfield graphics into VRAM and palette to buffer
@@ -15,7 +15,7 @@ constant VELOCITY_INT(2)
 a8()
 i16()
 code()
-scope LoadGraphics: {
+function LoadGraphics {
     ldx.w   #VRAM_STARFIELD_TILES_WADDR
     stx.w   VMADD
     Dma.ForceBlank.ToVram(Images.Stars.Tiles)
@@ -50,7 +50,7 @@ a8()
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     sta.w   ScrollBuffer.bg1.hOffset
     sta.w   ScrollBuffer.bg1.vOffset
 
@@ -63,7 +63,7 @@ scope Init: {
 a16()
 i16()
 code()
-scope ProcessFrame: {
+function ProcessFrame {
     lda.w   Camera.xPos
     clc
     adc.w   #VELOCITY_INT

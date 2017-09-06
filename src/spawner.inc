@@ -2,7 +2,7 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Spawner {
+namespace Spawner {
 
     // id of previous spawn table
     // (word)
@@ -10,7 +10,7 @@ scope Spawner {
 
 
 // REQUIRES: 16 bit A, DB = 0x7e
-macro scope Init() {
+macro Init() {
     assert16a()
 
     lda.w   #0xffff
@@ -19,7 +19,7 @@ macro scope Init() {
 
 
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-macro scope ProcessGameLoop() {
+macro ProcessGameLoop() {
     assert16a()
     assert16i()
 
@@ -44,7 +44,7 @@ macro scope ProcessGameLoop() {
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e, Entities setup
 a16()
 i16()
-scope Spawn: {
+function Spawn {
 allocateTmpWord(tmp_address)
 allocateTmpWord(tmp_count)
 
@@ -103,9 +103,9 @@ Return:
 
 
 rodata(rom0)
-constant SpawnTableOffset(pc() & 0xff0000)
+constant SpawnTableOffset = pc() & 0xff0000
 
-scope SpawnTableRow {
+namespace SpawnTableRow {
     struct(SpawnTableOffset + 1)
         field(entityId, 2)
         field(parameter,2)
@@ -114,13 +114,14 @@ scope SpawnTableRow {
     endstruct()
 }
 
-scope SpawnTableData: {
-    constant XSTART(Camera.DISPLAY_WIDTH + Entity.ACTIVE_WINDOW_EXTEND_HORIZONTAL / 2)
-    evaluate count(0)
+SpawnTableData:
+namespace SpawnTableData {
+    constant XSTART = Camera.DISPLAY_WIDTH + Entity.ACTIVE_WINDOW_EXTEND_HORIZONTAL / 2
+    evaluate count = 0
 
-    macro table() {
+    inline table() {
         _{count}:
-        global evaluate count({count} + 1)
+        evaluate count = {count} + 1
     }
 
     macro row(entity, evaluate param, evaluate xPos, evaluate yPos) {
@@ -238,16 +239,14 @@ scope SpawnTableData: {
         row(EnemyCarrier,           0,      0,      112)
 }
 
-scope SpawnTableList: {
-    evaluate n(0)
+SpawnTableList:
+    evaluate n = 0
     while {n} < {SpawnTableData.count} {
         dw  SpawnTableData._{n}
 
-        evaluate n({n} + 1)
+        evaluate n = {n} + 1
     }
-
-    constant N_ELEMENTS((pc() - SpawnTableList) / 2)
-}
+    constant SpawnTableList.N_ELEMENTS = (pc() - SpawnTableList) / 2
 
 
 code()

@@ -2,22 +2,22 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Entities {
-scope EnemyCarrier {
+namespace Entities {
+namespace EnemyCarrier {
 
 
-constant X_POSITION(180)
-constant SHIELD_HEALTH(6)
-constant SHIELD_RECHARGE(60 * 4)
+constant X_POSITION = 180
+constant SHIELD_HEALTH = 6
+constant SHIELD_RECHARGE = 60 * 4
 
-constant MAX_FRONT_DRONES(4)
-constant MAX_REAR_DRONES(4)
+constant MAX_FRONT_DRONES = 4
+constant MAX_REAR_DRONES = 4
 
-constant SPAWN_DRONE_DELAY(60 * 2)
-constant FRONT_BAY_ACTION_POINT(1)
-constant REAR_BAY_ACTION_POINT(2)
+constant SPAWN_DRONE_DELAY = 60 * 2
+constant FRONT_BAY_ACTION_POINT = 1
+constant REAR_BAY_ACTION_POINT = 2
 
-constant N_DEATH_EXPLOSIONS(8)
+constant N_DEATH_EXPLOSIONS = 8
 
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrier)
@@ -25,12 +25,12 @@ Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
 BaseEnemy.useDefaultCalculateAttackValue()
 
-scope State {
+namespace State {
     createEnum(0, 2)
         enum(MOVE_TO_POSITION)
         enum(HOVER)
 
-    constant MASK(0x1 << 1)
+    constant MASK = 0x1 << 1
 
     code()
     FunctionTable:
@@ -40,7 +40,7 @@ scope State {
         assert(pc() - FunctionTable == MASK + 2)
 }
 
-scope EntityStruct {
+namespace EntityStruct {
     childstruct(BaseEnemy)
         field(state, 2)
         field(shieldHealth, 2)
@@ -49,7 +49,7 @@ scope EntityStruct {
     endstruct()
 }
 
-scope RomData {
+namespace RomData {
     childstruct(BaseEnemyData)
     endstruct()
 }
@@ -59,7 +59,7 @@ scope RomData {
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     lda.w   #MSEO.EnemyCarrier.Animations.Flying_Shield
     jsr     MetaSprite.SetAnimation
 
@@ -76,7 +76,7 @@ scope Init: {
 // Process entity shield's health and recharge
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // INPUT: dp = entity
-macro scope ProcessShield() {
+macro ProcessShield() {
     lda.b   EntityStruct.shieldHealth
     bne     EndIf
         // Shield is recharging
@@ -97,7 +97,7 @@ EndIf:
 a16()
 i16()
 code()
-scope Process: {
+function Process {
     ProcessShield()
 
     lda.b   EntityStruct.state
@@ -113,7 +113,7 @@ scope Process: {
 a16()
 i16()
 code()
-scope Process.MoveToPosition: {
+function Process.MoveToPosition {
 
     lda.b   EntityStruct.xPos.px
     sec
@@ -141,7 +141,7 @@ ContinueMoving:
 a16()
 i16()
 code()
-scope Process.Hover: {
+function Process.Hover {
     lda.b   EntityStruct.spawnDroneDelay
     dec
     bpl     SkipSpawnDrone
@@ -181,10 +181,10 @@ SkipSpawnDrone:
 a16()
 i16()
 code()
-scope TakeDamageFromEntity: {
+function TakeDamageFromEntity {
 allocateTmpWord(explosionLocation)
-constant explosionLoc.x(explosionLocation)
-constant explosionLoc.y(explosionLocation + 1)
+constant explosionLoc.x = explosionLocation
+constant explosionLoc.y = explosionLocation + 1
 
     jsr     BaseEnemy.TakeDamageFromEntity
 
@@ -277,17 +277,17 @@ CollideWithShield:
 
 
 rodata(EN_RomData)
-scope CarrierRomData: {
+CarrierRomData:
     dw  FunctionTable
     db  Entity.ListId.BOSS  // initial List
     dw  MSFS.EnemyCarrier   // frameSetId
     db  0                   // defaultPalette
     dw  50                  // health
     dd  -0x010000           // launch velocity
-}
+
 
 rodata(EN_EntityList)
-constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
+constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
     dw  CarrierRomData
 
 }

@@ -2,43 +2,43 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Entities {
-scope PlayerEntity {
+namespace Entities {
+namespace PlayerEntity {
 
-constant SCREEN_MARGIN_TOP(8)
-constant SCREEN_MARGIN_BOTTOM(8)
-constant SCREEN_MARGIN_LEFT(12)
-constant SCREEN_MARGIN_RIGHT(60)
+constant SCREEN_MARGIN_TOP = 8
+constant SCREEN_MARGIN_BOTTOM = 8
+constant SCREEN_MARGIN_LEFT = 12
+constant SCREEN_MARGIN_RIGHT = 60
 
 // Friction
 // (0:0:15 fixed point)
-constant FRICTION(0x6666)
+constant FRICTION = 0x6666
 
 // Repeat dead explosion frame count
 // (int frames)
-constant DEAD_EXPLOSION_FRAME_DELAY(25)
+constant DEAD_EXPLOSION_FRAME_DELAY = 25
 
 // Player Acceleration
 // (0:0:15 fixed point)
-constant X_ACCEL(FRICTION + 0x1234)
-constant Y_ACCEL(FRICTION + 0x3456)
+constant X_ACCEL = FRICTION + 0x1234
+constant Y_ACCEL = FRICTION + 0x3456
 
 // Max Player Velocity
 // (0:15:16 fixed point)
-constant MAX_X_VECL(0x014000)
-constant MAX_Y_VECL(0x020000)
+constant MAX_X_VECL = 0x014000
+constant MAX_Y_VECL = 0x020000
 
 // cooldown between missiles
 // (int frames)
-constant MISSILE_COOLDOWN(20)
+constant MISSILE_COOLDOWN = 20
 
 // The action point type of a missile
-constant MISSILE_ACTION_POINT(1)
+constant MISSILE_ACTION_POINT = 1
 
 buildFunctionTable(BaseEntityFunctionTable, PlayerEntity)
 Entity.useDefaultRenderer()
 
-scope EntityStruct: {
+namespace EntityStruct {
     childstruct(BaseEntity)
         field(hp, 2)
 
@@ -47,7 +47,7 @@ scope EntityStruct: {
     endstruct()
 }
 
-scope RomData: {
+namespace RomData {
     childstruct(BaseEntityData)
         field(health, 2)
     endstruct()
@@ -58,7 +58,7 @@ scope RomData: {
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     lda.w   #MSEO.Player.Animations.Straight
     jsr     MetaSprite.SetAnimation
 
@@ -74,7 +74,7 @@ scope Init: {
 a16()
 i16()
 code()
-scope Destructor: {
+function Destructor {
     rts
 }
 
@@ -97,7 +97,7 @@ macro ProcessDpad() {
         sta.b   EntityStruct.{c}Vecl + 2
     }
 
-    scope UpdateYVecl {
+    namespace UpdateYVecl {
         lda.w   Controller.Joy1.current
         bit.w   #JOY.up
         beq     ElseTestDown
@@ -129,7 +129,7 @@ macro ProcessDpad() {
     EndIf:
     }
 
-    scope UpdateXVecl {
+    namespace UpdateXVecl {
         lda.w   Controller.Joy1.current
         bit.w   #JOY.left
         beq     ElseTestRight
@@ -163,7 +163,7 @@ macro ProcessFriction() {
     assert16i()
 
     macro _handleFriction(c, evaluate friction, evaluate maxVecl) {
-        scope Friction_{c} {
+        namespace Friction_{c} {
             // if velocity > 0:
             //   velocity -= FRICTION
             //   if velocity < 0:
@@ -181,7 +181,7 @@ macro ProcessFriction() {
             ldx.b   EntityStruct.{c}Vecl + 2
             bmi     Minus
 
-            scope Positive {
+            namespace Positive {
                 // A = lw, X = hw
                 sec
                 sbc.w   #{friction}
@@ -215,7 +215,8 @@ macro ProcessFriction() {
                 bra     End
             }
 
-            scope Minus: {
+            Minus:
+            namespace Minus {
                 // A = lw, X = hw
 
                 clc
@@ -265,7 +266,7 @@ macro LimitToMargin() {
     assert16i()
 
     macro _limitToMargin(c, evaluate min, evaluate max) {
-        scope Limit_{c} {
+        namespace Limit_{c} {
             lda.w   Camera.{c}Pos
             clc
             adc.w   #{min}
@@ -291,7 +292,7 @@ macro LimitToMargin() {
 // Spawn missile on button press (with cooldown timer)
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // INPUT: dp = entity
-macro scope SpawnMissilesOnButtonPress() {
+macro SpawnMissilesOnButtonPress() {
     lda.b   EntityStruct.missileCooldown
     beq     TestButton
         dec
@@ -318,10 +319,10 @@ EndIf:
 a16()
 i16()
 code()
-scope Process.Dead: {
+function Process.Dead {
 allocateTmpWord(explosionLocation)
-constant explosionLoc.x(explosionLocation)
-constant explosionLoc.y(explosionLocation + 1)
+constant explosionLoc.x = explosionLocation
+constant explosionLoc.y = explosionLocation + 1
 
     lda.b   EntityStruct.missileCooldown
     dec
@@ -373,7 +374,7 @@ SkipExplosion:
 a16()
 i16()
 code()
-scope Process: {
+function Process {
     lda.b   EntityStruct.hp
     beq     Dead
 
@@ -397,7 +398,7 @@ scope Process: {
 a16()
 i16()
 code()
-scope CalculateAttackValue: {
+function CalculateAttackValue {
     lda.w   #1
     rts
 }
@@ -407,7 +408,7 @@ scope CalculateAttackValue: {
 a16()
 i16()
 code()
-scope BlockWithShield: {
+function BlockWithShield {
 
 }
 
@@ -418,7 +419,7 @@ scope BlockWithShield: {
 a16()
 i16()
 code()
-scope CollideWithShield: {
+function CollideWithShield {
     lda.w   #2
     bra     TakeDamage
 }
@@ -430,7 +431,7 @@ scope CollideWithShield: {
 a16()
 i16()
 code()
-scope CollideWithBody: {
+function CollideWithBody {
     lda.w   #5
     bra     TakeDamage
 }
@@ -443,7 +444,7 @@ scope CollideWithBody: {
 a16()
 i16()
 code()
-scope TakeDamageFromEntity: {
+function TakeDamageFromEntity {
     bra     TakeDamage
 }
 
@@ -452,7 +453,7 @@ scope TakeDamageFromEntity: {
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // INPUT: dp = entity
 // INPUT: A = damage
-scope TakeDamage: {
+function TakeDamage {
     // A = clamp(hp - A)
 
     eor.w   #0xffff
@@ -475,16 +476,16 @@ StillAlive:
 
 
 rodata(EN_RomData)
-scope PlayerRomData: {
+PlayerRomData:
     dw  FunctionTable
     db  Entity.ListId.PLAYER    // initial List
     dw  MSFS.Player             // frameSetId
     db  0                       // defaultPalette
     dw  6                       // health
-}
+
 
 rodata(EN_EntityList)
-constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
+constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
     dw  PlayerRomData
 }
 }

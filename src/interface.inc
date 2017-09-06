@@ -2,12 +2,12 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Interface {
+namespace Interface {
 
-constant BUFFER_WIDTH(Text.Console.BUFFER_WIDTH)
+constant BUFFER_WIDTH = Text.Console.BUFFER_WIDTH
 
-constant Y_OFFSET(28 - 3)
-constant X_OFFSET(3)
+constant Y_OFFSET = 28 - 3
+constant X_OFFSET = 3
 
 allocate(previousHp, wram7e, 2)
 
@@ -19,7 +19,7 @@ allocate(previousHp, wram7e, 2)
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     stz.w   previousHp
 
     // set text color (grey)
@@ -37,9 +37,9 @@ scope Init: {
 a16()
 i16()
 code()
-scope Update: {
-constant HP_OFFSET(X_OFFSET + Y_OFFSET * Text.Console.BUFFER_WIDTH)
-constant MAX_DISPLAY_HP(BUFFER_WIDTH - X_OFFSET * 2)
+function Update {
+constant HP_OFFSET = X_OFFSET + Y_OFFSET * Text.Console.BUFFER_WIDTH
+constant MAX_DISPLAY_HP = BUFFER_WIDTH - X_OFFSET * 2
 
     ldy.w   GameLoop.playerEntity
     lda.w   Entities.PlayerEntity.EntityStruct.hp,y
@@ -112,7 +112,7 @@ i16()
 }
 
 rodata(rom0)
-scope GameOverString: {
+function GameOverString {
     db  "Game Over", 0
 }
 

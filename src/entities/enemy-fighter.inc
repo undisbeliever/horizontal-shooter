@@ -2,8 +2,8 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope Entities {
-scope EnemyFighter {
+namespace Entities {
+namespace EnemyFighter {
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyFighter)
 Entity.useDefaultRenderer()
@@ -11,12 +11,12 @@ BaseEnemy.useDefaultDestructor()
 BaseEnemy.useDefaultCalculateAttackValue()
 
 
-scope EntityStruct: {
+namespace EntityStruct {
     childstruct(BaseEnemy)
     endstruct()
 }
 
-scope RomData: {
+namespace RomData {
     childstruct(BaseEnemyData)
     endstruct()
 }
@@ -26,7 +26,7 @@ scope RomData: {
 a16()
 i16()
 code()
-scope Init: {
+function Init {
     lda.w   #MSEO.Enemy.Animations.Flying_Left
     jsr     MetaSprite.SetAnimation
 
@@ -37,7 +37,7 @@ scope Init: {
 a16()
 i16()
 code()
-scope Process: {
+function Process {
     jmp     BaseEnemy.Process
 }
 
@@ -49,7 +49,7 @@ scope Process: {
 a16()
 i16()
 code()
-scope TakeDamageFromEntity: {
+function TakeDamageFromEntity {
     jmp     BaseEnemy.TakeDamageFromEntity
 }
 
@@ -64,20 +64,20 @@ CollideWithShield:
     rts
 
 
-macro _entity(name, frameSetId, velocity) {
-    scope {name} {
+inline _entity(name, frameSetId, velocity) {
+    namespace {name} {
         rodata(EN_RomData)
-        scope RomData: {
+        RomData:
             dw  FunctionTable
             db  Entity.ListId.ENEMY // initial List
             dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
             dw  3                   // health
             dd  {velocity}          // launch velocity
-        }
+
 
         rodata(EN_EntityList)
-        constant ENTITY_ID((pc() - Entity.Data.EntityList) / 2)
+        constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
             dw  RomData
     }
 }

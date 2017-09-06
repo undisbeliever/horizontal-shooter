@@ -2,16 +2,16 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-scope GameLoop {
+namespace GameLoop {
 
 // address of the current player
 allocateTmpWord(playerEntity)
 
-scope Run {
+namespace Run {
     // Restarts the game if the player pressed start and the player is dead
     //
     // REQUIRES: 16 bit A, 16 bit Index
-    macro scope ProcessStartButton() {
+    macro ProcessStartButton() {
         assert16a()
         assert16i()
 
@@ -32,7 +32,7 @@ scope Run {
 a16()
 i16()
 code()
-scope Run: {
+function Run {
     // Spawn the player
     // ----------------
     lda.w   #Camera.DISPLAY_WIDTH / 5 + Camera.ORIGIN
@@ -168,7 +168,7 @@ i16()
 // Restarts the game
 //
 // REQUIRES: none
-scope Restart: {
+function Restart {
     rep     #$30
 a16()
 i16()
