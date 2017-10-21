@@ -24,8 +24,17 @@ function Init {
 
     // set text color (grey)
 
-    lda.w   #16 << Palette.blue.shift | 16 << Palette.green.shift | 16 << Palette.red.shift
-    sta.w   Dma.Palette.buffer + 2
+    // ::TODO add resource palette::
+    sep     #$20
+a8()
+
+    lda.b   #1
+    sta.l   CGADD
+
+    lda.b   #ToPalette(16, 16, 16)
+    sta.l   CGDATA
+    lda.b   #ToPalette(16, 16, 16) >> 8
+    sta.l   CGDATA
 
     jmp     Text.Console.ClearBuffer
 }

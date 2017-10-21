@@ -23,7 +23,6 @@ include "../untech/src/untech.inc"
 
 include "interface.inc"
 include "spawner.inc"
-include "hacks.inc"
 include "physics.inc"
 
 include "gameloop.inc"

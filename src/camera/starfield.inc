@@ -24,22 +24,25 @@ function LoadGraphics {
     stx.w   VMADD
     Dma.ForceBlank.ToVram(Images.Stars.Map)
 
-    rep     #$30
-a16()
-    lda.l   Images.Stars.Palette
-    sta.l   Dma.Palette.buffer
 
-    ldx.w   #Images.Stars.Palette.size - 2
+    stz.w   CGADD
+    lda.l   Images.Stars.Palette
+    sta.w   CGDATA
+    lda.l   Images.Stars.Palette + 1
+    sta.w   CGDATA
+
+
+    lda.b   #16
+    sta.w   CGADD
+
+    ldx.w   #0
     Loop:
         lda.l   Images.Stars.Palette,x
-        sta.l   Dma.Palette.buffer + Images.Stars.PaletteOffset * 32,x
+        sta.w   CGDATA
 
-        dex
-        dex
-        bpl     Loop
-
-    sep     #$20
-a8()
+        inx
+        cpx.w   #Images.Stars.Palette.size
+        bcc     Loop
 
     rts
 }

@@ -23,5 +23,12 @@ rodata(rom0)
     }
 }
 
+constant Resources.PaletteList = 0
+constant Resources.PaletteList.count = 0
+
+constant MetaTiles.TilesetList = 0
+constant MetaTiles.TilesetList.count = 0
+
+
 // vim: ft=bass-65816 ts=4 sw=4 et:
 

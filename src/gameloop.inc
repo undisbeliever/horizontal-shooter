@@ -10,7 +10,7 @@ allocateTmpWord(playerEntity)
 namespace Run {
     // Restarts the game if the player pressed start and the player is dead
     //
-    // REQUIRES: 16 bit A, 16 bit Index
+    // REQUIRES: 16 bit A, 16 bit Index, DB access shadow
     macro ProcessStartButton() {
         assert16a()
         assert16i()
@@ -22,6 +22,35 @@ namespace Run {
             lda.w   Entities.PlayerEntity.EntityStruct.hp,y
             bne     EndIf
                 jmp     Restart
+        EndIf:
+    }
+
+    // Toggles showCpuUsageMeter if the player pressed the select button
+    //
+    // INPUT: 16 bit A, DB access shadow
+    a16()
+    i16()
+    code()
+    macro ToggleCpuUsageOnSelect() {
+        assert16a()
+
+        lda.w   Controller.Joy1.pressed
+        bit.w   #JOY.select
+        beq     EndIf
+            sep     #$20
+        a8()
+
+            lda.w   showCpuUsageMeter
+            beq     +
+                lda.b   #0
+                bra     ++
+            +
+                dec
+            +
+            sta.w   showCpuUsageMeter
+
+            rep     #$30
+        a16()
         EndIf:
     }
 }
@@ -53,6 +82,7 @@ function Run {
     Loop:
         Controller.UpdateControllerState()
         ProcessStartButton()
+        ToggleCpuUsageOnSelect()
 
         jsr     MetaSprite.Render.InitLoop
 
@@ -69,7 +99,7 @@ function Run {
 
         jsr     Interface.Update
 
-        jsr     Hacks.WaitFrameCpuUsage
+        jsr     WaitFrame
 
         bra     Loop
 }
@@ -103,8 +133,7 @@ i16()
     // BG3 - text console buffer (32x32x tilemap, 8x8px tiles)
     // OAM - objects
 
-    lda.b   #INIDISP.force
-    sta.w   INIDISP
+    jsr     ForceBlank
 
     lda.b   #BGMODE.mode1Bg3
     sta.w   BGMODE
@@ -118,7 +147,7 @@ i16()
     lda.b   #((VRAM_CONSOLE_MAP_WADDR / BGXSC.base.walign) << BGXSC.base.shift) | BGXSC.map.s32x32
     sta.w   BG3SC
 
-    lda.b   #(VRAM_CONSOLE_TILES_WADDR / BG34NBA.walign) << BG34NBA.bg1.shift
+    lda.b   #(VRAM_CONSOLE_TILES_WADDR / BG34NBA.walign) << BG34NBA.bg3.shift
     sta.w   BG34NBA
 
     lda.b   #(VRAM_OBJ_WADDR / OBSEL.base.walign) | OBSEL.size.s8_16
@@ -131,7 +160,6 @@ i16()
     jsr     Camera.StarField.LoadGraphics
     jsr     Text.Console.Init
 
-    jsr     EnableVBlank
 
     plb
 // DB = 0x7e
@@ -149,15 +177,8 @@ i16()
 
     // Enable Screen
     // -------------
-    sep     #$20
-a8()
 
-    // Transfer palette buffer to CGRAM on next frame
-    Dma.Palette.MarkDirty(all)
-
-    // Enable screen
-    lda.b   #15
-    sta.l   INIDISP
+    jsr     EnableDisplay_Full
 
     rep     #$30
 a16()
