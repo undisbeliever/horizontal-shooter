@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
-<spriteimporter id="EnemyCarrierDrone" tilesettype="ONE_TILE_FIXED" image="enemy-carrier-drone.png" transparent="891a1c">
+<spriteimporter id="EnemyCarrierDrone" tilesettype="ONE_TILE_FIXED" exportorder="EnemyCarrierDrone" image="enemy-carrier-drone.png" transparent="891a1c">
   <grid width="16" height="16" xoffset="8" yoffset="0" xpadding="0" ypadding="0" xorigin="8" yorigin="8"/>
-  <exportorder src="enemy-carrier-drone.utfseo"/>
   <palette npalettes="1" colorsize="4"/>
   <frame id="Flying" order="2">
     <gridlocation x="0" y="0"/>

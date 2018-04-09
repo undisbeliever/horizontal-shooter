@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
-<spriteimporter id="Explosion" tilesettype="ONE_TILE" image="explosion.png" transparent="610058">
+<spriteimporter id="Explosion" tilesettype="ONE_TILE" exportorder="Particle" image="explosion.png" transparent="610058">
   <grid width="16" height="16" xoffset="0" yoffset="0" xpadding="0" ypadding="0" xorigin="8" yorigin="8"/>
-  <exportorder src="particle.utfseo"/>
   <frame id="Frame_0" order="2">
     <gridlocation x="0" y="0"/>
     <object size="large" x="0" y="0"/>

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
 <metaspriteproject>
-  <frameset src="utsi/ships/player.utsi"/>
-  <frameset src="utsi/ships/enemy-fighter.utsi"/>
-  <frameset src="utsi/ships/enemy-carrier.utsi"/>
-  <frameset src="utsi/ships/enemy-carrier-drone.utsi"/>
-
-  <frameset src="utsi/missiles/player-plasma.utsi"/>
-  <frameset src="utsi/missiles/enemy-plasma.utsi"/>
-  <frameset src="utsi/particles/explosion.utsi"/>
+  <exportorder src="utsi/missiles/missiles.utfseo"/>
+  <exportorder src="utsi/particles/particle.utfseo"/>
+  <exportorder src="utsi/ships/enemy-carrier-drone.utfseo"/>
+  <exportorder src="utsi/ships/enemy-carrier.utfseo"/>
+  <exportorder src="utsi/ships/enemy.utfseo"/>
+  <exportorder src="utsi/ships/player.utfseo"/>
+  <frameset src="utsi/ships/player.utsi" type="spriteimporter"/>
+  <frameset src="utsi/ships/enemy-fighter.utsi" type="spriteimporter"/>
+  <frameset src="utsi/ships/enemy-carrier.utsi" type="spriteimporter"/>
+  <frameset src="utsi/ships/enemy-carrier-drone.utsi" type="spriteimporter"/>
+  <frameset src="utsi/missiles/player-plasma.utsi" type="spriteimporter"/>
+  <frameset src="utsi/missiles/enemy-plasma.utsi" type="spriteimporter"/>
+  <frameset src="utsi/particles/explosion.utsi" type="spriteimporter"/>
 </metaspriteproject>
