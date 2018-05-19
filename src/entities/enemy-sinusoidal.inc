@@ -55,13 +55,13 @@ function Process {
     clc
     adc.w   #2 * 2
     tax
-    cpx.w   #SineTable.size
+    cpx.w   #SineTable16.size
     bcc     +
         ldx.w   #0
     +
     stx.b   EntityStruct.sineTableIndex
 
-    lda.l   SineTable,x
+    lda.l   SineTable16,x
     asl
     sta.b   EntityStruct.yVecl
 

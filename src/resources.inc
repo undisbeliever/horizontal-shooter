@@ -3,6 +3,7 @@
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
 include "../gen/metasprites.inc"
+include "../gen/resources.inc"
 include "../resources/text/text.inc"
 
 namespace Text {
@@ -22,12 +23,6 @@ rodata(rom0)
         constant PaletteOffset = 1
     }
 }
-
-constant Resources.PaletteList = 0
-constant Resources.PaletteList.count = 0
-
-constant MetaTiles.TilesetList = 0
-constant MetaTiles.TilesetList.count = 0
 
 
 // vim: ft=bass-65816 ts=4 sw=4 et:

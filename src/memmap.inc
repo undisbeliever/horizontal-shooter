@@ -5,7 +5,7 @@
 architecture wdc65816
 
 createCodeBlock(code,                   0xc08000, 0xc0ffaf)
-createDataBlock(rom0,                   0xc00080, 0xc07fff)
+createDataBlock(rom0,                   0xc00080, 0xc04fff)
 
 createDataBlock(CopyrightHeader,        0xc00000, 0xc0007f)
 
@@ -33,6 +33,9 @@ createDataBlock(MS_PaletteData,         0xc18000, 0xc18fff)
 
 createDataBlock(EN_RomData,             0xc19000, 0xc19fff)
 
+createDataBlock(RES_Lists,              0xc05000, 0xc05fff)
+createDataBlock(RES_Block0,             0xc06000, 0xc07fff)
+
 createDataBlock(MS_TileBlock_0,         0xc1a000, 0xc1bfff)
 createDataBlock(MS_TileBlock_1,         0xc1c000, 0xc1dfff)
 createDataBlock(MS_TileBlock_2,         0xc1e000, 0xc1ffff)
@@ -48,14 +51,11 @@ createRamBlock(wram7f,      0x7f0000, 0x7fffff)
 
 // Temporary Variables
 // ===================
-allocate(dpTmp0, dp, 2)
-allocate(dpTmp1, dp, 2)
-allocate(dpTmp2, dp, 2)
-allocate(dpTmp3, dp, 2)
-allocate(dpTmp4, dp, 2)
-allocate(dpTmp5, dp, 2)
-allocate(dpTmp6, dp, 2)
-allocate(dpTmp7, dp, 2)
+evaluate n = 0
+while {n} < 20 {
+    allocate(dpTmp{n}, dp, 2)
+    evaluate n = {n} + 1
+}
 
 
 // Entity Layout
@@ -76,9 +76,13 @@ constant VRAM_STARFIELD_TILES_WADDR = 0x2000
 constant VRAM_STARFIELD_MAP_WADDR = 0x0400
 
 
-// Unused but requited by untech-engine
 
+// MetaTile engine settings
+// ========================
 constant MetaTiles.MAP_SIZE = 8192
+constant MetaTiles.N_META_TILES = 512
+
+// Unused but requited by untech-engine
 constant METATILES_MAP_WADDR = 0x0400   // 64x32 tiles in size
 constant METATILES_TILES_WADDR = 0x2000
 

@@ -43,6 +43,13 @@ gen/metasprites.inc: resources/metasprite/metasprites.utmspro
 RESOURCES += gen/metasprites.inc
 
 
+gen/resources.inc gen/resources.bin: resources/resources.utres
+	untech-resc --output-inc gen/resources.inc --output-bin gen/resources.bin "$<"
+
+RESOURCES += gen/resources.inc gen/resources.bin
+
+
+
 .PHONY: font
 font: gen/font-fixed.1bpp
 gen/font-fixed.1bpp: resources/text/font-fixed.png

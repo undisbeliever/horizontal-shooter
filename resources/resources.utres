@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF_8"?>
+<!DOCTYPE untech>
+<resources block-size="8192" block-count="1">
+  <metatile-engine-settings max-map-size="8192" n-metatiles="512"/>
+</resources>
