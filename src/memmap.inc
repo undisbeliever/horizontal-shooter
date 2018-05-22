@@ -2,8 +2,6 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
-architecture wdc65816
-
 createCodeBlock(code,                   0xc08000, 0xc0ffaf)
 createDataBlock(rom0,                   0xc00080, 0xc04fff)
 
