@@ -26,6 +26,16 @@ function Destructor {
 }
 
 
+// A = MetaSprite.Collision.bits
+// Y = MetaSprite.Collision.otherEntity
+a16()
+i16()
+code()
+function ProcessCollision {
+    rts
+}
+
+
 a16()
 i16()
 code()
@@ -43,19 +53,6 @@ a8()
 
     rep     #$30
 a16()
-    rts
-}
-
-
-// No Collisions
-a16()
-i16()
-code()
-BlockWithShield:
-TakeDamageFromEntity:
-CollideWithBody:
-CollideWithShield:
-function CalculateAttackValue {
     rts
 }
 

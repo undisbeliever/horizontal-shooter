@@ -13,7 +13,7 @@ constant SECOND_SHOT_COOLDOWN = 30
 buildFunctionTable(BaseEntityFunctionTable, EnemySinusoidal)
 Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
-BaseEnemy.useDefaultCalculateAttackValue()
+BaseEnemy.useDefaultProcessCollision()
 
 
 namespace EntityStruct {
@@ -166,28 +166,6 @@ function Process {
 SkipMissileTest:
     jmp     BaseEnemy.Process
 }
-
-
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity attacking
-// INPUT: A = attack value
-a16()
-i16()
-code()
-function TakeDamageFromEntity {
-    jmp     BaseEnemy.TakeDamageFromEntity
-}
-
-
-// ::TODO collision behaviour::
-a16()
-i16()
-code()
-BlockWithShield:
-CollideWithBody:
-CollideWithShield:
-    rts
 
 
 inline _entity(name, frameSetId, velocity, missileCooldown) {

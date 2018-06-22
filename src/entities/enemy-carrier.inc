@@ -23,7 +23,6 @@ constant N_DEATH_EXPLOSIONS = 8
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrier)
 Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
-BaseEnemy.useDefaultCalculateAttackValue()
 
 namespace State {
     createEnum(0, 2)
@@ -73,6 +72,46 @@ function Init {
 }
 
 
+// A = MetaSprite.Collision.bits
+// Y = MetaSprite.Collision.otherEntity
+a16()
+i16()
+code()
+function ProcessCollision {
+    bit.w   #THIS_SHIELD
+    beq     NoShieldCollision
+
+        // otherEntity hit shield
+        //
+        // decrease sheild health, change animation if destroyed
+
+        lda.b   EntityStruct.shieldHealth
+        dec
+        bpl     +
+            lda.w   #0
+        +
+        sta.b   EntityStruct.shieldHealth
+        bne     Return
+            // shield is destroyed
+
+            lda.w   #SHIELD_RECHARGE
+            sta.b   EntityStruct.shieldRechargeDelay
+
+            lda.w   #MSEO.EnemyCarrier.Animations.DropShield
+            jmp     MetaSprite.SetAnimation
+
+
+NoShieldCollision:
+    // Handle body/attack collision
+
+    lda.w   MetaSprite.Collision.bits
+    jmp     BaseEnemy.ProcessCollision
+
+Return:
+    rts
+}
+
+
 // Process entity shield's health and recharge
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // INPUT: dp = entity
@@ -99,6 +138,12 @@ i16()
 code()
 function Process {
     ProcessShield()
+
+    lda.b   EntityStruct.hp
+    bne     +
+        // Spawn multiple explosions when HP == 0
+        jsr     SpawnMultipleExposions
+    +
 
     lda.b   EntityStruct.state
     and.w   #State.MASK
@@ -173,107 +218,59 @@ SkipSpawnDrone:
 }
 
 
-
+// Spawns lots of explosions at the entity position
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // INPUT: dp = entity
-// INPUT: Y = entity attacking
-// INPUT: A = attack value
 a16()
 i16()
-code()
-function TakeDamageFromEntity {
+function SpawnMultipleExposions {
 allocateTmpWord(explosionLocation)
 constant explosionLoc.x = explosionLocation
 constant explosionLoc.y = explosionLocation + 1
 
-    jsr     BaseEnemy.TakeDamageFromEntity
+    // Spawn multiple explosions
 
-    lda.b   EntityStruct.hp
-    bne     StillAlive
-        // Spawn multiple explosions
+    lda.w   #N_DEATH_EXPLOSIONS - 1
 
-        lda.w   #N_DEATH_EXPLOSIONS - 1
+    Loop:
+        pha
 
-        Loop:
-            pha
+        // EXTREMELY BASIC explosion "randomizer"
+        //   explosionLoc.x += 13
+        //   explosionLoc.y += 37
+        //   spawn.xPos = entity.xPos - 24 + (explosionLoc.x & 63)
+        //   spawn.yPos = entity.yPos - 16 + (explosionLoc.y & 31)
 
-            // EXTREMELY BASIC explosion "randomizer"
-            //   explosionLoc.x += 13
-            //   explosionLoc.y += 37
-            //   spawn.xPos = entity.xPos - 24 + (explosionLoc.x & 63)
-            //   spawn.yPos = entity.yPos - 16 + (explosionLoc.y & 31)
+        lda.w   explosionLoc.x
+        // ignore carry
+        adc.w   #37 << 8 | 13
+        sta.w   explosionLoc.x
 
-            lda.w   explosionLoc.x
-            // ignore carry
-            adc.w   #37 << 8 | 13
-            sta.w   explosionLoc.x
+        and.w   #63
+        sec
+        sbc.w   #24
+        clc
+        adc.b   EntityStruct.xPos.px
+        sta.w   Entity.Spawn.xPos
 
-            and.w   #63
-            sec
-            sbc.w   #24
-            clc
-            adc.b   EntityStruct.xPos.px
-            sta.w   Entity.Spawn.xPos
+        lda.w   explosionLoc.y
+        and.w   #31
+        sec
+        sbc.w   #16
+        clc
+        adc.b   EntityStruct.yPos.px
+        sta.w   Entity.Spawn.yPos
 
-            lda.w   explosionLoc.y
-            and.w   #31
-            sec
-            sbc.w   #16
-            clc
-            adc.b   EntityStruct.yPos.px
-            sta.w   Entity.Spawn.yPos
+        ldy.w   #0
+        lda.w   #Entities.Particles.Explosion.ENTITY_ID
+        jsr     Entity.Spawn
 
-            ldy.w   #0
-            lda.w   #Entities.Particles.Explosion.ENTITY_ID
-            jsr     Entity.Spawn
+        pla
+        dec
+        bne     Loop
 
-            pla
-            dec
-            bne     Loop
-
-StillAlive:
     rts
 }
-
-
-// Decrease shield health
-// INPUT: dp = entity
-// INPUT: Y = entity attacking
-// INPUT: C = set if collide with an attack
-a16()
-i16()
-BlockWithShield: {
-    lda.b   EntityStruct.MetaSprite.Animation.id
-    and.w   #0xff
-    cmp.w   #MSEO.EnemyCarrier.Animations.Flying_Shield
-    bne     Return
-
-    lda.b   EntityStruct.shieldHealth
-    dec
-    bpl     +
-        lda.w   #0
-    +
-    sta.b   EntityStruct.shieldHealth
-    bne     Return
-        // shield is destroyed
-
-        lda.w   #SHIELD_RECHARGE
-        sta.b   EntityStruct.shieldRechargeDelay
-
-        lda.w   #MSEO.EnemyCarrier.Animations.DropShield
-        jmp     MetaSprite.SetAnimation
-Return:
-    rts
-}
-
-
-// ::TODO collision behaviour::
-a16()
-i16()
-code()
-CollideWithBody:
-CollideWithShield:
-    rts
 
 
 rodata(EN_RomData)

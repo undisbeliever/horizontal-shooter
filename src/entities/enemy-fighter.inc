@@ -8,7 +8,7 @@ namespace EnemyFighter {
 buildFunctionTable(BaseEntityFunctionTable, EnemyFighter)
 Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
-BaseEnemy.useDefaultCalculateAttackValue()
+BaseEnemy.useDefaultProcessCollision()
 
 
 namespace EntityStruct {
@@ -52,16 +52,6 @@ code()
 function TakeDamageFromEntity {
     jmp     BaseEnemy.TakeDamageFromEntity
 }
-
-
-// ::TODO collision behaviour::
-a16()
-i16()
-code()
-BlockWithShield:
-CollideWithBody:
-CollideWithShield:
-    rts
 
 
 inline _entity(name, frameSetId, velocity) {

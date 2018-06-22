@@ -105,6 +105,44 @@ function Destructor {
 }
 
 
+// A = MetaSprite.Collision.bits
+// Y = MetaSprite.Collision.otherEntity
+a16()
+i16()
+code()
+function ProcessCollision {
+
+    bit.w   #OTHER_SHIELD
+    beq     +
+        // Missile has collided with a shield
+        //
+        // If reflectable then reflect back at opponent
+
+        ldx.b   EntityStruct.romPtr
+        lda.l   RomData.reflectOffShield,x
+        and.w   #0xff
+        beq     CollideWithBody
+
+        ldx.w   #State.REFLECT
+        stx.b   EntityStruct.state
+
+        lda.w   MetaSprite.Collision.bits
+    +
+
+    // A = collision bits
+    bit.w   #OTHER_BODY
+    beq     +
+        // Missile collided with a body
+
+    CollideWithBody:
+        ldx.w   #State.EXPLODING
+        stx.b   EntityStruct.state
+    +
+
+    rts
+}
+
+
 a16()
 i16()
 code()
@@ -190,49 +228,6 @@ function Process.Reflect {
 }
 
 
-
-// Missile has collided with a hitbox
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity attacking
-// OUTPUT: A = attack value
-a16()
-i16()
-code()
-TakeDamageFromEntity:
-CollideWithBody:
-BlockWithShield:
-function CalculateAttackValue {
-    ldx.w   #State.EXPLODING
-    stx.b   EntityStruct.state
-
-    // ::TODO display collision animation::
-
-    lda.w   #1
-    rts
-}
-
-
-// Missile has collided with a shield
-//
-// Deflect back at opponent
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = missile entity
-// INPUT: Y = other entity
-a16()
-i16()
-code()
-CollideWithShield: {
-    ldx.b   EntityStruct.romPtr
-    lda.l   RomData.reflectOffShield,x
-    and.w   #0xff
-    beq     CollideWithBody
-
-    ldx.w   #State.REFLECT
-    stx.b   EntityStruct.state
-
-    rts
-}
 
 inline _entity(name, frameSetId, velocity, reflectOffShield) {
     namespace {name} {

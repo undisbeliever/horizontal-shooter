@@ -42,11 +42,48 @@ function Init {
 inline useDefaultDestructor() {
     constant Destructor = Entities.BaseEnemy.Destructor
 }
+inline useDefaultProcessCollision() {
+    constant ProcessCollision = Entities.BaseEnemy.ProcessCollision
+}
 
 a16()
 i16()
 code()
 function Destructor {
+    rts
+}
+
+
+// A = MetaSprite.Collision.bits
+// Y = MetaSprite.Collision.otherEntity
+a16()
+i16()
+code()
+function ProcessCollision {
+
+    bit.w   #THIS_BODY
+    beq     NoCollision
+
+    bit.w   #OTHER_ATTACK | OTHER_BODY | OTHER_SHIELD
+    beq     NoCollision
+        // this body collided with other attack, body or shield
+
+        lda.b   BaseEnemy.hp
+
+        assert(THIS_WEAK == 0x80)
+        bit.w   MetaSprite.Collision.bits - 1
+        bmi     +
+            // Enemy attack hit weak spot (remove 2 HP)
+            dec
+        +
+
+        dec
+        bpl     +
+            lda.w   #0
+        +
+        sta.b   BaseEnemy.hp
+
+NoCollision:
     rts
 }
 
@@ -78,23 +115,6 @@ function Process {
 }
 
 
-inline useDefaultCalculateAttackValue() {
-    constant CalculateAttackValue = Entities.BaseEnemy.CalculateAttackValue
-}
-
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity attacking
-// OUTPUT: A = attack value
-a16()
-i16()
-code()
-function CalculateAttackValue {
-    lda.w   #1
-    rts
-}
-
-
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
 // INPUT: dp = entity
 // INPUT: Y = entity attacking
@@ -115,16 +135,6 @@ function TakeDamageFromEntity {
 
     rts
 }
-
-
-// ::TODO collision behaviour::
-a16()
-i16()
-code()
-BlockWithShield:
-CollideWithBody:
-CollideWithShield:
-    rts
 
 }
 }

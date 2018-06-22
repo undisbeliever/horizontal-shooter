@@ -15,7 +15,7 @@ constant MISSILE_ACTION_POINT = 1
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrierDrone)
 Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
-BaseEnemy.useDefaultCalculateAttackValue()
+BaseEnemy.useDefaultProcessCollision()
 
 namespace State {
     createEnum(0, 2)
@@ -270,29 +270,6 @@ DontShoot:
 
     jmp     BaseEnemy.Process
 }
-
-
-
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity attacking
-// INPUT: A = attack value
-a16()
-i16()
-code()
-function TakeDamageFromEntity {
-    jmp     BaseEnemy.TakeDamageFromEntity
-}
-
-
-// ::TODO collision behaviour::
-a16()
-i16()
-code()
-BlockWithShield:
-CollideWithBody:
-CollideWithShield:
-    rts
 
 
 namespace FrontBay {
