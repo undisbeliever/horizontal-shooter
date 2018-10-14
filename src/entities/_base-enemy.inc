@@ -85,20 +85,6 @@ function ProcessCollision {
 
 NoCollision:
 
-    // corrupt dpTmp to test if EntityHitbox can handle overridden dpTmp variables
-    lda.w   #0xffff
-    sta.w   dpTmp0
-    sta.w   dpTmp1
-    sta.w   dpTmp2
-    sta.w   dpTmp3
-    sta.w   dpTmp4
-    sta.w   dpTmp5
-    sta.w   dpTmp6
-    sta.w   dpTmp7
-    sta.w   dpTmp8
-    sta.w   dpTmp9
-    sta.w   dpTmp10
-
     rts
 }
 
