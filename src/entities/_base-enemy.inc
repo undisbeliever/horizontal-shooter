@@ -107,12 +107,11 @@ function Process {
         lda.w   #Entities.Particles.Explosion.ENTITY_ID
         jsr     Entity.Spawn
 
-        ldy.w   #Entity.lists.toDelete
-        sty.w   Entity.changeList
-        rts
+        jmp     Entity.DeleteAndGotoNextEntity
     +
 
-    jmp     Physics.ProcessEntity
+    jsr     Physics.ProcessEntity
+    jmp     Entity.DeleteIfOutsideAndGotoNextEntity
 }
 
 }

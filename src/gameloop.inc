@@ -86,8 +86,6 @@ function Run {
 
         jsr     MetaSprite.Render.InitLoop
 
-        jsr     Entity.DeleteDeactivatedEntities
-
         jsr     Entity.ProcessGameLoop
         jsr     Camera.StarField.ProcessFrame
 

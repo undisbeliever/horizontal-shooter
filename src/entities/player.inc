@@ -401,7 +401,7 @@ constant explosionLoc.y = explosionLocation + 1
 SkipExplosion:
     sta.b   EntityStruct.missileCooldown
 
-    rts
+    jmp     Entity.GotoNextEntity
 }
 
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
@@ -422,7 +422,7 @@ function Process {
 
     SpawnMissilesOnButtonPress()
 
-    rts
+    jmp     Entity.GotoNextEntity
 }
 
 

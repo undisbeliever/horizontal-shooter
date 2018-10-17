@@ -47,13 +47,12 @@ a8()
     lda.b   BaseEntity.MetaSprite.Animation.id
     inc
     bne     +
-        ldy.w   #Entity.lists.toDelete
-        sty.w   Entity.changeList
+        jmp     Entity.DeleteAndGotoNextEntity
     +
 
     rep     #$30
 a16()
-    rts
+    jmp     Entity.GotoNextEntity
 }
 
 

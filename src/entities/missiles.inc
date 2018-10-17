@@ -159,7 +159,8 @@ i16()
 code()
 Process.Null:
 function Process.Flying {
-    jmp     Physics.ProcessEntity
+    jsr     Physics.ProcessEntity
+    jmp     Entity.DeleteIfOutsideAndGotoNextEntity
 }
 
 
@@ -169,9 +170,7 @@ code()
 function Process.Exploding {
     // ::TODO wait for animation to end::
 
-    ldy.w   #Entity.lists.toDelete
-    sty.w   Entity.changeList
-    rts
+    jmp     Entity.DeleteAndGotoNextEntity
 }
 
 
@@ -181,18 +180,6 @@ code()
 function Process.Reflect {
     assert(State.FLYING == 0)
     stz.b   EntityStruct.state
-
-    // Change missile type
-
-    ldy.w   Entity.currentList
-    cpy.w   #Entity.lists.enemyProjectiles
-    bne     +
-        ldy.w   #Entity.lists.playerProjectiles
-        bra     ++
-    +
-        ldy.w   #Entity.lists.enemyProjectiles
-    +
-    sty.w   Entity.changeList
 
 
     // Invert Velocity
@@ -224,7 +211,20 @@ function Process.Reflect {
         lda.w   #MSEO.Missile.Animations.Move_Right
     +
 
-    jmp     MetaSprite.SetAnimation
+    jsr     MetaSprite.SetAnimation
+
+
+    // Change missile type
+
+    ldy.w   Entity._currentList
+    cpy.w   #Entity.lists.enemyProjectiles
+    bne     +
+        ldy.w   #Entity.lists.playerProjectiles
+        bra     ++
+    +
+        ldy.w   #Entity.lists.enemyProjectiles
+    +
+    jmp     Entity.ChangeEntityListYAndGotoNextEntity
 }
 
 
