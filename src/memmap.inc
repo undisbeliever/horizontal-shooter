@@ -18,7 +18,6 @@ createDataBlock(EN_ProjectileList,      0xc10480, 0xc104ff)
 
 createDataBlock(DMA_Tile16Data,         0xc10500, 0xc10fff)
 
-
 createDataBlock(MS_FrameSetData,        0xc11000, 0xc11fff)
 createDataBlock(MS_FrameData,           0xc12000, 0xc12fff)
 createDataBlock(MS_AnimationData,       0xc13000, 0xc13fff)
@@ -31,7 +30,9 @@ createDataBlock(MS_PaletteData,         0xc18000, 0xc18fff)
 
 createDataBlock(EN_RomData,             0xc19000, 0xc19fff)
 
-createDataBlock(RES_Lists,              0xc05000, 0xc05fff)
+createDataBlock(breakIdStrings,         0xc05000, 0xc057ff)
+
+createDataBlock(RES_Lists,              0xc05800, 0xc05fff)
 createDataBlock(RES_Block0,             0xc06000, 0xc07fff)
 
 createDataBlock(MS_TileBlock_0,         0xc1a000, 0xc1bfff)
