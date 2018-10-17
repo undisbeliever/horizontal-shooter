@@ -115,28 +115,6 @@ function Process {
     jmp     Physics.ProcessEntity
 }
 
-
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity attacking
-// INPUT: A = attack value
-a16()
-i16()
-code()
-function TakeDamageFromEntity {
-    // A = clamp(hp - A)
-
-    eor.w   #0xffff
-    sec
-    adc.b   BaseEnemy.hp
-    bcs     +
-        lda.w   #0
-    +
-    sta.b   BaseEnemy.hp
-
-    rts
-}
-
 }
 }
 

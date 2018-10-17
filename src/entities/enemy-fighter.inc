@@ -42,18 +42,6 @@ function Process {
 }
 
 
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity attacking
-// INPUT: A = attack value
-a16()
-i16()
-code()
-function TakeDamageFromEntity {
-    jmp     BaseEnemy.TakeDamageFromEntity
-}
-
-
 inline _entity(name, frameSetId, velocity) {
     namespace {name} {
         rodata(EN_RomData)

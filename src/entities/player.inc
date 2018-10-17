@@ -426,68 +426,6 @@ function Process {
 }
 
 
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity collided with
-a16()
-i16()
-code()
-function CollideWithShield {
-    lda.w   #2
-    bra     TakeDamage
-}
-
-
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity collided with
-a16()
-i16()
-code()
-function CollideWithBody {
-    lda.w   #5
-    bra     TakeDamage
-}
-
-
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: Y = entity attacking
-// INPUT: A = attack value
-a16()
-i16()
-code()
-function TakeDamageFromEntity {
-    bra     TakeDamage
-}
-
-
-// Subtract damage from HP
-// REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
-// INPUT: dp = entity
-// INPUT: A = damage
-function TakeDamage {
-    // A = clamp(hp - A)
-
-    eor.w   #0xffff
-    sec
-    adc.b   EntityStruct.hp
-    bcs     +
-        lda.w   #0
-    +
-    sta.b   EntityStruct.hp
-
-    bne     StillAlive
-
-        // Entity is out of HP
-        // Spawn explosion on next frame
-        stz.b   EntityStruct.missileCooldown
-
-StillAlive:
-    rts
-}
-
-
 rodata(EN_RomData)
 PlayerRomData:
     dw  FunctionTable
