@@ -47,6 +47,8 @@ a8()
     lda.b   BaseEntity.MetaSprite.Animation.id
     inc
     bne     +
+        rep     #$30
+    a16()
         jmp     Entity.DeleteAndGotoNextEntity
     +
 
