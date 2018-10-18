@@ -430,8 +430,8 @@ rodata(EN_RomData)
 PlayerRomData:
     dw  FunctionTable
     db  Entity.ListId.PLAYER    // initial List
-    dw  MSFS.Player             // frameSetId
     db  0                       // defaultPalette
+    dw  MSFS.Player             // frameSetId
     dw  6                       // health
 
 

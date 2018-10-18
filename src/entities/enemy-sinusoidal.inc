@@ -174,8 +174,8 @@ inline _entity(name, frameSetId, velocity, missileCooldown) {
         RomData:
             dw  FunctionTable
             db  Entity.ListId.ENEMY // initial List
-            dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
+            dw  MSFS.{frameSetId}   // frameSetId
             dw  2                   // health
             dd  {velocity}          // launch velocity
             dw  {missileCooldown}   // missile cooldown

@@ -277,8 +277,8 @@ rodata(EN_RomData)
 CarrierRomData:
     dw  FunctionTable
     db  Entity.ListId.BOSS  // initial List
-    dw  MSFS.EnemyCarrier   // frameSetId
     db  0                   // defaultPalette
+    dw  MSFS.EnemyCarrier   // frameSetId
     dw  50                  // health
     dd  -0x010000           // launch velocity
 

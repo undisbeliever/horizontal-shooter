@@ -48,8 +48,8 @@ inline _entity(name, frameSetId, velocity) {
         RomData:
             dw  FunctionTable
             db  Entity.ListId.ENEMY // initial List
-            dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
+            dw  MSFS.{frameSetId}   // frameSetId
             dw  3                   // health
             dd  {velocity}          // launch velocity
 

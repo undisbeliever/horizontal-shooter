@@ -277,8 +277,8 @@ namespace FrontBay {
     CarrierDroneRomData:
         dw  FunctionTable
         db  Entity.ListId.ENEMY     // initial List
-        dw  MSFS.EnemyCarrierDrone  // frameSetId
         db  0                       // defaultPalette
+        dw  MSFS.EnemyCarrierDrone  // frameSetId
         dw  2                       // health
 
         dd  0x000000                // xVecl
@@ -303,8 +303,8 @@ namespace RearBay {
     CarrierDroneRomData:
         dw  FunctionTable
         db  Entity.ListId.ENEMY     // initial List
-        dw  MSFS.EnemyCarrierDrone  // frameSetId
         db  0                       // defaultPalette
+        dw  MSFS.EnemyCarrierDrone  // frameSetId
         dw  2                       // health
 
         dd  0x006666                // xVecl

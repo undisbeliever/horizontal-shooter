@@ -239,8 +239,8 @@ inline _entity(name, frameSetId, velocity, reflectOffShield) {
         RomData:
             dw  FunctionTable
             db  0                   // initial List (always null)
-            dw  MSFS.{frameSetId}   // frameSetId
             db  0                   // defaultPalette
+            dw  MSFS.{frameSetId}   // frameSetId
             dd  {velocity}          // launch velocity
             db  {reflectOffShield}  // reflectOffShield
 
