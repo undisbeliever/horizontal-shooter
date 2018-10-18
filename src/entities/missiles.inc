@@ -215,16 +215,20 @@ function Process.Reflect {
 
 
     // Change missile type
+    sep     #$20
+a8()
 
-    ldy.w   Entity._currentList
-    cpy.w   #Entity.lists.enemyProjectiles
+    lda.b   EntityStruct.listId
+    cmp.b   #Entity.ListId.ENEMY_PROJECTILE
     bne     +
-        ldy.w   #Entity.lists.playerProjectiles
+        lda.b   #Entity.ListId.PLAYER_PROJECTILE
         bra     ++
     +
-        ldy.w   #Entity.lists.enemyProjectiles
+        lda.b   #Entity.ListId.ENEMY_PROJECTILE
     +
-    jmp     Entity.ChangeEntityListYAndGotoNextEntity
+
+    // ChangeEntityListIdAndGotoNextEntity can be called with an 8 bit A
+    jmp     Entity.ChangeEntityListIdAndGotoNextEntity
 }
 
 
