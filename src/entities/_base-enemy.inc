@@ -21,6 +21,7 @@ namespace BaseEnemyData {
 namespace BaseEnemy {
 
 // IN: A = parameter (currently undefined)
+// OUT: C set = always activate entity
 a16()
 i16()
 code()
@@ -35,6 +36,8 @@ function Init {
     lda.l   BaseEnemyData.health,x
     sta.b   BaseEnemy.hp
 
+    // always activate
+    sec
     rts
 }
 

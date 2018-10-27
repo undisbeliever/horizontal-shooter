@@ -47,7 +47,8 @@ namespace RomData {
 
 
 // IN: A = parameter (address entity)
-//    MetaSprite.ActionPoint.address - address of actionPoint that spawned the missile
+//     MetaSprite.ActionPoint.address - address of actionPoint that spawned the missile
+// OUT: C set = always activate entity
 a16()
 i16()
 code()
@@ -94,6 +95,8 @@ EndIf:
     assert(State.FLYING == 0)
     stz.b   EntityStruct.state
 
+    // always activate
+    sec
     rts
 }
 

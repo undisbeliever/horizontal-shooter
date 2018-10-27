@@ -9,13 +9,18 @@ buildFunctionTable(BaseEntityFunctionTable, Particles)
 Entity.useDefaultRenderer()
 
 // IN: A = parameter (address entity)
-//    MetaSprite.ActionPoint.address - address of actionPoint that spawned the missile
+//     MetaSprite.ActionPoint.address - address of actionPoint that spawned the missile
+// OUT: C set = always activate entity
 a16()
 i16()
 code()
 function Init {
     lda.w   #MSEO.Particle.Animations.Animation
-    jmp     MetaSprite.SetAnimation
+    jsr     MetaSprite.SetAnimation
+
+    // always activate
+    sec
+    rts
 }
 
 a16()

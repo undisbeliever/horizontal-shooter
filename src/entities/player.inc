@@ -55,6 +55,7 @@ namespace RomData {
 
 
 // IN: A = parameter (NONE)
+// OUT: C set = always activate entity
 a16()
 i16()
 code()
@@ -68,6 +69,8 @@ function Init {
     lda.l   RomData.health,x
     sta.b   EntityStruct.hp
 
+    // always activate
+    sec
     rts
 }
 

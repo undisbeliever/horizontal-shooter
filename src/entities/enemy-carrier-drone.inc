@@ -68,7 +68,8 @@ namespace RomData {
 
 
 // IN: A = parameter (boss address
-//    MetaSprite.ActionPoint.address - address of actionPoint that spawned this entity
+//     MetaSprite.ActionPoint.address - address of actionPoint that spawned this entity
+// OUT: C set = always activate entity
 a16()
 i16()
 code()
@@ -101,6 +102,11 @@ a16()
     sta.b   EntityStruct.hp
 
 End:
+    jsr     _LoadNextPath
+
+    // always activate
+    sec
+    rts
 }
 
 // Loads the next path into the entity velocity/counter
@@ -110,8 +116,6 @@ a16()
 i16()
 code()
 function _LoadNextPath {
-    assert(pc() == Init.End)
-
     // X = romPtr + pathIndex
     // entity.pathIndex += sizeof(RomData.Path)
     //

@@ -55,6 +55,7 @@ namespace RomData {
 
 
 // IN: A = parameter (currently undefined)
+// OUT: C set = always activate entity
 a16()
 i16()
 code()
