@@ -6,7 +6,6 @@ namespace Entities {
 namespace Particles {
 
 buildFunctionTable(BaseEntityFunctionTable, Particles)
-Entity.useDefaultRenderer()
 
 // IN: A = parameter (address entity)
 //     MetaSprite.ActionPoint.address - address of actionPoint that spawned the missile
@@ -59,7 +58,7 @@ a8()
 
     rep     #$30
 a16()
-    jmp     Entity.GotoNextEntity
+    jmp     Entity.DrawAndGotoNextEntity
 }
 
 

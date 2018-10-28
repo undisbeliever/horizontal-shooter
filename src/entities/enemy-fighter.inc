@@ -6,7 +6,6 @@ namespace Entities {
 namespace EnemyFighter {
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyFighter)
-Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
 BaseEnemy.useDefaultProcessCollision()
 

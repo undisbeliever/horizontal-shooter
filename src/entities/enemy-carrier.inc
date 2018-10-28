@@ -21,7 +21,6 @@ constant N_DEATH_EXPLOSIONS = 8
 
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrier)
-Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
 
 namespace State {

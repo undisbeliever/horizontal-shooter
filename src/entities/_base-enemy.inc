@@ -114,7 +114,7 @@ function Process {
     +
 
     jsr     Physics.ProcessEntity
-    jmp     Entity.DeleteIfOutsideAndGotoNextEntity
+    jmp     Entity.DeleteIfOutsideOrDrawAndGotoNextEntity
 }
 
 }

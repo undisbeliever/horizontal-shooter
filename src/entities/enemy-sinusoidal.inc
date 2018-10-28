@@ -11,7 +11,6 @@ constant MISSILE_ACTION_POINT = 1
 constant SECOND_SHOT_COOLDOWN = 30
 
 buildFunctionTable(BaseEntityFunctionTable, EnemySinusoidal)
-Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
 BaseEnemy.useDefaultProcessCollision()
 

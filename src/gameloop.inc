@@ -91,8 +91,6 @@ function Run {
 
         Spawner.ProcessGameLoop()
 
-        jsr     Entity.RenderLoop
-
         jsr     MetaSprite.Render.EndLoop
 
         jsr     Interface.Update

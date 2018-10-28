@@ -11,7 +11,6 @@ constant X_VELOCITY = 0x028000
 
 
 buildFunctionTable(BaseEntityFunctionTable, Missile)
-Entity.useDefaultRenderer()
 
 namespace State {
     createEnum(0, 2)
@@ -163,7 +162,7 @@ code()
 Process.Null:
 function Process.Flying {
     jsr     Physics.ProcessEntity
-    jmp     Entity.DeleteIfOutsideAndGotoNextEntity
+    jmp     Entity.DeleteIfOutsideOrDrawAndGotoNextEntity
 }
 
 
@@ -230,8 +229,8 @@ a8()
         lda.b   #Entity.ListId.ENEMY_PROJECTILE
     +
 
-    // ChangeEntityListIdAndGotoNextEntity can be called with an 8 bit A
-    jmp     Entity.ChangeEntityListIdAndGotoNextEntity
+    // DrawAndChangeEntityListIdAndGotoNextEntity can be called with an 8 bit A
+    jmp     Entity.DrawAndChangeEntityListIdAndGotoNextEntity
 }
 
 

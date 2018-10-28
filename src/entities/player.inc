@@ -36,7 +36,6 @@ constant MISSILE_COOLDOWN = 20
 constant MISSILE_ACTION_POINT = 1
 
 buildFunctionTable(BaseEntityFunctionTable, PlayerEntity)
-Entity.useDefaultRenderer()
 
 namespace EntityStruct {
     childstruct(BaseEntity)
@@ -404,7 +403,7 @@ constant explosionLoc.y = explosionLocation + 1
 SkipExplosion:
     sta.b   EntityStruct.missileCooldown
 
-    jmp     Entity.GotoNextEntity
+    jmp     Entity.DrawAndGotoNextEntity
 }
 
 // REQUIRES: 16 bit A, 16 bit Index, DB = 0x7e
@@ -425,7 +424,7 @@ function Process {
 
     SpawnMissilesOnButtonPress()
 
-    jmp     Entity.GotoNextEntity
+    jmp     Entity.DrawAndGotoNextEntity
 }
 
 

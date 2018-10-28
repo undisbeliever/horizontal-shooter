@@ -13,7 +13,6 @@ constant DELAY_BETWEEN_SHOTS = 90
 constant MISSILE_ACTION_POINT = 1
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrierDrone)
-Entity.useDefaultRenderer()
 BaseEnemy.useDefaultDestructor()
 BaseEnemy.useDefaultProcessCollision()
 
