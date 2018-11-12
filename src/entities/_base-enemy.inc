@@ -45,6 +45,9 @@ function Init {
 inline useDefaultDestructor() {
     constant Destructor = Entities.BaseEnemy.Destructor
 }
+inline useDefaultDeactivated() {
+    constant Deactivated = Entities.BaseEnemy.Deactivated
+}
 inline useDefaultProcessCollision() {
     constant ProcessCollision = Entities.BaseEnemy.ProcessCollision
 }
@@ -53,6 +56,13 @@ a16()
 i16()
 code()
 function Destructor {
+    rts
+}
+
+a16()
+i16()
+code()
+function Deactivated {
     rts
 }
 

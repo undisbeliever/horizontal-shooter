@@ -80,6 +80,13 @@ function Destructor {
     rts
 }
 
+a16()
+i16()
+code()
+function Deactivated {
+    rts
+}
+
 
 // A = MetaSprite.Collision.bits
 // Y = MetaSprite.Collision.otherEntity

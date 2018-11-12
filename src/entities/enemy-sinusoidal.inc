@@ -12,6 +12,7 @@ constant SECOND_SHOT_COOLDOWN = 30
 
 buildFunctionTable(BaseEntityFunctionTable, EnemySinusoidal)
 BaseEnemy.useDefaultDestructor()
+BaseEnemy.useDefaultDeactivated()
 BaseEnemy.useDefaultProcessCollision()
 
 

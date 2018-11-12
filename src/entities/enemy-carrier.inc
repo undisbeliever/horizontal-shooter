@@ -22,6 +22,7 @@ constant N_DEATH_EXPLOSIONS = 8
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrier)
 BaseEnemy.useDefaultDestructor()
+BaseEnemy.useDefaultDeactivated()
 
 namespace State {
     createEnum(0, 2)

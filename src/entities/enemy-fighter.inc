@@ -7,6 +7,7 @@ namespace EnemyFighter {
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyFighter)
 BaseEnemy.useDefaultDestructor()
+BaseEnemy.useDefaultDeactivated()
 BaseEnemy.useDefaultProcessCollision()
 
 

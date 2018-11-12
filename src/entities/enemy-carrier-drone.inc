@@ -14,6 +14,7 @@ constant MISSILE_ACTION_POINT = 1
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrierDrone)
 BaseEnemy.useDefaultDestructor()
+BaseEnemy.useDefaultDeactivated()
 BaseEnemy.useDefaultProcessCollision()
 
 namespace State {
