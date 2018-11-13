@@ -48,6 +48,9 @@ function Spawn {
 allocateTmpWord(tmp_address)
 allocateTmpWord(tmp_count)
 
+    // Ensure enities are still valid
+    jsr     Entity.ValidateEntityLists
+
     // ::TODO select random table not of previous
 
     lda.w   previousTableId
