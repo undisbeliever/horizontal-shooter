@@ -51,21 +51,7 @@ a16()
 i16()
 code()
 function Process {
-    // Delete entity if animation.id == 0xff
-
-    sep     #$20
-a8()
-    lda.b   BaseEntity.MetaSprite.Animation.id
-    inc
-    bne     +
-        rep     #$30
-    a16()
-        jmp     Entity.DeleteAndGotoNextEntity
-    +
-
-    rep     #$30
-a16()
-    jmp     Entity.DrawAndGotoNextEntity
+    jmp     Entity.DeleteIfAnimationEndsOrDrawAndGotoNextEntity
 }
 
 
