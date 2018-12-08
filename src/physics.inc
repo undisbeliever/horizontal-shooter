@@ -16,17 +16,17 @@ function ProcessEntity {
     macro _addVelocity(c) {
         clc
         lda.b   BaseEntity.{c}Vecl
-        adc.b   BaseEntity.{c}Pos
-        sta.b   BaseEntity.{c}Pos
+        adc.b   BaseEntity.{c}Pos.sx
+        sta.b   BaseEntity.{c}Pos.sx
 
         lda.b   BaseEntity.{c}Vecl + 2
-        adc.b   BaseEntity.{c}Pos + 2
+        adc.b   BaseEntity.{c}Pos.px
 
-        if BaseEntity.{c}Pos == BaseEntity.xPos {
+        if BaseEntity.{c}Pos.px == BaseEntity.xPos.px {
             clc
             adc.w   #Camera.StarField.VELOCITY_INT
         }
-        sta.b   BaseEntity.{c}Pos + 2
+        sta.b   BaseEntity.{c}Pos.px
     }
     _addVelocity(x)
     _addVelocity(y)
