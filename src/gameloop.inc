@@ -86,10 +86,18 @@ function Run {
 
         jsr     MetaSprite.Render.InitLoop
 
-        jsr     Entity.ProcessGameLoop
         jsr     Camera.StarField.ProcessFrame
 
         Spawner.ProcessGameLoop()
+
+        Entity.ProcessSpecialLists()
+
+        MetaSprite.EntityHitbox.Begin()
+            MetaSprite.EntityHitbox.TestCollisions(PLAYERS, BOSSES, ENEMIES, ENEMY_PROJECTILES)
+            MetaSprite.EntityHitbox.TestCollisions(PLAYER_PROJECTILES, BOSSES, ENEMIES)
+        MetaSprite.EntityHitbox.End()
+
+        Entity.ProcessEntityLists()
 
         jsr     MetaSprite.Render.EndLoop
 
@@ -97,7 +105,7 @@ function Run {
 
         jsr     WaitFrame
 
-        bra     Loop
+        jmp     Loop
 }
 
 

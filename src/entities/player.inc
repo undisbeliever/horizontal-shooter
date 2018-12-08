@@ -438,7 +438,7 @@ function Process {
 rodata(EN_RomData)
 PlayerRomData:
     dw  FunctionTable
-    db  Entity.ListId.PLAYER    // initial List
+    db  EntityLists.PLAYERS     // initial List
     db  0                       // defaultPalette
     dw  MSFS.Player             // frameSetId
     dw  6                       // health

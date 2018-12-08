@@ -12,8 +12,20 @@ constant DELAY_BETWEEN_SHOTS = 90
 
 constant MISSILE_ACTION_POINT = 1
 
+// ::TODO move to EnemyCarrier entity::
+// Number of active front bay EnemyCarrierDrone entities
+//   - Incremented on Init
+//   - Decremented on Destructor
+allocateTmpWord(frontBayDrones)
+
+// ::TODO move to EnemyCarrier entity::
+// Number of active front bay EnemyCarrierDrone entities
+//   - Incremented on Init
+//   - Decremented on Destructor
+allocateTmpWord(rearBayDrones)
+
+
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrierDrone)
-BaseEnemy.useDefaultDestructor()
 BaseEnemy.useDefaultDeactivated()
 BaseEnemy.useDefaultProcessCollision()
 
@@ -67,13 +79,23 @@ namespace RomData {
 }
 
 
-// IN: A = parameter (boss address
+// IN: A = parameter (boss address)
 //     MetaSprite.ActionPoint.address - address of actionPoint that spawned this entity
 // OUT: C set = always activate entity
 a16()
 i16()
 code()
 function Init {
+
+    lda.b   EntityStruct.romPtr
+    cmp.w   #FrontBay.CarrierDroneRomData
+    bne     +
+        inc.w   frontBayDrones
+        bra     ++
+    +
+        inc.w   rearBayDrones
+    +
+
     lda.w   #MSEO.EnemyCarrierDrone.Animations.Flying
     jsr     MetaSprite.SetAnimation
 
@@ -106,6 +128,23 @@ End:
 
     // always activate
     sec
+    rts
+}
+
+
+a16()
+i16()
+code()
+function Destructor {
+    lda.b   EntityStruct.romPtr
+    cmp.w   #FrontBay.CarrierDroneRomData
+    bne     +
+        dec.w   frontBayDrones
+        bra     ++
+    +
+        dec.w   rearBayDrones
+    +
+
     rts
 }
 
@@ -280,7 +319,7 @@ namespace FrontBay {
     rodata(EN_RomData)
     CarrierDroneRomData:
         dw  FunctionTable
-        db  Entity.ListId.ENEMY     // initial List
+        db  EntityLists.ENEMIES     // initial List
         db  0                       // defaultPalette
         dw  MSFS.EnemyCarrierDrone  // frameSetId
         dw  2                       // health
@@ -306,7 +345,7 @@ namespace RearBay {
     rodata(EN_RomData)
     CarrierDroneRomData:
         dw  FunctionTable
-        db  Entity.ListId.ENEMY     // initial List
+        db  EntityLists.ENEMIES     // initial List
         db  0                       // defaultPalette
         dw  MSFS.EnemyCarrierDrone  // frameSetId
         dw  2                       // health

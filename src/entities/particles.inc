@@ -60,7 +60,7 @@ inline _entity(name, frameSetId, palette) {
         rodata(EN_RomData)
         RomData:
             dw  FunctionTable
-            db  Entity.ListId.PARTICLE  // initial List
+            db  EntityLists.PARTICLES   // initial List
             db  {palette}               // defaultPalette
             dw  MSFS.{frameSetId}       // frameSetId
 

@@ -60,6 +60,11 @@ a16()
 i16()
 code()
 function Init {
+
+    // reset drone count
+    stz.w   EnemyCarrierDrone.frontBayDrones
+    stz.w   EnemyCarrierDrone.rearBayDrones
+
     lda.w   #MSEO.EnemyCarrier.Animations.Flying_Shield
     jsr     MetaSprite.SetAnimation
 
@@ -192,8 +197,7 @@ function Process.Hover {
     dec
     bpl     SkipSpawnDrone
 
-        lda.w   #EnemyCarrierDrone.FrontBay.ENTITY_ID
-        jsr     Entity.CountEnemiesWithId
+        lda.w   EnemyCarrierDrone.frontBayDrones
         cmp.w   #MAX_FRONT_DRONES - 1
         bcs     +
             lda.w   #FRONT_BAY_ACTION_POINT
@@ -201,8 +205,7 @@ function Process.Hover {
             jsr     Entity.SpawnAtActionPoint
         +
 
-        lda.w   #EnemyCarrierDrone.RearBay.ENTITY_ID
-        jsr     Entity.CountEnemiesWithId
+        lda.w   EnemyCarrierDrone.rearBayDrones
         cmp.w   #MAX_REAR_DRONES - 1
         bcs     +
             lda.w   #REAR_BAY_ACTION_POINT
@@ -277,7 +280,7 @@ constant explosionLoc.y = explosionLocation + 1
 rodata(EN_RomData)
 CarrierRomData:
     dw  FunctionTable
-    db  Entity.ListId.BOSS  // initial List
+    db  EntityLists.BOSSES  // initial List
     db  0                   // defaultPalette
     dw  MSFS.EnemyCarrier   // frameSetId
     dw  50                  // health

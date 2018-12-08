@@ -228,12 +228,12 @@ function Process.Reflect {
 a8()
 
     lda.b   EntityStruct.listId
-    cmp.b   #Entity.ListId.ENEMY_PROJECTILE
+    cmp.b   #EntityLists.ENEMY_PROJECTILES
     bne     +
-        lda.b   #Entity.ListId.PLAYER_PROJECTILE
+        lda.b   #EntityLists.PLAYER_PROJECTILES
         bra     ++
     +
-        lda.b   #Entity.ListId.ENEMY_PROJECTILE
+        lda.b   #EntityLists.ENEMY_PROJECTILES
     +
 
     // DrawAndChangeEntityListIdAndGotoNextEntity can be called with an 8 bit A

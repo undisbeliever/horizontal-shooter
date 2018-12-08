@@ -25,10 +25,10 @@ macro ProcessGameLoop() {
 
     // Spawn if player has HP and no enemies or bosses on screen
 
-    lda.w   Entity.lists.bosses
+    lda.w   {Entity.listAddress(BOSSES)}
     bne     EndIf
 
-    lda.w   Entity.lists.enemies
+    lda.w   {Entity.listAddress(ENEMIES)}
     bne     EndIf
 
     ldy.w   GameLoop.playerEntity

@@ -64,6 +64,28 @@ namespace Entity {
     constant N_ENTITIES = 64
 }
 
+namespace EntityLists {
+    createEnum()
+        // no collisions
+        enum(PARTICLES)
+
+        // collides with: bosses, enemies
+        enum(PLAYER_PROJECTILES)
+
+        // collides with: players
+        enum(ENEMY_PROJECTILES)
+
+        // collides with: bosses enemies, enemy projectiles
+        enum(PLAYERS)
+
+        // collides with: players, player projectiles
+        enum(BOSSES)
+
+        // collides with: players, player projectiles
+        enum(ENEMIES)
+    endEnum()
+}
+
 
 // VRAM Layout
 // ===========

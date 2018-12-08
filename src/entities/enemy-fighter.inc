@@ -48,7 +48,7 @@ inline _entity(name, frameSetId, velocity) {
         rodata(EN_RomData)
         RomData:
             dw  FunctionTable
-            db  Entity.ListId.ENEMY // initial List
+            db  EntityLists.ENEMIES // initial List
             db  0                   // defaultPalette
             dw  MSFS.{frameSetId}   // frameSetId
             dw  3                   // health
