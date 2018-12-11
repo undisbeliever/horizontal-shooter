@@ -227,10 +227,20 @@ a16()
 i16()
 code()
 function Process {
+    // Check if drone has died
+    lda.b   EntityStruct.carrierEntityId
+    Entity.GetEntityWithIdOrBranchIfEmpty_X(CarrierDead)
+
     lda.b   EntityStruct.state
     and.w   #State.MASK
     tax
     jmp     (State.FunctionTable,x)
+
+
+CarrierDead:
+    // The carrier is no more, reduce HP to zero and drone explodes
+    stz.b   EntityStruct.hp
+    jmp     BaseEnemy.Process
 }
 
 
