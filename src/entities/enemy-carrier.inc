@@ -45,6 +45,13 @@ namespace EntityStruct {
         field(shieldHealth, 2)
         field(shieldRechargeDelay, 2)
         field(spawnDroneDelay, 2)
+
+        // Number of active front bay drones for this carrier
+        // (This value is automatically incremented/decremented by EnemyCarrierDrone)
+        field(frontBayDrones, 2)
+        // Number of active rear bay drones for this carrier
+        // (This value is automatically incremented/decremented by EnemyCarrierDrone)
+        field(rearBayDrones, 2)
     endstruct()
 }
 
@@ -62,8 +69,8 @@ code()
 function Init {
 
     // reset drone count
-    stz.w   EnemyCarrierDrone.frontBayDrones
-    stz.w   EnemyCarrierDrone.rearBayDrones
+    stz.b   EntityStruct.frontBayDrones
+    stz.b   EntityStruct.rearBayDrones
 
     lda.w   #MSEO.EnemyCarrier.Animations.Flying_Shield
     jsr     MetaSprite.SetAnimation
@@ -197,7 +204,7 @@ function Process.Hover {
     dec
     bpl     SkipSpawnDrone
 
-        lda.w   EnemyCarrierDrone.frontBayDrones
+        lda.b   EntityStruct.frontBayDrones
         cmp.w   #MAX_FRONT_DRONES - 1
         bcs     +
             lda.w   #FRONT_BAY_ACTION_POINT
@@ -205,7 +212,7 @@ function Process.Hover {
             jsr     Entity.SpawnAtActionPoint
         +
 
-        lda.w   EnemyCarrierDrone.rearBayDrones
+        lda.b   EntityStruct.rearBayDrones
         cmp.w   #MAX_REAR_DRONES - 1
         bcs     +
             lda.w   #REAR_BAY_ACTION_POINT

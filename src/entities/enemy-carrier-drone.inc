@@ -12,18 +12,6 @@ constant DELAY_BETWEEN_SHOTS = 90
 
 constant MISSILE_ACTION_POINT = 1
 
-// ::TODO move to EnemyCarrier entity::
-// Number of active front bay EnemyCarrierDrone entities
-//   - Incremented on Init
-//   - Decremented on Destructor
-allocateTmpWord(frontBayDrones)
-
-// ::TODO move to EnemyCarrier entity::
-// Number of active front bay EnemyCarrierDrone entities
-//   - Incremented on Init
-//   - Decremented on Destructor
-allocateTmpWord(rearBayDrones)
-
 
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrierDrone)
 BaseEnemy.useDefaultDeactivated()
@@ -56,6 +44,9 @@ namespace EntityStruct {
 
         // index offset for the path
         field(pathIndex, 1)
+
+        // the entityId of the carrier that spawned this drone
+        field(carrierEntityId, 2)
     endstruct()
 }
 
@@ -86,16 +77,22 @@ a16()
 i16()
 code()
 function Init {
+    // store the entityId of the carrier
+    tax
+    lda.w   EnemyCarrier.EntityStruct.entityId,x
+    sta.b   EntityStruct.carrierEntityId
 
+    // increment carrier drone counter
     lda.b   EntityStruct.romPtr
     cmp.w   #FrontBay.CarrierDroneRomData
     bne     +
-        inc.w   frontBayDrones
+        inc.w   EnemyCarrier.EntityStruct.frontBayDrones,x
         bra     ++
     +
-        inc.w   rearBayDrones
+        inc.w   EnemyCarrier.EntityStruct.rearBayDrones,x
     +
 
+    // Set animation and state
     lda.w   #MSEO.EnemyCarrierDrone.Animations.Flying
     jsr     MetaSprite.SetAnimation
 
@@ -136,14 +133,20 @@ a16()
 i16()
 code()
 function Destructor {
-    lda.b   EntityStruct.romPtr
-    cmp.w   #FrontBay.CarrierDroneRomData
-    bne     +
-        dec.w   frontBayDrones
-        bra     ++
-    +
-        dec.w   rearBayDrones
-    +
+    // Get carrier address (if it is still alive)
+    lda.b   EntityStruct.carrierEntityId
+    Entity.GetEntityWithIdOrBranchIfEmpty_X(CarrierDead)
+
+        // carrier still alive, decrement drone counter
+        lda.b   EntityStruct.romPtr
+        cmp.w   #FrontBay.CarrierDroneRomData
+        bne     +
+            dec.w   EnemyCarrier.EntityStruct.frontBayDrones,x
+            bra     ++
+        +
+            dec.w   EnemyCarrier.EntityStruct.rearBayDrones,x
+        +
+    CarrierDead:
 
     rts
 }
