@@ -401,7 +401,7 @@ constant explosionLoc.y = explosionLocation + 1
         sta.w   Entity.Spawn.yPos
 
         ldy.w   #0
-        lda.w   #Entities.Particles.Explosion.ENTITY_ID
+        lda.w   #Entities.Particles.Explosion.ENTITY_DATA_ID
         jsr     Entity.Spawn
 
         // reset explosion counter
@@ -444,8 +444,8 @@ PlayerRomData:
     dw  6                       // health
 
 
-rodata(EN_EntityList)
-constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
+rodata(EN_EntityDataList)
+constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
     dw  PlayerRomData
 }
 }

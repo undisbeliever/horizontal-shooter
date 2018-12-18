@@ -13,7 +13,7 @@ createDataBlock(MS_PaletteList,         0xc10100, 0xc101ff)
 createDataBlock(MS_FrameList,           0xc10200, 0xc102ff)
 createDataBlock(MS_AnimationList,       0xc10300, 0xc103ff)
 
-createDataBlock(EN_EntityList,          0xc10400, 0xc1047f)
+createDataBlock(EN_EntityDataList,      0xc10400, 0xc1047f)
 createDataBlock(EN_ProjectileList,      0xc10480, 0xc104ff)
 
 createDataBlock(DMA_Tile16Data,         0xc10500, 0xc10fff)

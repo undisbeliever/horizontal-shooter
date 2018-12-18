@@ -128,7 +128,7 @@ namespace SpawnTableData {
     }
 
     macro row(entity, evaluate param, evaluate xPos, evaluate yPos) {
-        dw  Entities.{entity}.ENTITY_ID, {param}, XSTART + {xPos}, {yPos}
+        dw  Entities.{entity}.ENTITY_DATA_ID, {param}, XSTART + {xPos}, {yPos}
     }
 
     table()

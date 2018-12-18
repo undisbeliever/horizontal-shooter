@@ -349,8 +349,8 @@ namespace FrontBay {
         dd  0x011000                // yVecl
         db  0
 
-    rodata(EN_EntityList)
-    constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
+    rodata(EN_EntityDataList)
+    constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
         dw  CarrierDroneRomData
 }
 
@@ -375,8 +375,8 @@ namespace RearBay {
         dd  0x011000                // yVecl
         db  0
 
-    rodata(EN_EntityList)
-    constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
+    rodata(EN_EntityDataList)
+    constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
         dw  CarrierDroneRomData
 }
 

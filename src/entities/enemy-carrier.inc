@@ -208,7 +208,7 @@ function Process.Hover {
         cmp.w   #MAX_FRONT_DRONES - 1
         bcs     +
             lda.w   #FRONT_BAY_ACTION_POINT
-            ldy.w   #EnemyCarrierDrone.FrontBay.ENTITY_ID
+            ldy.w   #EnemyCarrierDrone.FrontBay.ENTITY_DATA_ID
             jsr     Entity.SpawnAtActionPoint
         +
 
@@ -216,7 +216,7 @@ function Process.Hover {
         cmp.w   #MAX_REAR_DRONES - 1
         bcs     +
             lda.w   #REAR_BAY_ACTION_POINT
-            ldy.w   #EnemyCarrierDrone.RearBay.ENTITY_ID
+            ldy.w   #EnemyCarrierDrone.RearBay.ENTITY_DATA_ID
             jsr     Entity.SpawnAtActionPoint
         +
 
@@ -273,7 +273,7 @@ constant explosionLoc.y = explosionLocation + 1
         sta.w   Entity.Spawn.yPos
 
         ldy.w   #0
-        lda.w   #Entities.Particles.Explosion.ENTITY_ID
+        lda.w   #Entities.Particles.Explosion.ENTITY_DATA_ID
         jsr     Entity.Spawn
 
         pla
@@ -294,8 +294,8 @@ CarrierRomData:
     dd  -0x010000           // launch velocity
 
 
-rodata(EN_EntityList)
-constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
+rodata(EN_EntityDataList)
+constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
     dw  CarrierRomData
 
 }

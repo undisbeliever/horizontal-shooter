@@ -117,7 +117,7 @@ function Process {
         sta.w   Entity.Spawn.yPos
 
         ldy.w   #0
-        lda.w   #Entities.Particles.Explosion.ENTITY_ID
+        lda.w   #Entities.Particles.Explosion.ENTITY_DATA_ID
         jsr     Entity.Spawn
 
         jmp     Entity.DeleteAndGotoNextEntity

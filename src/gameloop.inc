@@ -70,7 +70,7 @@ function Run {
     sta.w   Entity.Spawn.yPos
 
     ldy.w   #0
-    lda.w   #Entities.PlayerEntity.ENTITY_ID
+    lda.w   #Entities.PlayerEntity.ENTITY_DATA_ID
     jsr     Entity.Spawn
     sty.w   playerEntity
 

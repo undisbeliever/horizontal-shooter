@@ -55,8 +55,8 @@ inline _entity(name, frameSetId, velocity) {
             dd  {velocity}          // launch velocity
 
 
-        rodata(EN_EntityList)
-        constant ENTITY_ID = (pc() - Entity.Data.EntityList) / 2
+        rodata(EN_EntityDataList)
+        constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
             dw  RomData
     }
 }
