@@ -2,8 +2,7 @@
 BINARY         := bin/horizontal-shooter.sfc
 MAIN           := src/main.asm
 
-METASPRITE_PRO := resources/metasprite/metasprites.utmspro
-RESOURCES_PRO  := resources/resources.utres
+PROJECT_FILE   := resources/horizontal-shooter.utproject
 
 SRC_DIRS       := src resources
 TABLE_DIRS     := tables

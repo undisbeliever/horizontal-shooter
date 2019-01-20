@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF_8"?>
+<!DOCTYPE untech>
+<project>
+  <block-settings block-size="8192" block-count="1"/>
+  <metatile-engine-settings max-map-size="8192" n-metatiles="512"/>
+  <exportorder src="metasprite/utsi/missiles/missiles.utfseo"/>
+  <exportorder src="metasprite/utsi/particles/particle.utfseo"/>
+  <exportorder src="metasprite/utsi/ships/enemy-carrier-drone.utfseo"/>
+  <exportorder src="metasprite/utsi/ships/enemy-carrier.utfseo"/>
+  <exportorder src="metasprite/utsi/ships/enemy.utfseo"/>
+  <exportorder src="metasprite/utsi/ships/player.utfseo"/>
+  <frameset src="metasprite/utsi/ships/player.utsi" type="spriteimporter"/>
+  <frameset src="metasprite/utsi/ships/enemy-fighter.utsi" type="spriteimporter"/>
+  <frameset src="metasprite/utsi/ships/enemy-carrier.utsi" type="spriteimporter"/>
+  <frameset src="metasprite/utsi/ships/enemy-carrier-drone.utsi" type="spriteimporter"/>
+  <frameset src="metasprite/utsi/missiles/player-plasma.utsi" type="spriteimporter"/>
+  <frameset src="metasprite/utsi/missiles/enemy-plasma.utsi" type="spriteimporter"/>
+  <frameset src="metasprite/utsi/particles/explosion.utsi" type="spriteimporter"/>
+</project>
