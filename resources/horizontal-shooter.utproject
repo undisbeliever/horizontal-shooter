@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
 <project>
-  <block-settings block-size="8192" block-count="1"/>
+  <block-settings block-size="16384" block-count="1"/>
   <metatile-engine-settings max-map-size="8192" n-metatiles="512"/>
   <exportorder src="metasprite/utsi/missiles/missiles.utfseo"/>
   <exportorder src="metasprite/utsi/particles/particle.utfseo"/>
