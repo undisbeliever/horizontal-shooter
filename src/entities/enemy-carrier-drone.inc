@@ -42,8 +42,8 @@ namespace EntityStruct {
         // frame decrement counter
         field(counter, 2)
 
-        // index offset for the path
-        field(pathIndex, 1)
+        // address of the path
+        field(path, 2)
 
         // the entityId of the carrier that spawned this drone
         field(carrierEntityId, 2)
@@ -51,21 +51,25 @@ namespace EntityStruct {
 }
 
 namespace RomData {
-    childstruct(BaseEnemyData)
-        // repeated until path.frames = 0
-        namespace Path {
-            // (0:7:15 fixed point)
-            constant xVecl = initialVelocity
-            // (0:7:15 fixed point)
-            field(yVecl, 4)
-            // number of movement frames
-            // (byte - frames)
-            field(frames, 1)
+    childstruct(BaseEntityData)
+        field(health, 2)
+        field(path, 2) // address to PathStruct
+    endstruct()
+}
 
-            assert(xVecl + 4 == yVecl)
+rodata(rom0)
+constant PathOffset = pc() & 0xff0000
 
-            constant size = 9
-        }
+namespace PathStruct {
+    // repeated until frames == 0
+    struct(PathOffset)
+        // (0:7:15 fixed point)
+        field(xVecl, 4)
+        // (0:7:15 fixed point)
+        field(yVecl, 4)
+        // number of movement frames
+        // (byte - frames)
+        field(frames, 1)
     endstruct()
 }
 
@@ -78,13 +82,25 @@ i16()
 code()
 function Init {
     // store the entityId of the carrier
-    tax
-    lda.w   EnemyCarrier.EntityStruct.entityId,x
+    // A = carrier address
+    tay
+    lda.w   EnemyCarrier.EntityStruct.entityId,y
     sta.b   EntityStruct.carrierEntityId
 
+    // store hp and path
+    ldx.b   EntityStruct.romPtr
+
+    lda.l   RomData.health,x
+    sta.b   EntityStruct.hp
+
+    lda.l   RomData.path,x
+    tyx
+
     // increment carrier drone counter
-    lda.b   EntityStruct.romPtr
-    cmp.w   #FrontBay.CarrierDroneRomData
+    // A = path address
+    // X = Carrier Entity Address
+    sta.b   EntityStruct.path
+    cmp.w   #FrontBayPath
     bne     +
         inc.w   EnemyCarrier.EntityStruct.frontBayDrones,x
         bra     ++
@@ -101,8 +117,6 @@ function Init {
 
     sep     #$20
 a8()
-    stz.b   EntityStruct.pathIndex
-
     // set up-down direction
     ldx.w   MetaSprite.ActionPoint.address
     lda.l   MetaSprite.Format.ActionPoints.yPos,x
@@ -115,12 +129,7 @@ a8()
 
     rep     #$30
 a16()
-    ldx.b   EntityStruct.romPtr
 
-    lda.l   RomData.health,x
-    sta.b   EntityStruct.hp
-
-End:
     jsr     _LoadNextPath
 
     // always activate
@@ -135,11 +144,17 @@ code()
 function Destructor {
     // Get carrier address (if it is still alive)
     lda.b   EntityStruct.carrierEntityId
-    Entity.GetEntityWithIdOrBranchIfEmpty_X(CarrierDead)
+    Entity.GetEntityWithIdOrBranchIfEmpty_Y(CarrierDead)
 
         // carrier still alive, decrement drone counter
-        lda.b   EntityStruct.romPtr
-        cmp.w   #FrontBay.CarrierDroneRomData
+
+        ldx.b   EntityStruct.romPtr
+        lda.l   RomData.path,x
+        tyx
+
+        // A = path address
+        // X = Carrier Entity Address
+        cmp.w   #FrontBayPath
         bne     +
             dec.w   EnemyCarrier.EntityStruct.frontBayDrones,x
             bra     ++
@@ -158,8 +173,8 @@ a16()
 i16()
 code()
 function _LoadNextPath {
-    // X = romPtr + pathIndex
-    // entity.pathIndex += sizeof(RomData.Path)
+    // X = path
+    // entity.path += PathStruct.size
     //
     // entity.movementFrames = X->path.frames
     //
@@ -169,51 +184,43 @@ function _LoadNextPath {
     //      entity.yVecl = X->path.yVecl
     // entity.xVecl = X->path.xVecl
 
-    sep     #$21
-a8()
-    lda.b   EntityStruct.pathIndex
-    tax
-    // c set
-    adc.b   #RomData.Path.size - 1
-    sta.b   EntityStruct.pathIndex
+    ldx.b   EntityStruct.path
 
     txa
-    rep     #$21
-a16()
-    and.w   #0xff
-    // carry clear
-    adc.b   EntityStruct.romPtr
-    tax
+    clc
+    adc.w   #PathStruct.size
+    sta.b   EntityStruct.path
 
     lda.b   EntityStruct.movingUpOnZero
+    and.w   #0xff
     bne     MoveDown
         // moving up
         sec
         lda.w   #0
-        sbc.l   RomData.Path.yVecl,x
+        sbc.l   PathStruct.yVecl,x
         sta.b   EntityStruct.yVecl
 
         lda.w   #0
-        sbc.l   RomData.Path.yVecl + 2,x
+        sbc.l   PathStruct.yVecl + 2,x
 
         bra     EndIf
 
     MoveDown:
         // moving down
-        lda.l   RomData.Path.yVecl,x
+        lda.l   PathStruct.yVecl,x
         sta.b   EntityStruct.yVecl
 
-        lda.l   RomData.Path.yVecl + 2,x
+        lda.l   PathStruct.yVecl + 2,x
 
 EndIf:
     sta.b   EntityStruct.yVecl + 2
 
-    lda.l   RomData.Path.xVecl,x
+    lda.l   PathStruct.xVecl,x
     sta.b   EntityStruct.xVecl
-    lda.l   RomData.Path.xVecl + 2,x
+    lda.l   PathStruct.xVecl + 2,x
     sta.b   EntityStruct.xVecl + 2
 
-    lda.l   RomData.Path.frames,x
+    lda.l   PathStruct.frames,x
     and.w   #0xff
     sta.b   EntityStruct.counter
 
@@ -336,18 +343,7 @@ namespace FrontBay {
         db  0                       // defaultPalette
         dw  MSFS.EnemyCarrierDrone  // frameSetId
         dw  2                       // health
-
-        dd  0x000000                // xVecl
-        dd  0x007777                // yVecl
-        db  45                      // frame count
-
-        dd  -0x07777                // xVecl
-        dd  0x003bbb                // yVecl
-        db  55                      // frame count
-
-        dd  0                       // xVecl
-        dd  0x011000                // yVecl
-        db  0
+        dw  FrontBayPath            // path
 
     rodata(EN_EntityDataList)
     constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
@@ -362,24 +358,41 @@ namespace RearBay {
         db  0                       // defaultPalette
         dw  MSFS.EnemyCarrierDrone  // frameSetId
         dw  2                       // health
-
-        dd  0x006666                // xVecl
-        dd  0x000000                // yVecl
-        db  50                      // frame count
-
-        dd  0x005555                // xVecl
-        dd  0x003bbb                // yVecl
-        db  50                      // frame count
-
-        dd  0                       // xVecl
-        dd  0x011000                // yVecl
-        db  0
+        dw  RearBayPath             // path
 
     rodata(EN_EntityDataList)
     constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
         dw  CarrierDroneRomData
 }
 
+rodata(rom0)
+assert(PathOffset == pc() & 0xff0000)
+
+FrontBayPath:
+    dd  0x000000                // xVecl
+    dd  0x007777                // yVecl
+    db  45                      // frame count
+
+    dd  -0x07777                // xVecl
+    dd  0x003bbb                // yVecl
+    db  55                      // frame count
+
+    dd  0                       // xVecl
+    dd  0x011000                // yVecl
+    db  0
+
+RearBayPath:
+    dd  0x006666                // xVecl
+    dd  0x000000                // yVecl
+    db  50                      // frame count
+
+    dd  0x005555                // xVecl
+    dd  0x003bbb                // yVecl
+    db  50                      // frame count
+
+    dd  0                       // xVecl
+    dd  0x011000                // yVecl
+    db  0
 }
 }
 
