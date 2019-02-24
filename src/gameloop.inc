@@ -19,7 +19,7 @@ namespace Run {
         and.w   #JOY.start
         beq     EndIf
             ldy.w   GameLoop.playerEntity
-            lda.w   Entities.PlayerEntity.EntityStruct.hp,y
+            lda.w   Entities.Player.EntityStruct.hp,y
             bne     EndIf
                 jmp     Restart
         EndIf:
@@ -70,7 +70,7 @@ function Run {
     sta.w   Entity.Spawn.yPos
 
     ldy.w   #0
-    lda.w   #Entities.PlayerEntity.ENTITY_DATA_ID
+    lda.w   #Project.EntityIds.Player
     jsr     Entity.Spawn
     sty.w   playerEntity
 
@@ -93,8 +93,8 @@ function Run {
         Entity.ProcessSpecialLists()
 
         MetaSprite.EntityHitbox.Begin()
-            MetaSprite.EntityHitbox.TestCollisions(PLAYERS, BOSSES, ENEMIES, ENEMY_PROJECTILES)
-            MetaSprite.EntityHitbox.TestCollisions(PLAYER_PROJECTILES, BOSSES, ENEMIES)
+            MetaSprite.EntityHitbox.TestCollisions(Players, Enemies, EnemyProjectiles)
+            MetaSprite.EntityHitbox.TestCollisions(PlayerProjectiles, Enemies)
         MetaSprite.EntityHitbox.End()
 
         Entity.ProcessEntityLists()

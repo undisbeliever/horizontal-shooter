@@ -3,7 +3,7 @@
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
 namespace Entities {
-namespace PlayerEntity {
+namespace Player {
 
 constant SCREEN_MARGIN_TOP = 8
 constant SCREEN_MARGIN_BOTTOM = 8
@@ -35,7 +35,7 @@ constant MISSILE_COOLDOWN = 20
 // The action point type of a missile
 constant MISSILE_ACTION_POINT = 1
 
-buildFunctionTable(BaseEntityFunctionTable, PlayerEntity)
+buildFunctionTable(BaseEntityFunctionTable, Player)
 
 namespace EntityStruct {
     childstruct(BaseEntity)
@@ -46,12 +46,6 @@ namespace EntityStruct {
     endstruct()
 }
 
-namespace RomData {
-    childstruct(BaseEntityData)
-        field(health, 2)
-    endstruct()
-}
-
 
 // IN: A = parameter (NONE)
 // OUT: C set = always activate entity
@@ -59,13 +53,13 @@ a16()
 i16()
 code()
 function Init {
-    lda.w   #MSEO.Player.Animations.Straight
+    lda.w   #{ExportOrder}.Animations.Straight
     jsr     MetaSprite.SetAnimation
 
     stz.b   EntityStruct.missileCooldown
 
     ldx.b   EntityStruct.romPtr
-    lda.l   RomData.health,x
+    lda.l   {RomStruct}.health,x
     sta.b   EntityStruct.hp
 
     // always activate
@@ -146,7 +140,7 @@ macro ProcessDpad() {
         bit.w   #JOY.up
         beq     ElseTestDown
             // Up pressed
-            lda.w   #MSEO.Player.Animations.Up
+            lda.w   #{ExportOrder}.Animations.Up
             jsr     MetaSprite.SetAnimation
 
             _AddAccel(y, -Y_ACCEL)
@@ -158,7 +152,7 @@ macro ProcessDpad() {
         beq     Else
             // Down pressed
 
-            lda.w   #MSEO.Player.Animations.Down
+            lda.w   #{ExportOrder}.Animations.Down
             jsr     MetaSprite.SetAnimation
 
             _AddAccel(y, Y_ACCEL)
@@ -167,7 +161,7 @@ macro ProcessDpad() {
     Else:
         // Up/Down not pressed
 
-        lda.w   #MSEO.Player.Animations.Straight
+        lda.w   #{ExportOrder}.Animations.Straight
         jsr     MetaSprite.SetAnimation
 
     EndIf:
@@ -348,7 +342,7 @@ macro SpawnMissilesOnButtonPress() {
         bit.w   #JOY.b | JOY.y
         beq     EndIf
             lda.w   #MISSILE_ACTION_POINT
-            ldy.w   #Missile.PlayerPlasma.PROJECTILE_ID
+            ldy.w   #Project.ProjectileIds.PlayerPlasma
             jsr     Entity.SpawnPlayerProjectileFromActionPoint
 
             lda.w   #MISSILE_COOLDOWN
@@ -401,7 +395,7 @@ constant explosionLoc.y = explosionLocation + 1
         sta.w   Entity.Spawn.yPos
 
         ldy.w   #0
-        lda.w   #Entities.Particles.Explosion.ENTITY_DATA_ID
+        lda.w   #Project.EntityIds.Explosion
         jsr     Entity.Spawn
 
         // reset explosion counter
@@ -433,20 +427,6 @@ function Process {
 
     jmp     Entity.DrawAndGotoNextEntity
 }
-
-
-rodata(EN_RomData)
-PlayerRomData:
-    dw  FunctionTable
-    db  EntityLists.PLAYERS     // initial List
-    db  0                       // defaultPalette
-    dw  MSFS.Player             // frameSetId
-    dw  6                       // health
-
-
-rodata(EN_EntityDataList)
-constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
-    dw  PlayerRomData
 }
 }
 

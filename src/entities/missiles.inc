@@ -37,13 +37,6 @@ namespace EntityStruct {
     endstruct()
 }
 
-namespace RomData {
-    childstruct(BaseEntityData)
-        field(initialVelocity, 4)
-        field(reflectOffShield, 1)
-    endstruct()
-}
-
 
 // IN: A = parameter (address entity)
 //     MetaSprite.ActionPoint.address - address of actionPoint that spawned the missile
@@ -64,14 +57,14 @@ function Init {
 
         sec
         lda.w   #0
-        sbc.l   RomData.initialVelocity,x
+        sbc.l   {RomStruct}.initialVelocity,x
         sta.b   EntityStruct.xVecl
 
         lda.w   #0
-        sbc.l   RomData.initialVelocity + 2,x
+        sbc.l   {RomStruct}.initialVelocity + 2,x
         sta.b   EntityStruct.xVecl + 2
 
-        lda.w   #MSEO.Missile.Animations.Move_Left
+        lda.w   #{ExportOrder}.Animations.Move_Left
 
         bra     EndIf
 
@@ -79,12 +72,12 @@ function Init {
         // missile travels right
         ldx.b   EntityStruct.romPtr
 
-        lda.l   RomData.initialVelocity,x
+        lda.l   {RomStruct}.initialVelocity,x
         sta.b   EntityStruct.xVecl
-        lda.l   RomData.initialVelocity + 2,x
+        lda.l   {RomStruct}.initialVelocity + 2,x
         sta.b   EntityStruct.xVecl + 2
 
-        lda.w   #MSEO.Missile.Animations.Move_Right
+        lda.w   #{ExportOrder}.Animations.Move_Right
 
 EndIf:
 
@@ -128,7 +121,7 @@ function ProcessCollision {
         // If reflectable then reflect back at opponent
 
         ldx.b   EntityStruct.romPtr
-        lda.l   RomData.reflectOffShield,x
+        lda.l   {RomStruct}.reflectOffShield,x
         and.w   #0xff
         beq     CollideWithBody
 
@@ -213,11 +206,11 @@ function Process.Reflect {
 
     bpl     +
         // travelling left
-        lda.w   #MSEO.Missile.Animations.Move_Left
+        lda.w   #{ExportOrder}.Animations.Move_Left
         bra     ++
     +
         // travelling left
-        lda.w   #MSEO.Missile.Animations.Move_Right
+        lda.w   #{ExportOrder}.Animations.Move_Right
     +
 
     jsr     MetaSprite.SetAnimation
@@ -228,40 +221,17 @@ function Process.Reflect {
 a8()
 
     lda.b   EntityStruct.listId
-    cmp.b   #EntityLists.ENEMY_PROJECTILES
+    cmp.b   #EntityLists.EnemyProjectiles
     bne     +
-        lda.b   #EntityLists.PLAYER_PROJECTILES
+        lda.b   #EntityLists.PlayerProjectiles
         bra     ++
     +
-        lda.b   #EntityLists.ENEMY_PROJECTILES
+        lda.b   #EntityLists.EnemyProjectiles
     +
 
     // DrawAndChangeEntityListIdAndGotoNextEntity can be called with an 8 bit A
     jmp     Entity.DrawAndChangeEntityListIdAndGotoNextEntity
 }
-
-
-
-inline _entity(name, frameSetId, velocity, reflectOffShield) {
-    namespace {name} {
-        rodata(EN_RomData)
-        RomData:
-            dw  FunctionTable
-            db  0                   // initial List (always null)
-            db  0                   // defaultPalette
-            dw  MSFS.{frameSetId}   // frameSetId
-            dd  {velocity}          // launch velocity
-            db  {reflectOffShield}  // reflectOffShield
-
-
-        rodata(EN_ProjectileList)
-        constant PROJECTILE_ID = (pc() - Entity.Data.ProjectileList) / 2
-            dw  RomData
-    }
-}
-_entity(PlayerPlasma, PlayerPlasma, 0x028000, 1)
-_entity(EnemyPlasma, EnemyPlasma, 0x020000, 1)
-
 }
 }
 

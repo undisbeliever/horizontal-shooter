@@ -23,16 +23,13 @@ macro ProcessGameLoop() {
     assert16a()
     assert16i()
 
-    // Spawn if player has HP and no enemies or bosses on screen
+    // Spawn if player has HP and no enemies on screen
 
-    lda.w   {Entity.listAddress(BOSSES)}
-    bne     EndIf
-
-    lda.w   {Entity.listAddress(ENEMIES)}
+    lda.w   {Entity.listAddress(Enemies)}
     bne     EndIf
 
     ldy.w   GameLoop.playerEntity
-    lda.w   Entities.PlayerEntity.EntityStruct.hp,y
+    lda.w   Entities.Player.EntityStruct.hp,y
     beq     EndIf
 
         jsr     Spawner.Spawn
@@ -128,114 +125,114 @@ namespace SpawnTableData {
     }
 
     macro row(entity, evaluate param, evaluate xPos, evaluate yPos) {
-        dw  Entities.{entity}.ENTITY_DATA_ID, {param}, XSTART + {xPos}, {yPos}
+        dw  Project.EntityIds.{entity}, {param}, XSTART + {xPos}, {yPos}
     }
 
     table()
         db 12
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 0)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 1)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 2)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 3)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 4)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 5)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 6)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 7)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 8)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 9)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 10)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 11)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 0)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 1)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 2)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 3)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 4)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 5)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 6)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 7)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 8)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 9)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 10)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 11)
 
     table()
         db 3
-        row(EnemySinusoidal.Slow,   0,     20,      112 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      112 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      112 + 10)
+        row(EnemySinusoidal_Slow,   0,     20,      112 - 10)
+        row(EnemySinusoidal_Slow,   0,      0,      112 + 0)
+        row(EnemySinusoidal_Slow,   0,     20,      112 + 10)
 
     table()
         db 7
-        row(EnemySinusoidal.Slow,   0,     30,      112 - 30)
-        row(EnemySinusoidal.Slow,   0,     20,      112 - 20)
-        row(EnemySinusoidal.Slow,   0,     10,      112 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      112 + 0)
-        row(EnemySinusoidal.Slow,   0,     10,      112 + 10)
-        row(EnemySinusoidal.Slow,   0,     20,      112 + 20)
-        row(EnemySinusoidal.Slow,   0,     30,      112 + 30)
+        row(EnemySinusoidal_Slow,   0,     30,      112 - 30)
+        row(EnemySinusoidal_Slow,   0,     20,      112 - 20)
+        row(EnemySinusoidal_Slow,   0,     10,      112 - 10)
+        row(EnemySinusoidal_Slow,   0,      0,      112 + 0)
+        row(EnemySinusoidal_Slow,   0,     10,      112 + 10)
+        row(EnemySinusoidal_Slow,   0,     20,      112 + 20)
+        row(EnemySinusoidal_Slow,   0,     30,      112 + 30)
 
     table()
         db 12
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 0)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 1)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 2)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 3)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 4)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 5)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 6)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 7)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 8)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 9)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 10)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 11)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 0)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 1)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 2)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 3)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 4)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 5)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 6)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 7)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 8)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 9)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 10)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 11)
 
     table()
         db 3
-        row(EnemySinusoidal.Fast,   0,     20,      112 - 10)
-        row(EnemySinusoidal.Fast,   0,      0,      112 + 0)
-        row(EnemySinusoidal.Fast,   0,     20,      112 + 10)
+        row(EnemySinusoidal_Fast,   0,     20,      112 - 10)
+        row(EnemySinusoidal_Fast,   0,      0,      112 + 0)
+        row(EnemySinusoidal_Fast,   0,     20,      112 + 10)
 
     table()
         db 6
-        row(EnemySinusoidal.Slow,   0,     20,      40 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      40 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      40 + 10)
-        row(EnemySinusoidal.Slow,   0,     20,      184 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      184 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      184 + 10)
+        row(EnemySinusoidal_Slow,   0,     20,      40 - 10)
+        row(EnemySinusoidal_Slow,   0,      0,      40 + 0)
+        row(EnemySinusoidal_Slow,   0,     20,      40 + 10)
+        row(EnemySinusoidal_Slow,   0,     20,      184 - 10)
+        row(EnemySinusoidal_Slow,   0,      0,      184 + 0)
+        row(EnemySinusoidal_Slow,   0,     20,      184 + 10)
 
     table()
         db 12
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 0)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 1)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 2)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 3)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 4)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 5)
-        row(EnemyFighter.Fast,      0,      0,      18 + 17 * 6)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 7)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 8)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 9)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 10)
-        row(EnemyFighter.Slow,      0,      0,      18 + 17 * 11)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 0)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 1)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 2)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 3)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 4)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 5)
+        row(EnemyFighter_Fast,      0,      0,      18 + 17 * 6)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 7)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 8)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 9)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 10)
+        row(EnemyFighter_Slow,      0,      0,      18 + 17 * 11)
 
     table()
         db 11
-        row(EnemySinusoidal.Medium, 0,     20,      112 - 10)
-        row(EnemySinusoidal.Medium, 0,      0,      112 + 0)
-        row(EnemySinusoidal.Medium, 0,     20,      112 + 10)
+        row(EnemySinusoidal_Medium, 0,     20,      112 - 10)
+        row(EnemySinusoidal_Medium, 0,      0,      112 + 0)
+        row(EnemySinusoidal_Medium, 0,     20,      112 + 10)
 
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 0)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 1)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 2)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 3)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 0)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 1)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 2)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 3)
 
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 8)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 9)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 10)
-        row(EnemyFighter.Medium,    0,      0,      18 + 17 * 11)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 8)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 9)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 10)
+        row(EnemyFighter_Medium,    0,      0,      18 + 17 * 11)
 
     table()
         db 9
-        row(EnemySinusoidal.Slow,   0,     20,      184 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      184 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      184 + 10)
+        row(EnemySinusoidal_Slow,   0,     20,      184 - 10)
+        row(EnemySinusoidal_Slow,   0,      0,      184 + 0)
+        row(EnemySinusoidal_Slow,   0,     20,      184 + 10)
 
-        row(EnemySinusoidal.Medium, 0,     20,      112 - 10)
-        row(EnemySinusoidal.Medium, 0,      0,      112 + 0)
-        row(EnemySinusoidal.Medium, 0,     20,      112 + 10)
+        row(EnemySinusoidal_Medium, 0,     20,      112 - 10)
+        row(EnemySinusoidal_Medium, 0,      0,      112 + 0)
+        row(EnemySinusoidal_Medium, 0,     20,      112 + 10)
 
-        row(EnemySinusoidal.Slow,   0,     20,      40 - 10)
-        row(EnemySinusoidal.Slow,   0,      0,      40 + 0)
-        row(EnemySinusoidal.Slow,   0,     20,      40 + 10)
+        row(EnemySinusoidal_Slow,   0,     20,      40 - 10)
+        row(EnemySinusoidal_Slow,   0,      0,      40 + 0)
+        row(EnemySinusoidal_Slow,   0,     20,      40 + 10)
 
     table()
         db 1

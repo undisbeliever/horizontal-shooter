@@ -55,11 +55,6 @@ namespace EntityStruct {
     endstruct()
 }
 
-namespace RomData {
-    childstruct(BaseEnemyData)
-    endstruct()
-}
-
 
 // IN: A = parameter (currently undefined)
 // OUT: C set = always activate entity
@@ -72,7 +67,7 @@ function Init {
     stz.b   EntityStruct.frontBayDrones
     stz.b   EntityStruct.rearBayDrones
 
-    lda.w   #MSEO.EnemyCarrier.Animations.Flying_Shield
+    lda.w   #{ExportOrder}.Animations.Flying_Shield
     jsr     MetaSprite.SetAnimation
 
     lda.w   #SHIELD_HEALTH
@@ -110,7 +105,7 @@ function ProcessCollision {
             lda.w   #SHIELD_RECHARGE
             sta.b   EntityStruct.shieldRechargeDelay
 
-            lda.w   #MSEO.EnemyCarrier.Animations.DropShield
+            lda.w   #{ExportOrder}.Animations.DropShield
             jmp     MetaSprite.SetAnimation
 
 
@@ -138,7 +133,7 @@ macro ProcessShield() {
             lda.w   #SHIELD_HEALTH
             sta.b   EntityStruct.shieldHealth
 
-            lda.w   #MSEO.EnemyCarrier.Animations.RaiseShield
+            lda.w   #{ExportOrder}.Animations.RaiseShield
             jsr     MetaSprite.SetAnimation
 EndIf:
 }
@@ -208,7 +203,7 @@ function Process.Hover {
         cmp.w   #MAX_FRONT_DRONES - 1
         bcs     +
             lda.w   #FRONT_BAY_ACTION_POINT
-            ldy.w   #EnemyCarrierDrone.FrontBay.ENTITY_DATA_ID
+            ldy.w   #Project.EntityIds.EnemyCarrierDrone_FrontBay
             jsr     Entity.SpawnAtActionPoint
         +
 
@@ -216,7 +211,7 @@ function Process.Hover {
         cmp.w   #MAX_REAR_DRONES - 1
         bcs     +
             lda.w   #REAR_BAY_ACTION_POINT
-            ldy.w   #EnemyCarrierDrone.RearBay.ENTITY_DATA_ID
+            ldy.w   #Project.EntityIds.EnemyCarrierDrone_RearBay
             jsr     Entity.SpawnAtActionPoint
         +
 
@@ -273,7 +268,7 @@ constant explosionLoc.y = explosionLocation + 1
         sta.w   Entity.Spawn.yPos
 
         ldy.w   #0
-        lda.w   #Entities.Particles.Explosion.ENTITY_DATA_ID
+        lda.w   #Project.EntityIds.Explosion
         jsr     Entity.Spawn
 
         pla
@@ -282,22 +277,6 @@ constant explosionLoc.y = explosionLocation + 1
 
     rts
 }
-
-
-rodata(EN_RomData)
-CarrierRomData:
-    dw  FunctionTable
-    db  EntityLists.BOSSES  // initial List
-    db  0                   // defaultPalette
-    dw  MSFS.EnemyCarrier   // frameSetId
-    dw  50                  // health
-    dd  -0x010000           // launch velocity
-
-
-rodata(EN_EntityDataList)
-constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
-    dw  CarrierRomData
-
 }
 }
 

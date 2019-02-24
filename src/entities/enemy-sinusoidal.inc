@@ -23,12 +23,6 @@ namespace EntityStruct {
     endstruct()
 }
 
-namespace RomData {
-    childstruct(BaseEnemyData)
-        field(missileCooldown, 2)
-    endstruct()
-}
-
 
 // IN: A = parameter (currently undefined)
 // OUT: C set = always activate entity
@@ -36,7 +30,7 @@ a16()
 i16()
 code()
 function Init {
-    lda.w   #MSEO.Enemy.Animations.Flying_Left
+    lda.w   #{ExportOrder}.Animations.Flying_Left
     jsr     MetaSprite.SetAnimation
 
     stz.b   EntityStruct.sineTableIndex
@@ -156,41 +150,17 @@ function Process {
         bcc     SkipMissileTest
 
         lda.w   #MISSILE_ACTION_POINT
-        ldy.w   #Missile.EnemyPlasma.PROJECTILE_ID
+        ldy.w   #Project.ProjectileIds.EnemyPlasma
         jsr     Entity.SpawnEnemyProjectileFromActionPoint
 
         ldx.b   EntityStruct.romPtr
-        lda.l   RomData.missileCooldown,x
+        lda.l   {RomStruct}.missileCooldown,x
         sta.b   EntityStruct.missileCooldown
 
 
 SkipMissileTest:
     jmp     BaseEnemy.Process
 }
-
-
-inline _entity(name, frameSetId, velocity, missileCooldown) {
-    namespace {name} {
-        rodata(EN_RomData)
-        RomData:
-            dw  FunctionTable
-            db  EntityLists.ENEMIES // initial List
-            db  0                   // defaultPalette
-            dw  MSFS.{frameSetId}   // frameSetId
-            dw  2                   // health
-            dd  {velocity}          // launch velocity
-            dw  {missileCooldown}   // missile cooldown
-
-
-        rodata(EN_EntityDataList)
-        constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
-            dw  RomData
-    }
-}
-_entity(Slow,   EnemyFighter,   -0x009876, 60)
-_entity(Medium, EnemyFighter,   -0x010000, 50)
-_entity(Fast,   EnemyFighter,   -0x012345, 40)
-
 }
 }
 

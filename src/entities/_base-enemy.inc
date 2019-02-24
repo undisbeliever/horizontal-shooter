@@ -10,15 +10,9 @@ namespace BaseEnemy {
     endstruct()
 }
 
-namespace BaseEnemyData {
-    basestruct(BaseEntityData)
-        field(health, 2)
-        field(initialVelocity, 4)
-    endstruct()
-}
-
-
 namespace BaseEnemy {
+
+define RomStruct = Project.EntityRomStructs.BaseEnemyData
 
 // IN: A = parameter (currently undefined)
 // OUT: C set = always activate entity
@@ -28,12 +22,12 @@ code()
 function Init {
     ldx.b   BaseEnemy.romPtr
 
-    lda.l   BaseEnemyData.initialVelocity,x
+    lda.l   {RomStruct}.initialVelocity,x
     sta.b   BaseEnemy.xVecl
-    lda.l   BaseEnemyData.initialVelocity + 2,x
+    lda.l   {RomStruct}.initialVelocity + 2,x
     sta.b   BaseEnemy.xVecl + 2
 
-    lda.l   BaseEnemyData.health,x
+    lda.l   {RomStruct}.health,x
     sta.b   BaseEnemy.hp
 
     // always activate
@@ -117,7 +111,7 @@ function Process {
         sta.w   Entity.Spawn.yPos
 
         ldy.w   #0
-        lda.w   #Entities.Particles.Explosion.ENTITY_DATA_ID
+        lda.w   #Project.EntityIds.Explosion
         jsr     Entity.Spawn
 
         jmp     Entity.DeleteAndGotoNextEntity
@@ -126,7 +120,6 @@ function Process {
     jsr     Physics.ProcessEntity
     jmp     Entity.DeleteIfOutsideOrDrawAndGotoNextEntity
 }
-
 }
 }
 

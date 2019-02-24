@@ -16,11 +16,6 @@ namespace EntityStruct {
     endstruct()
 }
 
-namespace RomData {
-    childstruct(BaseEnemyData)
-    endstruct()
-}
-
 
 // IN: A = parameter (currently undefined)
 // OUT: C set = always activate entity
@@ -28,7 +23,7 @@ a16()
 i16()
 code()
 function Init {
-    lda.w   #MSEO.Enemy.Animations.Flying_Left
+    lda.w   #{ExportOrder}.Animations.Flying_Left
     jsr     MetaSprite.SetAnimation
 
     jmp     BaseEnemy.Init
@@ -41,29 +36,6 @@ code()
 function Process {
     jmp     BaseEnemy.Process
 }
-
-
-inline _entity(name, frameSetId, velocity) {
-    namespace {name} {
-        rodata(EN_RomData)
-        RomData:
-            dw  FunctionTable
-            db  EntityLists.ENEMIES // initial List
-            db  0                   // defaultPalette
-            dw  MSFS.{frameSetId}   // frameSetId
-            dw  3                   // health
-            dd  {velocity}          // launch velocity
-
-
-        rodata(EN_EntityDataList)
-        constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
-            dw  RomData
-    }
-}
-_entity(Slow,   EnemyFighter,   -0x011234)
-_entity(Medium, EnemyFighter,   -0x015678)
-_entity(Fast,   EnemyFighter,   -0x019abc)
-
 }
 }
 

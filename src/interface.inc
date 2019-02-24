@@ -51,7 +51,7 @@ constant HP_OFFSET = X_OFFSET + Y_OFFSET * Text.Console.BUFFER_WIDTH
 constant MAX_DISPLAY_HP = BUFFER_WIDTH - X_OFFSET * 2
 
     ldy.w   GameLoop.playerEntity
-    lda.w   Entities.PlayerEntity.EntityStruct.hp,y
+    lda.w   Entities.Player.EntityStruct.hp,y
 
     // Only update interface if HP display changed
     cmp.w   previousHp

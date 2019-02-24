@@ -4,13 +4,9 @@
 
 createDataBlock(CopyrightHeader,        0xc00000, 0xc0007f)
 
-createDataBlock(rom0,                   0xc00080, 0xc04fff)
+createDataBlock(rom0,                   0xc00080, 0xc05fff)
 
-createDataBlock(breakIdStrings,         0xc05000, 0xc057ff)
-
-createDataBlock(EN_RomData,             0xc05800, 0xc05bff)
-createDataBlock(EN_ProjectileList,      0xc05c00, 0xc05fff)
-createDataBlock(EN_EntityDataList,      0xc06000, 0xc067ff)
+createDataBlock(breakIdStrings,         0xc06000, 0xc067ff)
 
 createDataBlock(RES_Lists,              0xc06800, 0xc07fff)
 
@@ -46,27 +42,8 @@ namespace Entity {
     constant N_ENTITIES = 64
 }
 
-namespace EntityLists {
-    createEnum()
-        // no collisions
-        enum(PARTICLES)
-
-        // collides with: bosses, enemies
-        enum(PLAYER_PROJECTILES)
-
-        // collides with: players
-        enum(ENEMY_PROJECTILES)
-
-        // collides with: bosses enemies, enemy projectiles
-        enum(PLAYERS)
-
-        // collides with: players, player projectiles
-        enum(BOSSES)
-
-        // collides with: players, player projectiles
-        enum(ENEMIES)
-    endEnum()
-}
+define PLAYER_PROJECTILE_ENTITY_LIST = PlayerProjectiles
+define ENEMY_PROJECTILE_ENTITY_LIST  = EnemyProjectiles
 
 
 // VRAM Layout

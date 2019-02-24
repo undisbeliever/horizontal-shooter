@@ -45,15 +45,8 @@ namespace EntityStruct {
         // address of the path
         field(path, 2)
 
-        // the entityId of the carrier that spawned this drone
+        // the instanceId of the carrier that spawned this drone
         field(carrierEntityId, 2)
-    endstruct()
-}
-
-namespace RomData {
-    childstruct(BaseEntityData)
-        field(health, 2)
-        field(path, 2) // address to PathStruct
     endstruct()
 }
 
@@ -81,19 +74,19 @@ a16()
 i16()
 code()
 function Init {
-    // store the entityId of the carrier
+    // store the instanceId of the carrier
     // A = carrier address
     tay
-    lda.w   EnemyCarrier.EntityStruct.entityId,y
+    lda.w   EnemyCarrier.EntityStruct.instanceId,y
     sta.b   EntityStruct.carrierEntityId
 
     // store hp and path
     ldx.b   EntityStruct.romPtr
 
-    lda.l   RomData.health,x
+    lda.l   {RomStruct}.health,x
     sta.b   EntityStruct.hp
 
-    lda.l   RomData.path,x
+    lda.l   {RomStruct}.path,x
     tyx
 
     // increment carrier drone counter
@@ -109,7 +102,7 @@ function Init {
     +
 
     // Set animation and state
-    lda.w   #MSEO.EnemyCarrierDrone.Animations.Flying
+    lda.w   #{ExportOrder}.Animations.Flying
     jsr     MetaSprite.SetAnimation
 
     assert(State.MOVE_TO_POSITION == 0)
@@ -149,7 +142,7 @@ function Destructor {
         // carrier still alive, decrement drone counter
 
         ldx.b   EntityStruct.romPtr
-        lda.l   RomData.path,x
+        lda.l   {RomStruct}.path,x
         tyx
 
         // A = path address
@@ -322,7 +315,7 @@ function Process.Patrol {
     bne     DontShoot
 
         lda.w   #MISSILE_ACTION_POINT
-        ldy.w   #Missile.EnemyPlasma.PROJECTILE_ID
+        ldy.w   #Project.ProjectileIds.EnemyPlasma
         jsr     Entity.SpawnEnemyProjectileFromActionPoint
 
         lda.w   #DELAY_BETWEEN_SHOTS + 1
@@ -334,36 +327,6 @@ DontShoot:
     jmp     BaseEnemy.Process
 }
 
-
-namespace FrontBay {
-    rodata(EN_RomData)
-    CarrierDroneRomData:
-        dw  FunctionTable
-        db  EntityLists.ENEMIES     // initial List
-        db  0                       // defaultPalette
-        dw  MSFS.EnemyCarrierDrone  // frameSetId
-        dw  2                       // health
-        dw  FrontBayPath            // path
-
-    rodata(EN_EntityDataList)
-    constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
-        dw  CarrierDroneRomData
-}
-
-namespace RearBay {
-    rodata(EN_RomData)
-    CarrierDroneRomData:
-        dw  FunctionTable
-        db  EntityLists.ENEMIES     // initial List
-        db  0                       // defaultPalette
-        dw  MSFS.EnemyCarrierDrone  // frameSetId
-        dw  2                       // health
-        dw  RearBayPath             // path
-
-    rodata(EN_EntityDataList)
-    constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
-        dw  CarrierDroneRomData
-}
 
 rodata(rom0)
 assert(PathOffset == pc() & 0xff0000)

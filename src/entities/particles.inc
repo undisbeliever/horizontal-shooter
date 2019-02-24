@@ -14,7 +14,7 @@ a16()
 i16()
 code()
 function Init {
-    lda.w   #MSEO.Particle.Animations.Animation
+    lda.w   #{ExportOrder}.Animations.Animation
     jsr     MetaSprite.SetAnimation
 
     // always activate
@@ -53,24 +53,6 @@ code()
 function Process {
     jmp     Entity.DeleteIfAnimationEndsOrDrawAndGotoNextEntity
 }
-
-
-inline _entity(name, frameSetId, palette) {
-    namespace {name} {
-        rodata(EN_RomData)
-        RomData:
-            dw  FunctionTable
-            db  EntityLists.PARTICLES   // initial List
-            db  {palette}               // defaultPalette
-            dw  MSFS.{frameSetId}       // frameSetId
-
-
-        rodata(EN_EntityDataList)
-        constant ENTITY_DATA_ID = (pc() - Entity.Data.EntityDataList) / 2
-            dw  RomData
-    }
-}
-_entity(Explosion, Explosion, 0)
 
 }
 }
