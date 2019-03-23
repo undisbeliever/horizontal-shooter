@@ -111,8 +111,7 @@ function Init {
     sep     #$20
 a8()
     // set up-down direction
-    ldx.w   MetaSprite.ActionPoint.address
-    lda.l   MetaSprite.Format.ActionPoints.yPos,x
+    lda.w   MetaSprite.ActionPoint.positionPair.yPos
     cmp.b   #INT_MS8_OFFSET
     bcs     +
         // moving up

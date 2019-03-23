@@ -45,16 +45,16 @@ a16()
 i16()
 code()
 function Init {
-    ldx.w   MetaSprite.ActionPoint.address
-    lda.l   MetaSprite.Format.ActionPoints.xPos,x
+    ldx.b   EntityStruct.romPtr
+
+    lda.w   MetaSprite.ActionPoint.positionPair.xPos
     and.w   #0x00ff
     cmp.w   #INT_MS8_OFFSET
     bcs     Right
-
         // Missile travels left
         // load negative velocity
-        ldx.b   EntityStruct.romPtr
 
+        // X = romPtr
         sec
         lda.w   #0
         sbc.l   {RomStruct}.initialVelocity,x
@@ -70,8 +70,8 @@ function Init {
 
     Right:
         // missile travels right
-        ldx.b   EntityStruct.romPtr
 
+        // X = romPtr
         lda.l   {RomStruct}.initialVelocity,x
         sta.b   EntityStruct.xVecl
         lda.l   {RomStruct}.initialVelocity + 2,x
