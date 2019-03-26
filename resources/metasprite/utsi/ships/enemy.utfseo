@@ -7,6 +7,12 @@
   <animation id="Flying_Right">
     <alt name="Flying_Left" hflip="true"/>
   </animation>
+  <animation id="Shoot_Left">
+    <alt name="Shoot_Right" hflip="true"/>
+  </animation>
+  <animation id="Shoot_Right">
+    <alt name="Shoot_Left" hflip="true"/>
+  </animation>
   <animation id="Dead_Left">
     <alt name="Dead_Right" hflip="true"/>
   </animation>

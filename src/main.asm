@@ -37,6 +37,9 @@ include "entities/enemy-sinusoidal.inc"
 include "entities/enemy-carrier.inc"
 include "entities/enemy-carrier-drone.inc"
 
+include "actionpoints.inc"
+
+
 code(code)
 CopHandler:
 IrqHandler:

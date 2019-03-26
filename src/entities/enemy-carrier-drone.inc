@@ -8,11 +8,6 @@ namespace EnemyCarrierDrone {
 constant SCREEN_MARGIN_TOP = 24
 constant SCREEN_MARGIN_BOTTOM = 24
 
-constant DELAY_BETWEEN_SHOTS = 90
-
-constant MISSILE_ACTION_POINT = 1
-
-
 buildFunctionTable(BaseEntityFunctionTable, EnemyCarrierDrone)
 BaseEnemy.useDefaultDeactivated()
 BaseEnemy.useDefaultProcessCollision()
@@ -102,7 +97,7 @@ function Init {
     +
 
     // Set animation and state
-    lda.w   #{ExportOrder}.Animations.Flying
+    lda.w   #{ExportOrder}.Animations.Animation
     jsr     MetaSprite.SetAnimation
 
     assert(State.MOVE_TO_POSITION == 0)
@@ -307,21 +302,6 @@ function Process.Patrol {
             sta.b   EntityStruct.yVecl + 2
 
     EndIf:
-
-
-    // Shoot every DELAY_BETWEEN_SHOTS frames
-    lda.b   EntityStruct.counter
-    bne     DontShoot
-
-        lda.w   #MISSILE_ACTION_POINT
-        ldy.w   #Project.ProjectileIds.EnemyPlasma
-        jsr     Entity.SpawnEnemyProjectileFromActionPoint
-
-        lda.w   #DELAY_BETWEEN_SHOTS + 1
-
-DontShoot:
-    dec
-    sta.b   EntityStruct.counter
 
     jmp     BaseEnemy.Process
 }

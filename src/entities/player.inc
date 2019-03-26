@@ -32,9 +32,6 @@ constant MAX_Y_VECL = 0x020000
 // (int frames)
 constant MISSILE_COOLDOWN = 20
 
-// The action point type of a missile
-constant MISSILE_ACTION_POINT = 1
-
 buildFunctionTable(BaseEntityFunctionTable, Player)
 
 namespace EntityStruct {
@@ -341,9 +338,7 @@ macro SpawnMissilesOnButtonPress() {
         lda.w   Controller.Joy1.current
         bit.w   #JOY.b | JOY.y
         beq     EndIf
-            lda.w   #MISSILE_ACTION_POINT
-            ldy.w   #Project.ProjectileIds.PlayerPlasma
-            jsr     Entity.SpawnPlayerProjectileFromActionPoint
+            jsr     Entity.SpawnManualPlayerProjectiles
 
             lda.w   #MISSILE_COOLDOWN
             sta.b   EntityStruct.missileCooldown

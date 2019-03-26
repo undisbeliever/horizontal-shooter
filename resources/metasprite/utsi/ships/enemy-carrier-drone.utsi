@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
-<spriteimporter id="EnemyCarrierDrone" tilesettype="ONE_TILE_FIXED" exportorder="EnemyCarrierDrone" image="enemy-carrier-drone.png" transparent="891a1c">
-  <grid width="16" height="16" xoffset="8" yoffset="0" xpadding="0" ypadding="0" xorigin="8" yorigin="8"/>
-  <palette npalettes="1" colorsize="4"/>
+<spriteimporter id="EnemyCarrierDrone" tilesettype="TWO_TILES_FIXED" exportorder="SingleAnimation" image="enemy-carrier-drone.png" transparent="881a1c">
+  <grid width="16" height="16" xoffset="0" yoffset="0" xpadding="0" ypadding="0" xorigin="8" yorigin="8"/>
   <frame id="Flying" order="2">
     <gridlocation x="0" y="0"/>
     <object size="large" x="0" y="0"/>
-    <actionpoint parameter="1" x="4" y="8"/>
-    <entityhitbox type="BODY" x="6" y="5" width="5" height="6"/>
+    <entityhitbox type="---B" x="6" y="5" width="5" height="6"/>
   </frame>
-  <animation id="Flying" durationformat="FRAME" oneshot="true">
-    <aframe frame="Flying" duration="1"/>
+  <frame id="Shoot" order="2">
+    <gridlocation x="1" y="0"/>
+    <object size="large" x="0" y="0"/>
+    <actionpoint type="EnemyProjectile" x="3" y="8"/>
+    <entityhitbox type="---B" x="6" y="5" width="5" height="6"/>
+  </frame>
+  <animation id="Animation" durationformat="FRAME">
+    <aframe frame="Flying" duration="87"/>
+    <aframe frame="Shoot" duration="3"/>
   </animation>
 </spriteimporter>

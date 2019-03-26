@@ -2,6 +2,8 @@
 // Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
+RegisterBreakId(INVALID_ENTITY_TYPE)
+
 namespace Entities {
 namespace EnemyCarrier {
 
@@ -14,8 +16,6 @@ constant MAX_FRONT_DRONES = 4
 constant MAX_REAR_DRONES = 4
 
 constant SPAWN_DRONE_DELAY = 60 * 2
-constant FRONT_BAY_ACTION_POINT = 1
-constant REAR_BAY_ACTION_POINT = 2
 
 constant N_DEATH_EXPLOSIONS = 8
 
@@ -168,6 +168,9 @@ i16()
 code()
 function Process.MoveToPosition {
 
+    // Do not spawn drones until carrier is in position
+    stz.b   EntityStruct.spawnDroneDelay
+
     lda.b   EntityStruct.xPos.px
     sec
     sbc.w   Camera.xPos
@@ -177,8 +180,6 @@ function Process.MoveToPosition {
         // in correct position, cancel velocity
         stz.b   EntityStruct.xVecl
         stz.b   EntityStruct.xVecl + 2
-
-        stz.b   EntityStruct.spawnDroneDelay
 
         ldx.w   #State.HOVER
         stx.b   EntityStruct.state
@@ -195,30 +196,7 @@ a16()
 i16()
 code()
 function Process.Hover {
-    lda.b   EntityStruct.spawnDroneDelay
-    dec
-    bpl     SkipSpawnDrone
-
-        lda.b   EntityStruct.frontBayDrones
-        cmp.w   #MAX_FRONT_DRONES - 1
-        bcs     +
-            lda.w   #FRONT_BAY_ACTION_POINT
-            ldy.w   #Project.EntityIds.EnemyCarrierDrone_FrontBay
-            jsr     Entity.SpawnAtActionPoint
-        +
-
-        lda.b   EntityStruct.rearBayDrones
-        cmp.w   #MAX_REAR_DRONES - 1
-        bcs     +
-            lda.w   #REAR_BAY_ACTION_POINT
-            ldy.w   #Project.EntityIds.EnemyCarrierDrone_RearBay
-            jsr     Entity.SpawnAtActionPoint
-        +
-
-        lda.w   #SPAWN_DRONE_DELAY
-
-SkipSpawnDrone:
-    sta.b   EntityStruct.spawnDroneDelay
+    dec.b   EntityStruct.spawnDroneDelay
 
     jmp     BaseEnemy.Process
 }
@@ -277,6 +255,68 @@ constant explosionLoc.y = explosionLocation + 1
 
     rts
 }
+
+
+// Spawn a EnemyCarrierDrone at the given action point if
+//    * spawnDroneDelay is negative or >= SPAWN_DRONE_DELAY, and
+//    * frontBayDrones/rearBayDrones < MAX_FRONT_DRONES/MAX_REAR_DRONES
+//
+// REQUITES: 16 bit A, 16 bit Index, DB = 0x7e
+// INPUT: DP: entity
+//         A: action point positionPair (int_ms8 pair)
+a16()
+i16()
+code()
+function SpawnDroneActionPoint {
+
+    ldx.b   EntityStruct.functionTable
+    cpx.w   #FunctionTable
+    beq     +
+        // This ActionPoint is only allowed on a EnemyCarrier entity
+        break(INVALID_ENTITY_TYPE)
+    +
+
+    // Only spawn drone is spawnDroneDelay is negative or >= SPAWN_DRONE_DELAY
+    ldx.b   EntityStruct.spawnDroneDelay
+    cpx.w   #SPAWN_DRONE_DELAY
+    bcc     Return
+
+    tax
+    // X = AP positionPair
+    // MUST NOT MODIFY X
+
+    // Test if AP is left or right of origin
+    and.w   #0xff
+    cmp.w   #INT_MS8_OFFSET
+    bcs     +
+        // front bay drone
+        lda.b   EntityStruct.frontBayDrones
+        cmp.w   #MAX_FRONT_DRONES
+        bcs     Return
+
+        ldy.w   #Project.EntityIds.EnemyCarrierDrone_FrontBay
+        bra     ++
+    +
+        // rear bay drone
+        lda.b   EntityStruct.rearBayDrones
+        cmp.w   #MAX_REAR_DRONES
+        bcs     Return
+
+        ldy.w   #Project.EntityIds.EnemyCarrierDrone_RearBay
+    +
+
+    lda.w   #SPAWN_DRONE_DELAY
+    sta.b   EntityStruct.spawnDroneDelay
+
+    txa
+    // A = AP positionPair
+    // Y = entityId
+    jmp     Entity.SpawnEntityAtActionPoint
+
+Return:
+    rts
+}
+
 }
 }
 

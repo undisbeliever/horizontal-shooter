@@ -7,7 +7,6 @@ namespace EnemySinusoidal {
 
 constant X_PADDING = 30
 constant MISSILE_THREASHOLD = 15
-constant MISSILE_ACTION_POINT = 1
 constant SECOND_SHOT_COOLDOWN = 30
 
 buildFunctionTable(BaseEntityFunctionTable, EnemySinusoidal)
@@ -149,9 +148,8 @@ function Process {
         cmp.b   EntityStruct.yPos.px
         bcc     SkipMissileTest
 
-        lda.w   #MISSILE_ACTION_POINT
-        ldy.w   #Project.ProjectileIds.EnemyPlasma
-        jsr     Entity.SpawnEnemyProjectileFromActionPoint
+        lda.w   #{ExportOrder}.Animations.Shoot_Left
+        jsr     MetaSprite.SetAnimation
 
         ldx.b   EntityStruct.romPtr
         lda.l   {RomStruct}.missileCooldown,x
