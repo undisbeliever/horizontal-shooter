@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF_8"?>
 <!DOCTYPE untech>
-<spriteimporter id="EnemyFighter" tilesettype="ONE_ROW_FIXED" exportorder="Enemy" image="enemy-fighter.png" transparent="881a1c">
+<spriteimporter id="EnemyFighter" tilesettype="ONE_ROW_FIXED" exportorder="Enemy" image="enemy-fighter.png">
   <grid width="20" height="20" xoffset="0" yoffset="0" xpadding="0" ypadding="0" xorigin="10" yorigin="11"/>
   <frame id="Dead_Left" order="2">
     <gridlocation x="0" y="0"/>
