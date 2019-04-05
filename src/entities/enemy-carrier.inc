@@ -105,8 +105,14 @@ function ProcessCollision {
             lda.w   #SHIELD_RECHARGE
             sta.b   EntityStruct.shieldRechargeDelay
 
-            lda.w   #{ExportOrder}.Animations.DropShield
-            jmp     MetaSprite.SetAnimation
+            sep     #$20
+        a8()
+
+            lda.b   #{ExportOrder}.Animations.DropShield
+            sta.b   BaseEnemy.MetaSprite.Animation.nextAnimation
+
+            rep     #$30
+        a16()
 
 
 NoShieldCollision:
@@ -133,8 +139,14 @@ macro ProcessShield() {
             lda.w   #SHIELD_HEALTH
             sta.b   EntityStruct.shieldHealth
 
-            lda.w   #{ExportOrder}.Animations.RaiseShield
-            jsr     MetaSprite.SetAnimation
+            sep     #$20
+        a8()
+
+            lda.b   #{ExportOrder}.Animations.RaiseShield
+            sta.b   BaseEnemy.MetaSprite.Animation.nextAnimation
+
+            rep     #$30
+        a16()
 EndIf:
 }
 

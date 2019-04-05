@@ -148,8 +148,13 @@ function Process {
         cmp.b   EntityStruct.yPos.px
         bcc     SkipMissileTest
 
-        lda.w   #{ExportOrder}.Animations.Shoot_Left
-        jsr     MetaSprite.SetAnimation
+        sep     #$20
+    a8()
+        lda.b   #{ExportOrder}.Animations.Shoot_Left
+        sta.b   BaseEntity.MetaSprite.Animation.nextAnimation
+
+        rep     #$30
+    a16()
 
         ldx.b   EntityStruct.romPtr
         lda.l   {RomStruct}.missileCooldown,x
