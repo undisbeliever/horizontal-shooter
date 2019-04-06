@@ -23,8 +23,7 @@ a16()
 i16()
 code()
 function Init {
-    lda.w   #{ExportOrder}.Animations.Flying_Left
-    jsr     MetaSprite.SetAnimation
+    SetAnimation(Flying_Left)
 
     jmp     BaseEnemy.Init
 }

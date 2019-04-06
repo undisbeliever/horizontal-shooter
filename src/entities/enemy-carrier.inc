@@ -67,8 +67,7 @@ function Init {
     stz.b   EntityStruct.frontBayDrones
     stz.b   EntityStruct.rearBayDrones
 
-    lda.w   #{ExportOrder}.Animations.Flying_Shield
-    jsr     MetaSprite.SetAnimation
+    SetAnimation(Flying_Shield)
 
     lda.w   #SHIELD_HEALTH
     sta.b   EntityStruct.shieldHealth
@@ -108,8 +107,7 @@ function ProcessCollision {
             sep     #$20
         a8()
 
-            lda.b   #{ExportOrder}.Animations.DropShield
-            sta.b   BaseEnemy.MetaSprite.Animation.nextAnimation
+            SetNextAnimation(DropShield)
 
             rep     #$30
         a16()
@@ -139,14 +137,12 @@ macro ProcessShield() {
             lda.w   #SHIELD_HEALTH
             sta.b   EntityStruct.shieldHealth
 
-            sep     #$20
-        a8()
-
-            lda.b   #{ExportOrder}.Animations.RaiseShield
-            sta.b   BaseEnemy.MetaSprite.Animation.nextAnimation
+            sep     #$10
+        i8()
+            SetNextAnimation(RaiseShield)
 
             rep     #$30
-        a16()
+        i16()
 EndIf:
 }
 
@@ -247,7 +243,7 @@ constant explosionLoc.y = explosionLocation + 1
         sbc.w   #24
         clc
         adc.b   EntityStruct.xPos.px
-        sta.w   Entity.Spawn.xPos
+        sta.w   SpawnEntity.xPos
 
         lda.w   explosionLoc.y
         and.w   #31
@@ -255,11 +251,9 @@ constant explosionLoc.y = explosionLocation + 1
         sbc.w   #16
         clc
         adc.b   EntityStruct.yPos.px
-        sta.w   Entity.Spawn.yPos
+        sta.w   SpawnEntity.yPos
 
-        ldy.w   #0
-        lda.w   #Project.EntityIds.Explosion
-        jsr     Entity.Spawn
+        SpawnEntity(Explosion)
 
         pla
         dec
@@ -306,7 +300,7 @@ function SpawnDroneActionPoint {
         cmp.w   #MAX_FRONT_DRONES
         bcs     Return
 
-        ldy.w   #Project.EntityIds.EnemyCarrierDrone_FrontBay
+        ldy.w   #{GetEntityId(EnemyCarrierDrone_FrontBay)}
         bra     ++
     +
         // rear bay drone
@@ -314,7 +308,7 @@ function SpawnDroneActionPoint {
         cmp.w   #MAX_REAR_DRONES
         bcs     Return
 
-        ldy.w   #Project.EntityIds.EnemyCarrierDrone_RearBay
+        ldy.w   #{GetEntityId(EnemyCarrierDrone_RearBay)}
     +
 
     lda.w   #SPAWN_DRONE_DELAY

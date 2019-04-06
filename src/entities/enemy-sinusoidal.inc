@@ -29,8 +29,7 @@ a16()
 i16()
 code()
 function Init {
-    lda.w   #{ExportOrder}.Animations.Flying_Left
-    jsr     MetaSprite.SetAnimation
+    SetAnimation(Flying_Left)
 
     stz.b   EntityStruct.sineTableIndex
     stz.b   EntityStruct.missileCooldown
@@ -150,8 +149,8 @@ function Process {
 
         sep     #$20
     a8()
-        lda.b   #{ExportOrder}.Animations.Shoot_Left
-        sta.b   BaseEntity.MetaSprite.Animation.nextAnimation
+
+        SetNextAnimation(Shoot_Left)
 
         rep     #$30
     a16()

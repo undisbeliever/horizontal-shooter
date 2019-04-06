@@ -81,7 +81,7 @@ function Init {
 
 EndIf:
 
-    jsr     MetaSprite.SetAnimation
+    SetAnimation_A()
 
 
     assert(State.FLYING == 0)
@@ -162,6 +162,7 @@ code()
 Process.Null:
 function Process.Flying {
     jsr     Physics.ProcessEntity
+
     jmp     Entity.DeleteIfOutsideOrDrawAndGotoNextEntity
 }
 
@@ -213,7 +214,7 @@ function Process.Reflect {
         lda.w   #{ExportOrder}.Animations.Move_Right
     +
 
-    jsr     MetaSprite.SetAnimation
+    SetAnimation_A()
 
 
     // Change missile type

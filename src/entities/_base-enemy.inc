@@ -105,19 +105,18 @@ function Process {
         // Entity is out of HP
         // Spawn explosion
         lda.b   BaseEnemy.xPos.px
-        sta.w   Entity.Spawn.xPos
+        sta.w   SpawnEntity.xPos
 
         lda.b   BaseEnemy.yPos.px
-        sta.w   Entity.Spawn.yPos
+        sta.w   SpawnEntity.yPos
 
-        ldy.w   #0
-        lda.w   #Project.EntityIds.Explosion
-        jsr     Entity.Spawn
+        SpawnEntity(Explosion)
 
         jmp     Entity.DeleteAndGotoNextEntity
     +
 
     jsr     Physics.ProcessEntity
+
     jmp     Entity.DeleteIfOutsideOrDrawAndGotoNextEntity
 }
 }

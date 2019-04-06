@@ -97,8 +97,7 @@ function Init {
     +
 
     // Set animation and state
-    lda.w   #{ExportOrder}.Animations.Animation
-    jsr     MetaSprite.SetAnimation
+    SetAnimation(Animation)
 
     assert(State.MOVE_TO_POSITION == 0)
     stz.b   EntityStruct.state

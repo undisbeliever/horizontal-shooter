@@ -50,8 +50,7 @@ a16()
 i16()
 code()
 function Init {
-    lda.w   #{ExportOrder}.Animations.Straight
-    jsr     MetaSprite.SetAnimation
+    SetAnimation(Straight)
 
     stz.b   EntityStruct.missileCooldown
 
@@ -137,8 +136,7 @@ macro ProcessDpad() {
         bit.w   #JOY.up
         beq     ElseTestDown
             // Up pressed
-            lda.w   #{ExportOrder}.Animations.Up
-            jsr     MetaSprite.SetAnimation
+            SetAnimation(Up)
 
             _AddAccel(y, -Y_ACCEL)
 
@@ -149,8 +147,7 @@ macro ProcessDpad() {
         beq     Else
             // Down pressed
 
-            lda.w   #{ExportOrder}.Animations.Down
-            jsr     MetaSprite.SetAnimation
+            SetAnimation(Down)
 
             _AddAccel(y, Y_ACCEL)
 
@@ -158,8 +155,7 @@ macro ProcessDpad() {
     Else:
         // Up/Down not pressed
 
-        lda.w   #{ExportOrder}.Animations.Straight
-        jsr     MetaSprite.SetAnimation
+        SetAnimation(Straight)
 
     EndIf:
     }
@@ -338,7 +334,7 @@ macro SpawnMissilesOnButtonPress() {
         lda.w   Controller.Joy1.current
         bit.w   #JOY.b | JOY.y
         beq     EndIf
-            jsr     Entity.SpawnManualPlayerProjectiles
+            SpawnManualPlayerProjectiles()
 
             lda.w   #MISSILE_COOLDOWN
             sta.b   EntityStruct.missileCooldown
@@ -379,7 +375,7 @@ constant explosionLoc.y = explosionLocation + 1
         sbc.w   #8
         clc
         adc.b   EntityStruct.xPos.px
-        sta.w   Entity.Spawn.xPos
+        sta.w   SpawnEntity.xPos
 
         lda.w   explosionLoc.y
         and.w   #7
@@ -387,11 +383,9 @@ constant explosionLoc.y = explosionLocation + 1
         sbc.w   #4
         clc
         adc.b   EntityStruct.yPos.px
-        sta.w   Entity.Spawn.yPos
+        sta.w   SpawnEntity.yPos
 
-        ldy.w   #0
-        lda.w   #Project.EntityIds.Explosion
-        jsr     Entity.Spawn
+        SpawnEntity(Explosion)
 
         // reset explosion counter
         lda.w   #DEAD_EXPLOSION_FRAME_DELAY - 1
