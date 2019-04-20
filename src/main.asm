@@ -1,5 +1,5 @@
 // This file is part of Horizontal Shooter.
-// Copyright (c) 2016 - 2017, Marcus Rowe <undisbeliever@gmail.com>.
+// Copyright (c) 2016 - 2019, Marcus Rowe <undisbeliever@gmail.com>.
 // Distributed under The MIT License: https://opensource.org/licenses/MIT
 
 define MEMORY_MAP = HIROM
@@ -55,7 +55,7 @@ rodata(CopyrightHeader)
 
 	//   12345678901234567890123456789012
     db  "Horizontal Shooter             \n"
-    db  "Copyright (c) 2016 - 2017      \n"
+    db  "Copyright (c) 2016 - 2019      \n"
     db  "Marcus Rowe (The UnDisbeliever)\n"
     db  "MIT Licensed code, CC0 Graphics\n"
 
