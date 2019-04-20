@@ -7,7 +7,7 @@ define ROM_SIZE = 1
 define ROM_SPEED = slow
 define REGION = Australia
 define ROM_NAME = "HORIZONTAL SHOOTER"
-define VERSION = 0
+define VERSION = 1
 
 include "../untech/src/common.inc"
 include "memmap.inc"
