@@ -80,7 +80,6 @@ function Run {
     // Process the entities
     // --------------------
     Loop:
-        Controller.UpdateControllerState()
         ProcessStartButton()
         ToggleCpuUsageOnSelect()
 
