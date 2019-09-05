@@ -59,8 +59,7 @@ constant VRAM_STARFIELD_MAP_WADDR = 0x0400
 
 // MetaTile engine settings
 // ========================
-constant MetaTiles.MAP_SIZE = 8192
-constant MetaTiles.N_META_TILES = 512
+constant MetaTiles.MAP_SIZE = 16384
 
 // Unused but requited by untech-engine
 constant METATILES_MAP_WADDR = 0x0400   // 64x32 tiles in size
